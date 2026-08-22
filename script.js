@@ -13,8 +13,8 @@ const foods = [
     id: 2,
     name: "Vada",
     price: 30,
-    description: "Crispy Vada with chatneys",
-    image: "images/vada.jpg"
+    description: "Crispy Vada with chatneys.",
+    image: "vada.jpg"
   },
   {
     id: 3,
