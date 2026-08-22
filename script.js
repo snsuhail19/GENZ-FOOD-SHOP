@@ -32,7 +32,7 @@ const foods = [
   },
   {
     id: 5,
-    name: "White Rise",
+    name: "White Rice",
     price: 30,
     description: "White rice with 3 gravys and veggies",
     image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=700&q=80"
