@@ -3,113 +3,549 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment - GENZ FOOD SHOP</title>
+  <title>Checkout - GENZ FOOD SHOP</title>
   <link rel="stylesheet" href="style.css">
+
   <style>
-    body { min-height: 100vh; }
-    .payment-page { max-width: 850px; margin: 45px auto; padding: 0 20px; }
-    .back { display:inline-block; margin-bottom:20px; color:#ff5a1f; text-decoration:none; font-weight:700; }
-    .payment-box { background:white; border:1px solid #eee; border-radius:22px; padding:25px; box-shadow:0 8px 30px rgba(0,0,0,.06); }
-    .payment-box h2 { margin-bottom:20px; }
-    .payment-item { display:flex; align-items:center; gap:15px; padding:15px 0; border-bottom:1px solid #eee; }
-    .payment-item img { width:75px; height:75px; object-fit:cover; border-radius:12px; }
-    .item-info { flex:1; }
-    .item-info h3 { margin-bottom:5px; }
-    .item-info p { color:#777; }
-    .quantity { display:flex; align-items:center; gap:9px; }
-    .quantity button { width:34px; height:34px; border:0; border-radius:9px; background:#eee; cursor:pointer; font-size:19px; }
-    .summary { margin-top:25px; padding-top:20px; border-top:2px solid #eee; }
-    .summary-row { display:flex; justify-content:space-between; margin:10px 0; }
-    .grand { font-size:24px; font-weight:900; }
-    .pay-button { width:100%; margin-top:20px; padding:16px; border:0; border-radius:13px; background:#ff5a1f; color:white; font-size:16px; font-weight:800; cursor:pointer; }
-    .note { color:#777; text-align:center; font-size:12px; margin-top:12px; }
+    body {
+      min-height: 100vh;
+      background: #f7f7f7;
+    }
+
+    .checkout {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #ff5a1f;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .box {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    }
+
+    .box h2 {
+      margin: 0 0 18px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 11px;
+      font-size: 15px;
+    }
+
+    .field textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .item img {
+      width: 65px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .info h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+
+    .info p {
+      margin: 0;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty button {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 9px;
+      background: #eee;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    .total {
+      font-size: 22px;
+      font-weight: 900;
+      border-top: 2px solid #eee;
+      padding-top: 15px;
+    }
+
+    .pay {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 12px;
+      background: #ff5a1f;
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+    }
+
+    .success {
+      display: none;
+      text-align: center;
+    }
+
+    .success h2 {
+      color: #16803a;
+    }
+
+    .order-text {
+      background: #f6f6f6;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: left;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+
     @media(max-width:600px) {
-      .payment-item { align-items:flex-start; }
-      .payment-item img { width:62px; height:62px; }
-      .quantity { flex-wrap:wrap; justify-content:flex-end; }
+      .item {
+        align-items: flex-start;
+      }
+
+      .item img {
+        width: 58px;
+        height: 58px;
+      }
+
+      .qty {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
+
 <body>
-  <header class="header">
-    <div class="brand">
-      <div class="logo">G</div>
-      <div><h1>GENZ FOOD SHOP</h1><p>Payment</p></div>
+
+<header class="header">
+
+  <div class="brand">
+
+    <div class="logo">G</div>
+
+    <div>
+      <h1>GENZ FOOD SHOP</h1>
+      <p>Checkout</p>
     </div>
-  </header>
 
-  <main class="payment-page">
-    <a class="back" href="index.html">← Back to Menu</a>
-    <div class="payment-box">
-      <h2>Order Summary</h2>
-      <div id="paymentItems"></div>
+  </div>
 
-      <div class="summary">
-        <div class="summary-row"><span>Subtotal</span><strong>₹<span id="subtotal">0</span></strong></div>
-        <div class="summary-row"><span>Delivery</span><strong>₹<span id="delivery">0</span></strong></div>
-        <div class="summary-row grand"><span>Total</span><strong>₹<span id="total">0</span></strong></div>
-        <button class="pay-button" onclick="paymentDemo()">Continue to Payment</button>
-        <p class="note">Payment gateway will be connected in the next version.</p>
+</header>
+
+
+<main class="checkout">
+
+  <a class="back" href="index.html">
+    ← Back to Menu
+  </a>
+
+
+  <!-- ORDER -->
+
+  <div class="box">
+
+    <h2>Your Order</h2>
+
+    <div id="items"></div>
+
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <strong>₹<span id="subtotal">0</span></strong>
+    </div>
+
+    <div class="summary-row">
+      <span>Delivery</span>
+      <strong>₹<span id="delivery">0</span></strong>
+    </div>
+
+    <div class="summary-row total">
+      <span>Total</span>
+      <strong>₹<span id="total">0</span></strong>
+    </div>
+
+  </div>
+
+
+  <!-- CUSTOMER DETAILS -->
+
+  <div class="box" id="customerBox">
+
+    <h2>Customer Details</h2>
+
+    <div class="field">
+
+      <label for="name">
+        Name
+      </label>
+
+      <input
+        id="name"
+        type="text"
+        placeholder="Enter your name"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="phone">
+        Phone
+      </label>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="Enter your phone number"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="address">
+        Delivery Address
+      </label>
+
+      <textarea
+        id="address"
+        placeholder="Enter your full delivery address"
+      ></textarea>
+
+    </div>
+
+
+    <button class="pay" onclick="placeOrder()">
+      Continue to Payment
+    </button>
+
+  </div>
+
+
+  <!-- SUCCESS -->
+
+  <div class="box success" id="successBox">
+
+    <h2>
+      Order Ready ✅
+    </h2>
+
+    <p>
+      Your order details are prepared below.
+    </p>
+
+    <br>
+
+    <div class="order-text" id="orderText"></div>
+
+    <br>
+
+    <p>
+      <strong>
+        Payment gateway is not connected yet.
+      </strong>
+    </p>
+
+    <p>
+      Next we can add UPI / Razorpay payment.
+    </p>
+
+    <br>
+
+    <a class="back" href="index.html">
+      ← Back to Menu
+    </a>
+
+  </div>
+
+</main>
+
+
+<script>
+
+let cart =
+  JSON.parse(localStorage.getItem("genzCart")) || [];
+
+
+function saveCart() {
+
+  localStorage.setItem(
+    "genzCart",
+    JSON.stringify(cart)
+  );
+
+  render();
+
+}
+
+
+function changeQuantity(id, amount) {
+
+  const item =
+    cart.find(i => i.id === id);
+
+  if (!item) return;
+
+  item.quantity += amount;
+
+
+  if (item.quantity <= 0) {
+
+    cart =
+      cart.filter(i => i.id !== id);
+
+  }
+
+
+  saveCart();
+
+}
+
+
+function render() {
+
+  const box =
+    document.getElementById("items");
+
+
+  if (cart.length === 0) {
+
+    box.innerHTML = `
+      <div class="empty">
+
+        Your cart is empty.
+
+        <br><br>
+
+        <a class="back" href="index.html">
+          Go to Menu
+        </a>
+
       </div>
+    `;
+
+    document.getElementById("subtotal").textContent = "0";
+
+    document.getElementById("total").textContent = "0";
+
+    return;
+
+  }
+
+
+  box.innerHTML = cart.map(item => `
+
+    <div class="item">
+
+      <img
+        src="${item.image}"
+        alt="${item.name}"
+      >
+
+
+      <div class="info">
+
+        <h3>
+          ${item.name}
+        </h3>
+
+        <p>
+          ₹${item.price} each
+        </p>
+
+      </div>
+
+
+      <div class="qty">
+
+        <button
+          onclick="changeQuantity(${item.id}, -1)"
+        >
+          −
+        </button>
+
+        <strong>
+          ${item.quantity}
+        </strong>
+
+        <button
+          onclick="changeQuantity(${item.id}, 1)"
+        >
+          +
+        </button>
+
+      </div>
+
+
+      <strong>
+        ₹${item.price * item.quantity}
+      </strong>
+
     </div>
-  </main>
 
-  <script>
-    let cart = JSON.parse(localStorage.getItem("genzCart")) || [];
+  `).join("");
 
-    function save() {
-      localStorage.setItem("genzCart", JSON.stringify(cart));
-      render();
-    }
 
-    function changeQuantity(id, amount) {
-      const item = cart.find(i => i.id === id);
-      if (!item) return;
-      item.quantity += amount;
-      if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
-      save();
-    }
+  const subtotal =
+    cart.reduce(
+      (sum, item) =>
+        sum + item.price * item.quantity,
+      0
+    );
 
-    function render() {
-      const box = document.getElementById("paymentItems");
 
-      if (!cart.length) {
-        box.innerHTML = '<div class="empty">Your cart is empty. <a href="index.html">Go back to menu</a></div>';
-        document.getElementById("subtotal").textContent = "0";
-        document.getElementById("total").textContent = "0";
-        return;
-      }
+  document.getElementById("subtotal").textContent =
+    subtotal;
 
-      box.innerHTML = cart.map(item => `
-        <div class="payment-item">
-          <img src="${item.image}" alt="${item.name}">
-          <div class="item-info">
-            <h3>${item.name}</h3>
-            <p>₹${item.price} each</p>
-          </div>
-          <div class="quantity">
-            <button onclick="changeQuantity(${item.id}, -1)">−</button>
-            <strong>${item.quantity}</strong>
-            <button onclick="changeQuantity(${item.id}, 1)">+</button>
-          </div>
-          <strong>₹${item.price * item.quantity}</strong>
-        </div>
-      `).join("");
 
-      const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      document.getElementById("subtotal").textContent = subtotal;
-      document.getElementById("total").textContent = subtotal;
-    }
+  document.getElementById("total").textContent =
+    subtotal;
 
-    function paymentDemo() {
-      if (!cart.length) {
-        alert("Your cart is empty.");
-        return;
-      }
-      alert("Payment page is ready. In the next version we can connect UPI / Razorpay and order confirmation.");
-    }
+}
 
-    render();
-  </script>
+
+function placeOrder() {
+
+  if (cart.length === 0) {
+
+    alert("Your cart is empty.");
+
+    return;
+
+  }
+
+
+  const name =
+    document.getElementById("name")
+      .value.trim();
+
+
+  const phone =
+    document.getElementById("phone")
+      .value.trim();
+
+
+  const address =
+    document.getElementById("address")
+      .value.trim();
+
+
+  if (!name || !phone || !address) {
+
+    alert(
+      "Please fill in your name, phone number and delivery address."
+    );
+
+    return;
+
+  }
+
+
+  const total =
+    cart.reduce(
+      (sum, item) =>
+        sum + item.price * item.quantity,
+      0
+    );
+
+
+  const lines =
+    cart.map(item =>
+      `${item.name} × ${item.quantity} = ₹${item.price * item.quantity}`
+    ).join("\n");
+
+
+  document.getElementById("orderText").textContent =
+
+`Customer: ${name}
+
+Phone: ${phone}
+
+Address: ${address}
+
+
+${lines}
+
+
+Total: ₹${total}`;
+
+
+  document.getElementById("customerBox")
+    .style.display = "none";
+
+
+  document.getElementById("successBox")
+    .style.display = "block";
+
+}
+
+
+render();
+
+</script>
+
 </body>
 </html>
