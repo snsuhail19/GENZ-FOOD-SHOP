@@ -6,15 +6,15 @@ const foods = [
     id: 1,
     name: "Samosa",
     price: 20,
-    description: "Crispy potato-filled Indian snack",
+    description: "Crispy potato-filled with ketchup",
     image: "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=700&q=80"
   },
   {
     id: 2,
     name: "Vada",
     price: 30,
-    description: "Crispy South Indian snack",
-    image: "https://share.google/rxDi132EKT3glNa8V"
+    description: "Crispy Vada with chatneys",
+    image: "https://unsplash.com/photos/a-white-plate-topped-with-donuts-next-to-a-bowl-of-sauce-jsTnzgTJGUk"
   },
   {
     id: 3,
