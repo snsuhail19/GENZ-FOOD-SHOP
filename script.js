@@ -14,7 +14,7 @@ const foods = [
     name: "Vada",
     price: 30,
     description: "Crispy South Indian snack",
-    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80"
+    image: "https://share.google/rxDi132EKT3glNa8V"
   },
   {
     id: 3,
