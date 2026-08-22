@@ -14,7 +14,7 @@ const foods = [
     name: "Vada",
     price: 30,
     description: "Crispy Vada with chatneys",
-    image: "https://unsplash.com/photos/a-white-plate-topped-with-donuts-next-to-a-bowl-of-sauce-jsTnzgTJGUk"
+    image: "images/vada.jgp"
   },
   {
     id: 3,
