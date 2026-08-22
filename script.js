@@ -42,7 +42,7 @@ const foods = [
     name: "Pani Puri",
     price: 50,
     description: "Popular spicy Indian street snack",
-    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80"
+    image: "panipoori.jpg"
   },
   {
     id: 7,
