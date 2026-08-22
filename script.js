@@ -13,7 +13,7 @@ const foods = [
     id: 2,
     name: "Vada",
     price: 30,
-    description: "Crispy Vada with chatneys.",
+    description: "Crispy Vada with chatneys",
     image: "vada.jpg"
   },
   {
@@ -32,9 +32,9 @@ const foods = [
   },
   {
     id: 5,
-    name: "Bajji",
+    name: "White Rise",
     price: 30,
-    description: "Hot and crispy Indian fritters",
+    description: "White rice with 3 gravys and veggies",
     image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=700&q=80"
   },
   {
