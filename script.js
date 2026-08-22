@@ -14,7 +14,7 @@ const foods = [
     name: "Vada",
     price: 30,
     description: "Crispy Vada with chatney's",
-    image: "https://raw.githubusercontent.com/snsuhail19/GENZ-FOOD-SHOP/main/images/vada.jpg"
+    image: "images/vada.jpg"
   },
   {
     id: 3,
