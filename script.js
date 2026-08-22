@@ -49,7 +49,7 @@ const foods = [
     name: "Pakoda",
     price: 40,
     description: "Crunchy onion pakoda",
-    image: "https://images.unsplash.com/photo-1626776876729-bab436b5e42b?auto=format&fit=crop&w=700&q=80"
+    image: "pakoda.jpg"
   },
   {
     id: 8,
