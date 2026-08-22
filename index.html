@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GENZ FOOD SHOP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <div class="logo">G</div>
+      <div>
+        <h1>GENZ FOOD SHOP</h1>
+        <p>Indian Foods & Snacks</p>
+      </div>
+    </div>
+    <button class="cart-btn" onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="tag">🔥 Fresh & Tasty</span>
+        <h2>Your favourite Indian snacks, <span>just a click away.</span></h2>
+        <p>Choose your food, add it to cart and continue to payment.</p>
+        <a href="#menu" class="hero-btn">Explore Menu</a>
+      </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+      <div class="section-title">
+        <p>OUR MENU</p>
+        <h2>Indian Foods & Snacks</h2>
+      </div>
+      <div id="foodGrid" class="food-grid"></div>
+    </section>
+  </main>
+
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <button class="close" onclick="closeCart()">×</button>
+      <h2>Your Cart</h2>
+      <div id="cartItems"></div>
+      <div class="cart-footer">
+        <strong>Total: ₹<span id="cartTotal">0</span></strong>
+        <button class="checkout-btn" onclick="goToPayment()">Proceed to Payment →</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 GENZ FOOD SHOP • Indian Foods & Snacks</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
