@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Dashboard - GENZ FOOD SHOP</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff8f3;
+      color: #171717;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .header {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.07);
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .owner {
+      color: #777;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .logout {
+      background: #171717;
+      color: white;
+    }
+
+    .refresh {
+      background: #ff5a1f;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .orders {
+      display: grid;
+      gap: 15px;
+    }
+
+    .order {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .order-id {
+      font-weight: 800;
+    }
+
+    .status {
+      background: #fff0e9;
+      color: #ff5a1f;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .customer {
+      background: #fff8f3;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 15px;
+    }
+
+    .customer div {
+      margin: 6px 0;
+      font-size: 14px;
+    }
+
+    .items {
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 20px;
+      font-weight: 900;
+      margin-top: 15px;
+    }
+
+    .loading,
+    .empty,
+    .error {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .error {
+      color: #c00;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+
+      <div>
+        <h1>👑 Owner Dashboard</h1>
+
+        <div class="owner">
+          GENZ FOOD SHOP
+          <br>
+          Owner: snsuhail19@gmail.com
+        </div>
+      </div>
+
+      <button
+        id="logoutBtn"
+        class="logout"
+      >
+        Logout
+      </button>
+
+    </div>
+
+
+    <button
+      id="refreshBtn"
+      class="refresh"
+    >
+      🔄 Refresh Orders
+    </button>
+
+
+    <div
+      id="loading"
+      class="loading"
+    >
+      Checking owner access...
+    </div>
+
+
+    <div
+      id="orders"
+      class="orders"
+    ></div>
+
+  </div>
+
+
+  <script type="module">
+
+    import {
+      initializeApp
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      query,
+      orderBy
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+    /* ==============================
+       FIREBASE CONFIG
+    ============================== */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+      authDomain:
+        "genz-food-shop.firebaseapp.com",
+
+      projectId:
+        "genz-food-shop",
+
+      storageBucket:
+        "genz-food-shop.firebasestorage.app",
+
+      messagingSenderId:
+        "259228392374",
+
+      appId:
+        "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+      measurementId:
+        "G-LT095LEWJ6"
+
+    };
+
+
+    /* ==============================
+       INITIALIZE
+    ============================== */
+
+    const app =
+      initializeApp(firebaseConfig);
+
+    const auth =
+      getAuth(app);
+
+    const db =
+      getFirestore(app);
+
+
+    /* ==============================
+       OWNER EMAIL
+    ============================== */
+
+    const OWNER_EMAIL =
+      "snsuhail19@gmail.com";
+
+
+    /* ==============================
+       ELEMENTS
+    ============================== */
+
+    const loading =
+      document.getElementById("loading");
+
+    const ordersContainer =
+      document.getElementById("orders");
+
+
+    /* ==============================
+       LOAD ORDERS
+    ============================== */
+
+    async function loadOrders() {
+
+      loading.style.display =
+        "block";
+
+      loading.textContent =
+        "Loading orders...";
+
+      ordersContainer.innerHTML =
+        "";
+
+
+      try {
+
+        const ordersRef =
+          collection(
+            db,
+            "orders"
+          );
+
+
+        const ordersQuery =
+          query(
+            ordersRef,
+            orderBy(
+              "createdAt",
+              "desc"
+            )
+          );
+
+
+        const snapshot =
+          await getDocs(
+            ordersQuery
+          );
+
+
+        if (snapshot.empty) {
+
+          loading.style.display =
+            "none";
+
+          ordersContainer.innerHTML =
+            '<div class="empty">No orders yet.</div>';
+
+          return;
+
+        }
+
+
+        loading.style.display =
+          "none";
+
+
+        snapshot.forEach(
+          (docSnapshot) => {
+
+            const order =
+              docSnapshot.data();
+
+            displayOrder(
+              docSnapshot.id,
+              order
+            );
+
+          }
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        loading.style.display =
+          "none";
+
+        ordersContainer.innerHTML =
+          '<div class="error">' +
+          "Could not load orders.<br><br>" +
+          (error.code || error.message) +
+          "</div>";
+
+      }
+
+    }
+
+
+    /* ==============================
+       DISPLAY ORDER
+    ============================== */
+
+    function displayOrder(
+      orderId,
+      order
+    ) {
+
+      const orderElement =
+        document.createElement("div");
+
+      orderElement.className =
+        "order";
+
+
+      let itemsHTML = "";
+
+
+      if (
+        Array.isArray(order.items)
+      ) {
+
+        order.items.forEach(
+          (item) => {
+
+            const name =
+              item.name ||
+              "Food item";
+
+            const quantity =
+              item.quantity ||
+              1;
+
+            const price =
+              Number(
+                item.price || 0
+              );
+
+
+            itemsHTML +=
+
+              '<div class="item">' +
+
+              '<span>' +
+
+              name +
+
+              " × " +
+
+              quantity +
+
+              "</span>" +
+
+              '<strong>₹' +
+
+              (
+                price * quantity
+              ).toFixed(2) +
+
+              "</strong>" +
+
+              "</div>";
+
+          }
+        );
+
+      }
+
+
+      const customerName =
+        order.name ||
+        order.customerName ||
+        "Not available";
+
+
+      const email =
+        order.email ||
+        "Not available";
+
+
+      const mobile =
+        order.mobile ||
+        "Not available";
+
+
+      const address =
+        order.address ||
+        "Not available";
+
+
+      const city =
+        order.city ||
+        "Not available";
+
+
+      const pincode =
+        order.pincode ||
+        "Not available";
+
+
+      const total =
+        Number(
+          order.total || 0
+        );
+
+
+      const status =
+        order.status ||
+        "Pending";
+
+
+      orderElement.innerHTML =
+
+        '<div class="order-header">' +
+
+        '<div class="order-id">' +
+
+        "Order #" +
+
+        orderId +
+
+        "</div>" +
+
+        '<div class="status">' +
+
+        status +
+
+        "</div>" +
+
+        "</div>" +
+
+
+        '<div class="customer">' +
+
+        "<div><strong>Name:</strong> " +
+
+        customerName +
+
+        "</div>" +
+
+        "<div><strong>Email:</strong> " +
+
+        email +
+
+        "</div>" +
+
+        "<div><strong>Mobile:</strong> " +
+
+        mobile +
+
+        "</div>" +
+
+        "<div><strong>Address:</strong> " +
+
+        address +
+
+        "</div>" +
+
+        "<div><strong>City:</strong> " +
+
+        city +
+
+        "</div>" +
+
+        "<div><strong>PIN:</strong> " +
+
+        pincode +
+
+        "</div>" +
+
+        "</div>" +
+
+
+        '<div class="items">' +
+
+        itemsHTML +
+
+        "</div>" +
+
+
+        '<div class="total">' +
+
+        "Total: ₹" +
+
+        total.toFixed(2) +
+
+        "</div>";
+
+
+      ordersContainer.appendChild(
+        orderElement
+      );
+
+    }
+
+
+    /* ==============================
+       AUTHENTICATION
+    ============================== */
+
+    onAuthStateChanged(
+      auth,
+      async (user) => {
+
+        if (!user) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+
+        }
+
+
+        const email =
+          (
+            user.email || ""
+          ).toLowerCase();
+
+
+        if (
+          email !==
+          OWNER_EMAIL.toLowerCase()
+        ) {
+
+          loading.innerHTML =
+            "❌ Access denied.<br><br>" +
+            "This page is only available to the shop owner.";
+
+          return;
+
+        }
+
+
+        await loadOrders();
+
+      }
+    );
+
+
+    /* ==============================
+       REFRESH
+    ============================== */
+
+    document
+      .getElementById("refreshBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          loadOrders();
+
+        }
+      );
+
+
+    /* ==============================
+       LOGOUT
+    ============================== */
+
+    document
+      .getElementById("logoutBtn")
+      .addEventListener(
+        "click",
+        async () => {
+
+          try {
+
+            await signOut(auth);
+
+            window.location.href =
+              "login.html";
+
+          }
+
+          catch (error) {
+
+            alert(
+              "Logout failed: " +
+              (
+                error.code ||
+                error.message
+              )
+            );
+
+          }
+
+        }
+      );
+
+  </script>
+
+</body>
+</html>
