@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Checkout - GENZ FOOD SHOP</title>
-  <link rel="stylesheet" href="style.css">
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
   <style>
+
     body {
       min-height: 100vh;
       background: #f7f7f7;
@@ -136,6 +148,11 @@
       margin-top: 16px;
     }
 
+    .pay:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .empty {
       text-align: center;
       padding: 30px;
@@ -151,6 +168,15 @@
       color: #16803a;
     }
 
+    .order-id {
+      background: #fff3ec;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-weight: 800;
+      word-break: break-all;
+    }
+
     .order-text {
       background: #f6f6f6;
       border-radius: 12px;
@@ -160,7 +186,24 @@
       font-size: 14px;
     }
 
+    .message {
+      display: none;
+      background: #fff3ec;
+      color: #8b3c17;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+    }
+
     @media(max-width:600px) {
+
       .item {
         align-items: flex-start;
       }
@@ -173,21 +216,35 @@
       .qty {
         flex-wrap: wrap;
       }
+
     }
+
   </style>
+
 </head>
 
+
 <body>
+
 
 <header class="header">
 
   <div class="brand">
 
-    <div class="logo">G</div>
+    <div class="logo">
+      G
+    </div>
 
     <div>
-      <h1>GENZ FOOD SHOP</h1>
-      <p>Checkout</p>
+
+      <h1>
+        GENZ FOOD SHOP
+      </h1>
+
+      <p>
+        Checkout
+      </p>
+
     </div>
 
   </div>
@@ -195,44 +252,108 @@
 </header>
 
 
+
 <main class="checkout">
 
-  <a class="back" href="index.html">
+
+  <a
+    class="back"
+    href="index.html"
+  >
     ← Back to Menu
   </a>
 
 
+  <!-- MESSAGE -->
+
+  <div
+    id="message"
+    class="message"
+  ></div>
+
+
+  <!-- LOADING -->
+
+  <div
+    id="loading"
+    class="box loading"
+  >
+
+    Checking your account...
+
+  </div>
+
+
+
   <!-- ORDER -->
 
-  <div class="box">
+  <div
+    class="box"
+    id="orderBox"
+    style="display:none;"
+  >
 
-    <h2>Your Order</h2>
+    <h2>
+      Your Order
+    </h2>
 
     <div id="items"></div>
 
-    <div class="summary-row">
-      <span>Subtotal</span>
-      <strong>₹<span id="subtotal">0</span></strong>
-    </div>
 
     <div class="summary-row">
-      <span>Delivery</span>
-      <strong>₹<span id="delivery">0</span></strong>
+
+      <span>
+        Subtotal
+      </span>
+
+      <strong>
+        ₹<span id="subtotal">0</span>
+      </strong>
+
     </div>
+
+
+    <div class="summary-row">
+
+      <span>
+        Delivery
+      </span>
+
+      <strong>
+        ₹<span id="delivery">0</span>
+      </strong>
+
+    </div>
+
 
     <div class="summary-row total">
-      <span>Total</span>
-      <strong>₹<span id="total">0</span></strong>
+
+      <span>
+        Total
+      </span>
+
+      <strong>
+        ₹<span id="total">0</span>
+      </strong>
+
     </div>
 
   </div>
 
 
+
   <!-- CUSTOMER DETAILS -->
 
-  <div class="box" id="customerBox">
+  <div
+    class="box"
+    id="customerBox"
+    style="display:none;"
+  >
 
-    <h2>Customer Details</h2>
+    <h2>
+      Customer Details
+    </h2>
+
 
     <div class="field">
 
@@ -249,6 +370,7 @@
     </div>
 
 
+
     <div class="field">
 
       <label for="phone">
@@ -258,10 +380,13 @@
       <input
         id="phone"
         type="tel"
-        placeholder="Enter your phone number"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="9876543210"
       >
 
     </div>
+
 
 
     <div class="field">
@@ -278,30 +403,51 @@
     </div>
 
 
-    <button class="pay" onclick="placeOrder()">
-      Continue to Payment
+
+    <button
+      id="placeOrderBtn"
+      class="pay"
+      onclick="placeOrder()"
+    >
+
+      Place Order
+
     </button>
 
   </div>
 
 
+
   <!-- SUCCESS -->
 
-  <div class="box success" id="successBox">
+  <div
+    class="box success"
+    id="successBox"
+  >
 
     <h2>
-      Order Ready ✅
+      Order Placed Successfully! ✅
     </h2>
 
     <p>
-      Your order details are prepared below.
+      Your order has been sent to GENZ FOOD SHOP.
     </p>
 
+
+    <div
+      class="order-id"
+      id="orderId"
+    ></div>
+
+
+    <div
+      class="order-text"
+      id="orderText"
+    ></div>
+
+
     <br>
 
-    <div class="order-text" id="orderText"></div>
-
-    <br>
 
     <p>
       <strong>
@@ -309,220 +455,722 @@
       </strong>
     </p>
 
+
     <p>
-      Next we can add UPI / Razorpay payment.
+      Your order has been saved successfully.
     </p>
+
 
     <br>
 
-    <a class="back" href="index.html">
+
+    <a
+      class="back"
+      href="index.html"
+    >
       ← Back to Menu
     </a>
 
   </div>
 
+
 </main>
 
 
-<script>
 
-let cart =
-  JSON.parse(localStorage.getItem("genzCart")) || [];
+<!-- =====================================
+     FIREBASE
+===================================== -->
 
-
-function saveCart() {
-
-  localStorage.setItem(
-    "genzCart",
-    JSON.stringify(cart)
-  );
-
-  render();
-
-}
+<script type="module">
 
 
-function changeQuantity(id, amount) {
-
-  const item =
-    cart.find(i => i.id === id);
-
-  if (!item) return;
-
-  item.quantity += amount;
+  import {
+    initializeApp
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 
-  if (item.quantity <= 0) {
+  import {
+    getAuth,
+    onAuthStateChanged
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    cart =
-      cart.filter(i => i.id !== id);
+
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    addDoc,
+    collection,
+    serverTimestamp
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+
+  /* =====================================
+     FIREBASE CONFIG
+  ===================================== */
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+    authDomain:
+      "genz-food-shop.firebaseapp.com",
+
+    projectId:
+      "genz-food-shop",
+
+    storageBucket:
+      "genz-food-shop.firebasestorage.app",
+
+    messagingSenderId:
+      "259228392374",
+
+    appId:
+      "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+    measurementId:
+      "G-LT095LEWJ6"
+
+  };
+
+
+
+  /* =====================================
+     INITIALIZE FIREBASE
+  ===================================== */
+
+  const app =
+    initializeApp(firebaseConfig);
+
+
+  const auth =
+    getAuth(app);
+
+
+  const db =
+    getFirestore(app);
+
+
+
+  /* =====================================
+     CART
+  ===================================== */
+
+  let cart =
+    JSON.parse(
+      localStorage.getItem("genzCart")
+    ) || [];
+
+
+
+  /* =====================================
+     CURRENT USER
+  ===================================== */
+
+  let currentUser = null;
+
+
+
+  /* =====================================
+     ELEMENTS
+  ===================================== */
+
+  const loading =
+    document.getElementById("loading");
+
+
+  const orderBox =
+    document.getElementById("orderBox");
+
+
+  const customerBox =
+    document.getElementById("customerBox");
+
+
+  const successBox =
+    document.getElementById("successBox");
+
+
+  const message =
+    document.getElementById("message");
+
+
+
+  /* =====================================
+     MESSAGE
+  ===================================== */
+
+  function showMessage(text) {
+
+    message.textContent =
+      text;
+
+    message.style.display =
+      "block";
 
   }
 
 
-  saveCart();
 
-}
+  function hideMessage() {
 
-
-function render() {
-
-  const box =
-    document.getElementById("items");
-
-
-  if (cart.length === 0) {
-
-    box.innerHTML = `
-      <div class="empty">
-
-        Your cart is empty.
-
-        <br><br>
-
-        <a class="back" href="index.html">
-          Go to Menu
-        </a>
-
-      </div>
-    `;
-
-    document.getElementById("subtotal").textContent = "0";
-
-    document.getElementById("total").textContent = "0";
-
-    return;
+    message.style.display =
+      "none";
 
   }
 
 
-  box.innerHTML = cart.map(item => `
 
-    <div class="item">
+  /* =====================================
+     LOAD SAVED PROFILE
+  ===================================== */
 
-      <img
-        src="${item.image}"
-        alt="${item.name}"
-      >
+  async function loadProfile(user) {
 
+    try {
 
-      <div class="info">
-
-        <h3>
-          ${item.name}
-        </h3>
-
-        <p>
-          ₹${item.price} each
-        </p>
-
-      </div>
+      const profileRef =
+        doc(
+          db,
+          "users",
+          user.uid
+        );
 
 
-      <div class="qty">
-
-        <button
-          onclick="changeQuantity(${item.id}, -1)"
-        >
-          −
-        </button>
-
-        <strong>
-          ${item.quantity}
-        </strong>
-
-        <button
-          onclick="changeQuantity(${item.id}, 1)"
-        >
-          +
-        </button>
-
-      </div>
+      const profileSnapshot =
+        await getDoc(
+          profileRef
+        );
 
 
-      <strong>
-        ₹${item.price * item.quantity}
-      </strong>
+      if (
+        profileSnapshot.exists()
+      ) {
 
-    </div>
+        const profile =
+          profileSnapshot.data();
 
-  `).join("");
+
+        document.getElementById(
+          "name"
+        ).value =
+          profile.name || user.displayName || "";
 
 
-  const subtotal =
-    cart.reduce(
-      (sum, item) =>
-        sum + item.price * item.quantity,
-      0
+        document.getElementById(
+          "phone"
+        ).value =
+          (profile.mobile || "")
+            .replace("+91", "");
+
+
+        document.getElementById(
+          "address"
+        ).value =
+          profile.address || "";
+
+      }
+
+      else {
+
+        document.getElementById(
+          "name"
+        ).value =
+          user.displayName || "";
+
+      }
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "Profile loading error:",
+        error
+      );
+
+      /*
+        Profile loading is not required
+        to place an order, so we continue.
+      */
+
+      document.getElementById(
+        "name"
+      ).value =
+        user.displayName || "";
+
+    }
+
+  }
+
+
+
+  /* =====================================
+     SAVE CART
+  ===================================== */
+
+  function saveCart() {
+
+    localStorage.setItem(
+      "genzCart",
+      JSON.stringify(cart)
     );
 
-
-  document.getElementById("subtotal").textContent =
-    subtotal;
-
-
-  document.getElementById("total").textContent =
-    subtotal;
-
-}
-
-
-function placeOrder() {
-
-  if (cart.length === 0) {
-
-    alert("Your cart is empty.");
-
-    return;
+    render();
 
   }
 
 
-  const name =
-    document.getElementById("name")
-      .value.trim();
+
+  /* =====================================
+     CHANGE QUANTITY
+  ===================================== */
+
+  function changeQuantity(
+    id,
+    amount
+  ) {
+
+    const item =
+      cart.find(
+        i => i.id === id
+      );
 
 
-  const phone =
-    document.getElementById("phone")
-      .value.trim();
+    if (!item) return;
 
 
-  const address =
-    document.getElementById("address")
-      .value.trim();
+    item.quantity += amount;
 
 
-  if (!name || !phone || !address) {
+    if (
+      item.quantity <= 0
+    ) {
 
-    alert(
-      "Please fill in your name, phone number and delivery address."
-    );
+      cart =
+        cart.filter(
+          i => i.id !== id
+        );
 
-    return;
+    }
+
+
+    saveCart();
 
   }
 
 
-  const total =
-    cart.reduce(
-      (sum, item) =>
-        sum + item.price * item.quantity,
-      0
-    );
+
+  /* =====================================
+     RENDER CART
+  ===================================== */
+
+  function render() {
+
+    const box =
+      document.getElementById(
+        "items"
+      );
 
 
-  const lines =
-    cart.map(item =>
-      `${item.name} × ${item.quantity} = ₹${item.price * item.quantity}`
-    ).join("\n");
+    if (
+      cart.length === 0
+    ) {
+
+      box.innerHTML = `
+
+        <div class="empty">
+
+          Your cart is empty.
+
+          <br><br>
+
+          <a
+            class="back"
+            href="index.html"
+          >
+            Go to Menu
+          </a>
+
+        </div>
+
+      `;
 
 
-  document.getElementById("orderText").textContent =
+      document.getElementById(
+        "subtotal"
+      ).textContent =
+        "0";
+
+
+      document.getElementById(
+        "total"
+      ).textContent =
+        "0";
+
+
+      return;
+
+    }
+
+
+
+    box.innerHTML =
+      cart.map(
+        item => `
+
+        <div class="item">
+
+          <img
+            src="${item.image}"
+            alt="${item.name}"
+          >
+
+
+          <div class="info">
+
+            <h3>
+              ${item.name}
+            </h3>
+
+            <p>
+              ₹${item.price} each
+            </p>
+
+          </div>
+
+
+          <div class="qty">
+
+            <button
+              onclick="changeQuantity(${item.id}, -1)"
+            >
+              −
+            </button>
+
+
+            <strong>
+              ${item.quantity}
+            </strong>
+
+
+            <button
+              onclick="changeQuantity(${item.id}, 1)"
+            >
+              +
+            </button>
+
+          </div>
+
+
+          <strong>
+            ₹${item.price * item.quantity}
+          </strong>
+
+        </div>
+
+      `
+      ).join("");
+
+
+
+    const subtotal =
+      cart.reduce(
+        (sum, item) =>
+          sum +
+          item.price *
+          item.quantity,
+        0
+      );
+
+
+    document.getElementById(
+      "subtotal"
+    ).textContent =
+      subtotal;
+
+
+    document.getElementById(
+      "delivery"
+    ).textContent =
+      "0";
+
+
+    document.getElementById(
+      "total"
+    ).textContent =
+      subtotal;
+
+  }
+
+
+
+  /* =====================================
+     PLACE ORDER
+  ===================================== */
+
+  window.placeOrder =
+    async function () {
+
+
+      hideMessage();
+
+
+      if (!currentUser) {
+
+        showMessage(
+          "You are not logged in. Please login first."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        cart.length === 0
+      ) {
+
+        showMessage(
+          "Your cart is empty."
+        );
+
+        return;
+
+      }
+
+
+
+      /* GET CUSTOMER DETAILS */
+
+      const name =
+        document.getElementById(
+          "name"
+        ).value.trim();
+
+
+      let phone =
+        document.getElementById(
+          "phone"
+        ).value.trim();
+
+
+      const address =
+        document.getElementById(
+          "address"
+        ).value.trim();
+
+
+
+      /* VALIDATION */
+
+      if (
+        !name ||
+        !phone ||
+        !address
+      ) {
+
+        showMessage(
+          "Please fill in your name, phone number and delivery address."
+        );
+
+        return;
+
+      }
+
+
+      phone =
+        phone.replace(
+          /\D/g,
+          ""
+        );
+
+
+      if (
+        !/^[6-9]\d{9}$/.test(
+          phone
+        )
+      ) {
+
+        showMessage(
+          "Please enter a valid 10-digit Indian mobile number."
+        );
+
+        return;
+
+      }
+
+
+
+      /* TOTAL */
+
+      const total =
+        cart.reduce(
+          (sum, item) =>
+            sum +
+            item.price *
+            item.quantity,
+          0
+        );
+
+
+
+      /* ORDER ITEMS */
+
+      const orderItems =
+        cart.map(
+          item => ({
+
+            id:
+              item.id,
+
+            name:
+              item.name,
+
+            price:
+              item.price,
+
+            quantity:
+              item.quantity,
+
+            image:
+              item.image,
+
+            itemTotal:
+              item.price *
+              item.quantity
+
+          })
+        );
+
+
+
+      /* DISABLE BUTTON */
+
+      const button =
+        document.getElementById(
+          "placeOrderBtn"
+        );
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "Placing Order...";
+
+
+
+      try {
+
+
+        /* =================================
+           SAVE ORDER TO FIRESTORE
+        ================================= */
+
+        const orderData = {
+
+          userId:
+            currentUser.uid,
+
+          customerName:
+            name,
+
+          customerEmail:
+            currentUser.email || "",
+
+          phone:
+            "+91" + phone,
+
+          address:
+            address,
+
+          items:
+            orderItems,
+
+          subtotal:
+            total,
+
+          delivery:
+            0,
+
+          total:
+            total,
+
+          status:
+            "Pending",
+
+          paymentStatus:
+            "Not Paid",
+
+          createdAt:
+            serverTimestamp()
+
+        };
+
+
+
+        const orderRef =
+          await addDoc(
+            collection(
+              db,
+              "orders"
+            ),
+            orderData
+          );
+
+
+
+        /* =================================
+           CLEAR CART
+        ================================= */
+
+        cart = [];
+
+
+        localStorage.removeItem(
+          "genzCart"
+        );
+
+
+
+        /* =================================
+           SHOW SUCCESS
+        ================================= */
+
+        document.getElementById(
+          "orderId"
+        ).textContent =
+          "Order ID: " +
+          orderRef.id;
+
+
+        const lines =
+          orderItems.map(
+            item =>
+              `${item.name} × ${item.quantity} = ₹${item.itemTotal}`
+          ).join("\n");
+
+
+        document.getElementById(
+          "orderText"
+        ).textContent =
 
 `Customer: ${name}
 
-Phone: ${phone}
+Email: ${currentUser.email || "-"}
+
+Phone: +91${phone}
 
 Address: ${address}
 
@@ -530,22 +1178,117 @@ Address: ${address}
 ${lines}
 
 
-Total: ₹${total}`;
+Total: ₹${total}
+
+Status: Pending`;
 
 
-  document.getElementById("customerBox")
-    .style.display = "none";
+
+        customerBox.style.display =
+          "none";
 
 
-  document.getElementById("successBox")
-    .style.display = "block";
-
-}
+        orderBox.style.display =
+          "none";
 
 
-render();
+        successBox.style.display =
+          "block";
+
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "ORDER ERROR:",
+          error
+        );
+
+
+        showMessage(
+          "Could not place order: " +
+          (
+            error.code ||
+            error.message
+          )
+        );
+
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          "Place Order";
+
+      }
+
+    };
+
+
+
+  /* =====================================
+     LOGIN CHECK
+  ===================================== */
+
+  onAuthStateChanged(
+    auth,
+    async (user) => {
+
+
+      if (!user) {
+
+        window.location.replace(
+          "login.html"
+        );
+
+        return;
+
+      }
+
+
+      currentUser =
+        user;
+
+
+      loading.style.display =
+        "none";
+
+
+      if (
+        cart.length === 0
+      ) {
+
+        orderBox.style.display =
+          "block";
+
+        customerBox.style.display =
+          "none";
+
+      }
+
+      else {
+
+        orderBox.style.display =
+          "block";
+
+        customerBox.style.display =
+          "block";
+
+        await loadProfile(user);
+
+      }
+
+
+      render();
+
+    }
+  );
 
 </script>
 
+
 </body>
+
 </html>
