@@ -1,22 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>GENZ FOOD SHOP</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
-  <!-- Hide website until Firebase checks login -->
   <style>
+
+    /* Hide the shop until Firebase checks login */
+
     body {
       display: none;
     }
+
+    /* Header buttons */
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-btn {
+      display: inline-block;
+
+      padding: 11px 16px;
+
+      background: #ff5a1f;
+
+      color: white;
+
+      text-decoration: none;
+
+      border-radius: 12px;
+
+      font-weight: 700;
+    }
+
+    .profile-btn:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 600px) {
+
+      .header-right {
+        gap: 6px;
+      }
+
+      .profile-btn {
+        padding: 9px 10px;
+        font-size: 13px;
+      }
+
+    }
+
   </style>
+
 </head>
 
+
 <body>
+
 
   <!-- =========================
        HEADER
@@ -36,14 +92,6 @@
           GENZ FOOD SHOP
         </h1>
 
-        <a
-          href="login.html"
-          class="login-btn"
-          id="loginButton"
-        >
-          👤 Login
-        </a>
-
         <p>
           Indian Foods & Snacks
         </p>
@@ -53,15 +101,37 @@
     </div>
 
 
-    <button
-      class="cart-btn"
-      onclick="openCart()"
-    >
-      🛒 Cart
-      <span id="cartCount">0</span>
-    </button>
+    <div class="header-right">
+
+      <!-- PROFILE -->
+
+      <a
+        href="profile.html"
+        class="profile-btn"
+      >
+        👤 Profile
+      </a>
+
+
+      <!-- CART -->
+
+      <button
+        class="cart-btn"
+        onclick="openCart()"
+      >
+
+        🛒 Cart
+
+        <span id="cartCount">
+          0
+        </span>
+
+      </button>
+
+    </div>
 
   </header>
+
 
 
   <!-- =========================
@@ -69,6 +139,9 @@
   ========================== -->
 
   <main>
+
+
+    <!-- HERO -->
 
     <section class="hero">
 
@@ -84,8 +157,10 @@
         </h2>
 
         <p>
-          Choose your food, add it to cart and continue to payment.
-          THE WEBSITE IS NOT COMPLETED, IT IS IN UNDER DEVELOPING,
+          Choose your food, add it to cart and
+          continue to payment.
+          THE WEBSITE IS NOT COMPLETED,
+          IT IS UNDER DEVELOPMENT,
           BE PATIENT.
         </p>
 
@@ -99,6 +174,7 @@
       </div>
 
     </section>
+
 
 
     <!-- =========================
@@ -131,6 +207,7 @@
     </section>
 
   </main>
+
 
 
   <!-- =========================
@@ -180,6 +257,7 @@
   </div>
 
 
+
   <!-- =========================
        FOOTER
   ========================== -->
@@ -193,9 +271,11 @@
   </footer>
 
 
+
   <!-- YOUR EXISTING SCRIPT -->
 
   <script src="script.js"></script>
+
 
 
   <!-- =========================
@@ -207,14 +287,16 @@
     import {
       initializeApp
     }
-    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 
     import {
       getAuth,
       onAuthStateChanged
     }
-    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
     /* =========================
@@ -260,7 +342,7 @@
 
 
     /* =========================
-       CHECK USER LOGIN
+       CHECK LOGIN
     ========================== */
 
     onAuthStateChanged(
@@ -270,43 +352,22 @@
         if (user) {
 
           /*
-            USER IS ALREADY LOGGED IN.
+            Already logged in.
 
-            Show the website.
+            Show the food shop.
           */
 
           document.body.style.display =
             "block";
-
-
-          /*
-            Change Login button to Profile.
-          */
-
-          const loginButton =
-            document.getElementById(
-              "loginButton"
-            );
-
-
-          if (loginButton) {
-
-            loginButton.textContent =
-              "👤 Profile";
-
-            loginButton.href =
-              "login.html";
-
-          }
 
         }
 
         else {
 
           /*
-            USER IS NOT LOGGED IN.
+            Not logged in.
 
-            Send them to login page.
+            Send user to login page.
           */
 
           window.location.replace(
@@ -320,5 +381,7 @@
 
   </script>
 
+
 </body>
+
 </html>
