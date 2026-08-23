@@ -38,12 +38,9 @@
       display: grid;
       place-items: center;
       margin: 0 auto 18px;
-
       background: #ff5a1f;
       color: white;
-
       border-radius: 18px;
-
       font-size: 32px;
       font-weight: 900;
     }
@@ -122,6 +119,12 @@
       color: #222;
     }
 
+    .location-btn {
+      background: #16803a;
+      color: white;
+      margin-top: 8px;
+    }
+
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
@@ -147,6 +150,16 @@
       color: #777;
       font-size: 14px;
       word-break: break-word;
+    }
+
+    .location-info {
+      background: #eef9f1;
+      color: #176b31;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .message {
@@ -188,9 +201,7 @@
     </p>
 
 
-    <!-- =====================================
-         STEP 1 - GOOGLE LOGIN
-    ====================================== -->
+    <!-- STEP 1 -->
 
     <div id="step1">
 
@@ -214,14 +225,9 @@
     </div>
 
 
-    <!-- =====================================
-         STEP 2 - USER DETAILS
-    ====================================== -->
+    <!-- STEP 2 -->
 
-    <div
-      id="step2"
-      class="hidden"
-    >
+    <div id="step2" class="hidden">
 
       <div class="step">
         STEP 2
@@ -231,13 +237,9 @@
 
       <div class="user-info">
 
-        <strong id="googleName">
-          -
-        </strong>
+        <strong id="googleName">-</strong>
 
-        <span id="googleEmail">
-          -
-        </span>
+        <span id="googleEmail">-</span>
 
       </div>
 
@@ -255,13 +257,35 @@
       >
 
 
+      <!-- LOCATION -->
+
+      <label>
+        Delivery Location
+      </label>
+
+      <button
+        type="button"
+        id="locationBtn"
+        class="location-btn"
+      >
+        📍 Get My Location
+      </button>
+
+      <div
+        id="locationInfo"
+        class="location-info hidden"
+      ></div>
+
+
+      <!-- ADDRESS -->
+
       <label for="address">
         Address
       </label>
 
       <textarea
         id="address"
-        placeholder="House number, street, area..."
+        placeholder="Your location address will appear here"
       ></textarea>
 
 
@@ -307,672 +331,890 @@
     </div>
 
 
-    <!-- MESSAGE -->
+    <div id="message" class="message hidden"></div>
 
-    <div
-      id="message"
-      class="message hidden"
-    ></div>
-
-    <div
-      id="success"
-      class="success hidden"
-    >
+    <div id="success" class="success hidden">
       Login successful. Opening shop...
     </div>
 
   </div>
 
 
-  <!-- =====================================
-       FIREBASE
-  ====================================== -->
+<script type="module">
 
-  <script type="module">
-
-    import {
-      initializeApp
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 
-    import {
-      getAuth,
-      GoogleAuthProvider,
-      signInWithPopup,
-      onAuthStateChanged,
-      signOut
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-    import {
-      getFirestore,
-      doc,
-      getDoc,
-      setDoc
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-    /* =====================================
-       FIREBASE CONFIG
-    ====================================== */
+/* FIREBASE CONFIG */
 
-    const firebaseConfig = {
+const firebaseConfig = {
 
-      apiKey:
-        "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+  apiKey:
+    "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
 
-      authDomain:
-        "genz-food-shop.firebaseapp.com",
+  authDomain:
+    "genz-food-shop.firebaseapp.com",
 
-      projectId:
-        "genz-food-shop",
+  projectId:
+    "genz-food-shop",
 
-      storageBucket:
-        "genz-food-shop.firebasestorage.app",
+  storageBucket:
+    "genz-food-shop.firebasestorage.app",
 
-      messagingSenderId:
-        "259228392374",
+  messagingSenderId:
+    "259228392374",
 
-      appId:
-        "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+  appId:
+    "1:259228392374:web:6af3a0d3c93597a5b5bf17",
 
-      measurementId:
-        "G-LT095LEWJ6"
+  measurementId:
+    "G-LT095LEWJ6"
 
-    };
+};
 
 
-    /* =====================================
-       INITIALIZE
-    ====================================== */
+/* INITIALIZE */
 
-    const app =
-      initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-    const auth =
-      getAuth(app);
+const auth =
+  getAuth(app);
 
-    const db =
-      getFirestore(app);
+const db =
+  getFirestore(app);
 
-    const provider =
-      new GoogleAuthProvider();
+const provider =
+  new GoogleAuthProvider();
 
 
-    /* =====================================
-       ELEMENTS
-    ====================================== */
+/* ELEMENTS */
 
-    const step1 =
-      document.getElementById("step1");
+const step1 =
+  document.getElementById("step1");
 
-    const step2 =
-      document.getElementById("step2");
+const step2 =
+  document.getElementById("step2");
 
-    const googleBtn =
-      document.getElementById("googleBtn");
+const googleBtn =
+  document.getElementById("googleBtn");
 
-    const continueBtn =
-      document.getElementById("continueBtn");
+const continueBtn =
+  document.getElementById("continueBtn");
 
-    const logoutBtn =
-      document.getElementById("logoutBtn");
+const logoutBtn =
+  document.getElementById("logoutBtn");
 
-    const message =
-      document.getElementById("message");
+const locationBtn =
+  document.getElementById("locationBtn");
 
-    const success =
-      document.getElementById("success");
+const locationInfo =
+  document.getElementById("locationInfo");
+
+const message =
+  document.getElementById("message");
+
+const success =
+  document.getElementById("success");
 
 
-    let currentUser = null;
+let currentUser = null;
+
+let currentLatitude = null;
+let currentLongitude = null;
 
 
-    /* =====================================
-       MESSAGE
-    ====================================== */
+/* MESSAGE */
 
-    function showMessage(text) {
+function showMessage(text) {
 
-      message.textContent =
-        text;
+  message.textContent =
+    text;
 
-      message.classList.remove(
-        "hidden"
+  message.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+function hideMessage() {
+
+  message.classList.add(
+    "hidden"
+  );
+
+}
+
+
+/* =====================================
+   GET LOCATION
+===================================== */
+
+locationBtn.addEventListener(
+  "click",
+  () => {
+
+    hideMessage();
+
+    if (!navigator.geolocation) {
+
+      showMessage(
+        "Location is not supported by this browser."
       );
+
+      return;
 
     }
 
 
-    function hideMessage() {
+    locationBtn.disabled = true;
 
-      message.classList.add(
-        "hidden"
-      );
-
-    }
+    locationBtn.textContent =
+      "📍 Getting your location...";
 
 
-    /* =====================================
-       LOAD EXISTING PROFILE
-    ====================================== */
+    navigator.geolocation.getCurrentPosition(
 
-    async function loadExistingProfile(user) {
+      async (position) => {
 
-      try {
+        currentLatitude =
+          position.coords.latitude;
 
-        const profileRef =
-          doc(
-            db,
-            "users",
-            user.uid
-          );
-
-        const snapshot =
-          await getDoc(
-            profileRef
-          );
+        currentLongitude =
+          position.coords.longitude;
 
 
-        if (snapshot.exists()) {
+        locationInfo.textContent =
+          "✅ Location detected successfully.";
 
-          const profile =
-            snapshot.data();
+        locationInfo.classList.remove(
+          "hidden"
+        );
 
 
-          document.getElementById(
-            "mobile"
-          ).value =
-            (profile.mobile || "")
-              .replace("+91", "");
+        try {
+
+          /*
+            Reverse geocoding.
+            Converts GPS coordinates
+            into readable address.
+          */
+
+          const url =
+            "https://nominatim.openstreetmap.org/reverse" +
+            "?format=jsonv2" +
+            "&lat=" +
+            encodeURIComponent(currentLatitude) +
+            "&lon=" +
+            encodeURIComponent(currentLongitude) +
+            "&addressdetails=1";
+
+
+          const response =
+            await fetch(url, {
+              headers: {
+                "Accept": "application/json"
+              }
+            });
+
+
+          if (!response.ok) {
+            throw new Error(
+              "Unable to find address."
+            );
+          }
+
+
+          const data =
+            await response.json();
+
+
+          const addressData =
+            data.address || {};
+
+
+          const displayAddress =
+            data.display_name || "";
 
 
           document.getElementById(
             "address"
           ).value =
-            profile.address || "";
+            displayAddress;
+
+
+          const city =
+            addressData.city ||
+            addressData.town ||
+            addressData.village ||
+            addressData.municipality ||
+            "";
 
 
           document.getElementById(
             "city"
           ).value =
-            profile.city || "";
+            city;
+
+
+          const pincode =
+            addressData.postcode || "";
 
 
           document.getElementById(
             "pincode"
           ).value =
-            profile.pincode || "";
+            pincode;
+
+
+          locationInfo.textContent =
+            "✅ Location detected and address filled automatically.";
+
 
         }
 
-      }
+        catch (error) {
 
-      catch (error) {
+          console.error(
+            "REVERSE LOCATION ERROR:",
+            error
+          );
+
+
+          locationInfo.textContent =
+            "✅ GPS location detected. Please enter address details manually.";
+
+        }
+
+
+        locationBtn.disabled =
+          false;
+
+        locationBtn.textContent =
+          "📍 Update My Location";
+
+      },
+
+
+      (error) => {
 
         console.error(
-          "PROFILE LOAD ERROR:",
+          "LOCATION ERROR:",
           error
         );
 
+
+        let text =
+          "Unable to get your location.";
+
+
+        if (
+          error.code ===
+          error.PERMISSION_DENIED
+        ) {
+
+          text =
+            "Location permission was denied. Please allow location permission in browser settings.";
+
+        }
+
+
+        if (
+          error.code ===
+          error.POSITION_UNAVAILABLE
+        ) {
+
+          text =
+            "Your location is currently unavailable. Please try again.";
+
+        }
+
+
+        if (
+          error.code ===
+          error.TIMEOUT
+        ) {
+
+          text =
+            "Location request timed out. Please try again.";
+
+        }
+
+
+        showMessage(text);
+
+
+        locationBtn.disabled =
+          false;
+
+        locationBtn.textContent =
+          "📍 Get My Location";
+
+      },
+
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
+      }
+
+    );
+
+  }
+);
+
+
+/* =====================================
+   LOAD EXISTING PROFILE
+===================================== */
+
+async function loadExistingProfile(user) {
+
+  try {
+
+    const profileRef =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
+
+
+    const snapshot =
+      await getDoc(
+        profileRef
+      );
+
+
+    if (snapshot.exists()) {
+
+      const profile =
+        snapshot.data();
+
+
+      document.getElementById(
+        "mobile"
+      ).value =
+        (profile.mobile || "")
+          .replace("+91", "");
+
+
+      document.getElementById(
+        "address"
+      ).value =
+        profile.address || "";
+
+
+      document.getElementById(
+        "city"
+      ).value =
+        profile.city || "";
+
+
+      document.getElementById(
+        "pincode"
+      ).value =
+        profile.pincode || "";
+
+
+      if (
+        profile.latitude &&
+        profile.longitude
+      ) {
+
+        currentLatitude =
+          profile.latitude;
+
+        currentLongitude =
+          profile.longitude;
+
+
+        locationInfo.textContent =
+          "✅ Saved delivery location is available.";
+
+        locationInfo.classList.remove(
+          "hidden"
+        );
+
+        locationBtn.textContent =
+          "📍 Update My Location";
+
       }
 
     }
 
+  }
 
-    /* =====================================
-       GOOGLE LOGIN
-    ====================================== */
+  catch (error) {
 
-    googleBtn.addEventListener(
-      "click",
-      async () => {
-
-        hideMessage();
-
-        googleBtn.disabled = true;
-
-        googleBtn.textContent =
-          "Opening Google...";
-
-
-        try {
-
-          const result =
-            await signInWithPopup(
-              auth,
-              provider
-            );
-
-
-          currentUser =
-            result.user;
-
-
-          document.getElementById(
-            "googleName"
-          ).textContent =
-            currentUser.displayName ||
-            "Google User";
-
-
-          document.getElementById(
-            "googleEmail"
-          ).textContent =
-            currentUser.email ||
-            "";
-
-
-          await loadExistingProfile(
-            currentUser
-          );
-
-
-          step1.classList.add(
-            "hidden"
-          );
-
-          step2.classList.remove(
-            "hidden"
-          );
-
-
-        }
-
-        catch (error) {
-
-          console.error(
-            "GOOGLE LOGIN ERROR:",
-            error
-          );
-
-
-          showMessage(
-            "Google login failed: " +
-            (
-              error.code ||
-              error.message
-            )
-          );
-
-
-          googleBtn.disabled =
-            false;
-
-          googleBtn.textContent =
-            "Continue with Google";
-
-        }
-
-      }
+    console.error(
+      "PROFILE LOAD ERROR:",
+      error
     );
 
+  }
 
-    /* =====================================
-       SAVE USER INFORMATION
-    ====================================== */
-
-    continueBtn.addEventListener(
-      "click",
-      async () => {
-
-        hideMessage();
+}
 
 
-        if (!currentUser) {
+/* =====================================
+   GOOGLE LOGIN
+===================================== */
 
-          showMessage(
-            "Please login with Google first."
-          );
+googleBtn.addEventListener(
+  "click",
+  async () => {
 
-          return;
+    hideMessage();
 
+    googleBtn.disabled =
+      true;
+
+    googleBtn.textContent =
+      "Opening Google...";
+
+
+    try {
+
+      const result =
+        await signInWithPopup(
+          auth,
+          provider
+        );
+
+
+      currentUser =
+        result.user;
+
+
+      document.getElementById(
+        "googleName"
+      ).textContent =
+        currentUser.displayName ||
+        "Google User";
+
+
+      document.getElementById(
+        "googleEmail"
+      ).textContent =
+        currentUser.email ||
+        "";
+
+
+      await loadExistingProfile(
+        currentUser
+      );
+
+
+      step1.classList.add(
+        "hidden"
+      );
+
+      step2.classList.remove(
+        "hidden"
+      );
+
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "GOOGLE LOGIN ERROR:",
+        error
+      );
+
+
+      showMessage(
+        "Google login failed: " +
+        (
+          error.code ||
+          error.message
+        )
+      );
+
+
+      googleBtn.disabled =
+        false;
+
+      googleBtn.textContent =
+        "Continue with Google";
+
+    }
+
+  }
+);
+
+
+/* =====================================
+   SAVE USER INFORMATION
+===================================== */
+
+continueBtn.addEventListener(
+  "click",
+  async () => {
+
+    hideMessage();
+
+
+    if (!currentUser) {
+
+      showMessage(
+        "Please login with Google first."
+      );
+
+      return;
+
+    }
+
+
+    const mobile =
+      document
+        .getElementById("mobile")
+        .value
+        .trim()
+        .replace(/\D/g, "");
+
+
+    const address =
+      document
+        .getElementById("address")
+        .value
+        .trim();
+
+
+    const city =
+      document
+        .getElementById("city")
+        .value
+        .trim();
+
+
+    const pincode =
+      document
+        .getElementById("pincode")
+        .value
+        .trim();
+
+
+    if (
+      !/^[6-9]\d{9}$/.test(
+        mobile
+      )
+    ) {
+
+      showMessage(
+        "Please enter a valid 10-digit Indian mobile number."
+      );
+
+      return;
+
+    }
+
+
+    /*
+      Require GPS location.
+    */
+
+    if (
+      currentLatitude === null ||
+      currentLongitude === null
+    ) {
+
+      showMessage(
+        "Please click 📍 Get My Location and allow location permission before continuing."
+      );
+
+      return;
+
+    }
+
+
+    if (!address) {
+
+      showMessage(
+        "Location address could not be detected. Please try getting your location again."
+      );
+
+      return;
+
+    }
+
+
+    if (!city) {
+
+      showMessage(
+        "City could not be detected. Please get your location again."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !/^\d{6}$/.test(
+        pincode
+      )
+    ) {
+
+      showMessage(
+        "Please enter a valid 6-digit PIN code."
+      );
+
+      return;
+
+    }
+
+
+    continueBtn.disabled =
+      true;
+
+    continueBtn.textContent =
+      "Saving...";
+
+
+    try {
+
+      const profile = {
+
+        name:
+          currentUser.displayName || "",
+
+        email:
+          currentUser.email || "",
+
+        mobile:
+          "+91" + mobile,
+
+        address:
+          address,
+
+        city:
+          city,
+
+        pincode:
+          pincode,
+
+        latitude:
+          currentLatitude,
+
+        longitude:
+          currentLongitude,
+
+        locationAccuracy:
+          null,
+
+        locationUpdatedAt:
+          new Date().toISOString(),
+
+        photoURL:
+          currentUser.photoURL || "",
+
+        updatedAt:
+          new Date().toISOString()
+
+      };
+
+
+      await setDoc(
+
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        ),
+
+        profile,
+
+        {
+          merge: true
         }
 
+      );
 
-        const mobile =
-          document
-            .getElementById("mobile")
-            .value
-            .trim()
-            .replace(/\D/g, "");
 
+      success.classList.remove(
+        "hidden"
+      );
 
-        const address =
-          document
-            .getElementById("address")
-            .value
-            .trim();
 
+      continueBtn.textContent =
+        "Opening Shop...";
 
-        const city =
-          document
-            .getElementById("city")
-            .value
-            .trim();
 
+      setTimeout(
+        () => {
 
-        const pincode =
-          document
-            .getElementById("pincode")
-            .value
-            .trim();
+          window.location.href =
+            "index.html";
 
+        },
+        700
+      );
 
-        /* VALIDATION */
+    }
 
-        if (
-          !/^[6-9]\d{9}$/.test(
-            mobile
-          )
-        ) {
+    catch (error) {
 
-          showMessage(
-            "Please enter a valid 10-digit Indian mobile number."
-          );
+      console.error(
+        "SAVE ERROR:",
+        error
+      );
 
-          return;
 
-        }
+      showMessage(
+        "Could not save your information: " +
+        (
+          error.code ||
+          error.message
+        )
+      );
 
 
-        if (!address) {
+      continueBtn.disabled =
+        false;
 
-          showMessage(
-            "Please enter your address."
-          );
+      continueBtn.textContent =
+        "Continue to Shop →";
 
-          return;
+    }
 
-        }
+  }
+);
 
 
-        if (!city) {
+/* =====================================
+   LOGOUT
+===================================== */
 
-          showMessage(
-            "Please enter your city."
-          );
+logoutBtn.addEventListener(
+  "click",
+  async () => {
 
-          return;
+    try {
 
-        }
+      await signOut(auth);
 
+      currentUser =
+        null;
 
-        if (
-          !/^\d{6}$/.test(
-            pincode
-          )
-        ) {
+      step2.classList.add(
+        "hidden"
+      );
 
-          showMessage(
-            "Please enter a valid 6-digit PIN code."
-          );
+      step1.classList.remove(
+        "hidden"
+      );
 
-          return;
+      hideMessage();
 
-        }
+      googleBtn.disabled =
+        false;
 
+      googleBtn.textContent =
+        "Continue with Google";
 
-        continueBtn.disabled =
-          true;
+    }
 
-        continueBtn.textContent =
-          "Saving...";
+    catch (error) {
 
+      showMessage(
+        "Logout failed: " +
+        (
+          error.code ||
+          error.message
+        )
+      );
 
-        try {
+    }
 
-          const profile = {
+  }
+);
 
-            name:
-              currentUser.displayName || "",
 
-            email:
-              currentUser.email || "",
+/* =====================================
+   CHECK CURRENT LOGIN
+===================================== */
 
-            mobile:
-              "+91" + mobile,
+onAuthStateChanged(
+  auth,
+  async (user) => {
 
-            address:
-              address,
+    if (user) {
 
-            city:
-              city,
+      currentUser =
+        user;
 
-            pincode:
-              pincode,
 
-            photoURL:
-              currentUser.photoURL || "",
+      document.getElementById(
+        "googleName"
+      ).textContent =
+        user.displayName ||
+        "Google User";
 
-            updatedAt:
-              new Date().toISOString()
 
-          };
+      document.getElementById(
+        "googleEmail"
+      ).textContent =
+        user.email ||
+        "";
 
 
-          await setDoc(
+      await loadExistingProfile(
+        user
+      );
 
-            doc(
-              db,
-              "users",
-              currentUser.uid
-            ),
 
-            profile,
+      step1.classList.add(
+        "hidden"
+      );
 
-            {
-              merge: true
-            }
+      step2.classList.remove(
+        "hidden"
+      );
 
-          );
+    }
 
+    else {
 
-          success.classList.remove(
-            "hidden"
-          );
+      step1.classList.remove(
+        "hidden"
+      );
 
+      step2.classList.add(
+        "hidden"
+      );
 
-          continueBtn.textContent =
-            "Opening Shop...";
+    }
 
+  }
+);
 
-          /*
-             USER IS NOW LOGGED IN.
-             OPEN THE SHOP.
-          */
-
-          setTimeout(
-            () => {
-
-              window.location.href =
-                "index.html";
-
-            },
-            700
-          );
-
-        }
-
-        catch (error) {
-
-          console.error(
-            "SAVE ERROR:",
-            error
-          );
-
-
-          showMessage(
-            "Could not save your information: " +
-            (
-              error.code ||
-              error.message
-            )
-          );
-
-
-          continueBtn.disabled =
-            false;
-
-          continueBtn.textContent =
-            "Continue to Shop →";
-
-        }
-
-      }
-    );
-
-
-    /* =====================================
-       LOGOUT
-    ====================================== */
-
-    logoutBtn.addEventListener(
-      "click",
-      async () => {
-
-        try {
-
-          await signOut(auth);
-
-
-          currentUser =
-            null;
-
-
-          step2.classList.add(
-            "hidden"
-          );
-
-          step1.classList.remove(
-            "hidden"
-          );
-
-
-          document.getElementById(
-            "mobile"
-          ).value = "";
-
-          document.getElementById(
-            "address"
-          ).value = "";
-
-          document.getElementById(
-            "city"
-          ).value = "";
-
-          document.getElementById(
-            "pincode"
-          ).value = "";
-
-
-          googleBtn.disabled =
-            false;
-
-          googleBtn.textContent =
-            "Continue with Google";
-
-
-          hideMessage();
-
-        }
-
-        catch (error) {
-
-          showMessage(
-            "Logout failed: " +
-            (
-              error.code ||
-              error.message
-            )
-          );
-
-        }
-
-      }
-    );
-
-
-    /* =====================================
-       CHECK CURRENT LOGIN
-    ====================================== */
-
-    onAuthStateChanged(
-      auth,
-      async (user) => {
-
-        /*
-          IMPORTANT:
-
-          If user is already logged in,
-          DO NOT redirect to login.html.
-
-          Instead show their information
-          and allow them to continue.
-        */
-
-        if (user) {
-
-          currentUser =
-            user;
-
-
-          document.getElementById(
-            "googleName"
-          ).textContent =
-            user.displayName ||
-            "Google User";
-
-
-          document.getElementById(
-            "googleEmail"
-          ).textContent =
-            user.email ||
-            "";
-
-
-          await loadExistingProfile(
-            user
-          );
-
-
-          step1.classList.add(
-            "hidden"
-          );
-
-          step2.classList.remove(
-            "hidden"
-          );
-
-        }
-
-        else {
-
-          /*
-            No user = stay on the
-            Google login screen.
-
-            DO NOT redirect to login.html.
-          */
-
-          step1.classList.remove(
-            "hidden"
-          );
-
-          step2.classList.add(
-            "hidden"
-          );
-
-        }
-
-      }
-    );
-
-  </script>
+</script>
 
 </body>
-
 </html>
