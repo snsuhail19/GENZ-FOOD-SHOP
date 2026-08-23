@@ -32,10 +32,6 @@
       margin: auto;
     }
 
-    /* =========================
-       HEADER
-    ========================== */
-
     .header {
       background: white;
       border-radius: 18px;
@@ -70,10 +66,6 @@
       font-weight: 700;
     }
 
-    /* =========================
-       REFRESH
-    ========================== */
-
     .refresh-btn {
       border: 0;
       border-radius: 10px;
@@ -84,10 +76,6 @@
       cursor: pointer;
       margin-bottom: 15px;
     }
-
-    /* =========================
-       ORDERS
-    ========================== */
 
     .orders {
       display: grid;
@@ -116,10 +104,6 @@
       word-break: break-all;
     }
 
-    /* =========================
-       STATUS
-    ========================== */
-
     .status {
       padding: 7px 12px;
       border-radius: 20px;
@@ -142,10 +126,6 @@
       color: #721c24;
     }
 
-    /* =========================
-       PAYMENT
-    ========================== */
-
     .payment {
       background: #f6f6f6;
       border-radius: 12px;
@@ -153,10 +133,6 @@
       margin-bottom: 15px;
       font-size: 14px;
     }
-
-    /* =========================
-       ITEMS
-    ========================== */
 
     .items {
       border-top: 1px solid #eee;
@@ -181,10 +157,6 @@
       white-space: nowrap;
     }
 
-    /* =========================
-       TOTAL
-    ========================== */
-
     .total {
       text-align: right;
       font-size: 21px;
@@ -192,19 +164,11 @@
       margin-top: 15px;
     }
 
-    /* =========================
-       DATE
-    ========================== */
-
     .date {
       color: #777;
       font-size: 13px;
       margin-top: 8px;
     }
-
-    /* =========================
-       LOADING / EMPTY / ERROR
-    ========================== */
 
     .loading,
     .empty,
@@ -219,10 +183,6 @@
     .error {
       color: #c00;
     }
-
-    /* =========================
-       MOBILE
-    ========================== */
 
     @media (max-width: 600px) {
 
@@ -265,9 +225,7 @@
 <div class="container">
 
 
-  <!-- =========================
-       HEADER
-  ========================== -->
+  <!-- HEADER -->
 
   <div class="header">
 
@@ -294,10 +252,7 @@
   </div>
 
 
-
-  <!-- =========================
-       REFRESH
-  ========================== -->
+  <!-- REFRESH -->
 
   <button
     id="refreshBtn"
@@ -307,25 +262,17 @@
   </button>
 
 
-
-  <!-- =========================
-       LOADING
-  ========================== -->
+  <!-- LOADING -->
 
   <div
     id="loading"
     class="loading"
   >
-
     Checking your account...
-
   </div>
 
 
-
-  <!-- =========================
-       ORDERS
-  ========================== -->
+  <!-- ORDERS -->
 
   <div
     id="orders"
@@ -334,7 +281,6 @@
 
 
 </div>
-
 
 
 <!-- =====================================
@@ -364,12 +310,10 @@
     collection,
     query,
     where,
-    orderBy,
     getDocs
   }
   from
     "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
 
 
   /* =====================================
@@ -402,22 +346,18 @@
   };
 
 
-
   /* =====================================
-     INITIALIZE FIREBASE
+     INITIALIZE
   ===================================== */
 
   const app =
     initializeApp(firebaseConfig);
 
-
   const auth =
     getAuth(app);
 
-
   const db =
     getFirestore(app);
-
 
 
   /* =====================================
@@ -427,14 +367,11 @@
   const loading =
     document.getElementById("loading");
 
-
   const ordersContainer =
     document.getElementById("orders");
 
-
   const refreshBtn =
     document.getElementById("refreshBtn");
-
 
 
   /* =====================================
@@ -445,33 +382,46 @@
 
     return String(value)
 
-      .replace(
-        /&/g,
-        "&amp;"
-      )
+      .replace(/&/g, "&amp;")
 
-      .replace(
-        /</g,
-        "&lt;"
-      )
+      .replace(/</g, "&lt;")
 
-      .replace(
-        />/g,
-        "&gt;"
-      )
+      .replace(/>/g, "&gt;")
 
-      .replace(
-        /"/g,
-        "&quot;"
-      )
+      .replace(/"/g, "&quot;")
 
-      .replace(
-        /'/g,
-        "&#039;"
-      );
+      .replace(/'/g, "&#039;");
 
   }
 
+
+  /* =====================================
+     GET DATE VALUE
+  ===================================== */
+
+  function getOrderTime(order) {
+
+    if (
+      order.createdAt &&
+      typeof order.createdAt.toMillis === "function"
+    ) {
+
+      return order.createdAt.toMillis();
+
+    }
+
+    if (
+      order.createdAt &&
+      typeof order.createdAt.toDate === "function"
+    ) {
+
+      return order.createdAt.toDate().getTime();
+
+    }
+
+    return 0;
+
+  }
 
 
   /* =====================================
@@ -486,12 +436,29 @@
 
     }
 
-
     try {
 
-      const date =
-        timestamp.toDate();
+      let date;
 
+      if (
+        typeof timestamp.toDate === "function"
+      ) {
+
+        date = timestamp.toDate();
+
+      }
+
+      else {
+
+        date = new Date(timestamp);
+
+      }
+
+      if (isNaN(date.getTime())) {
+
+        return "Date not available";
+
+      }
 
       return date.toLocaleString(
         "en-IN",
@@ -515,7 +482,6 @@
   }
 
 
-
   /* =====================================
      DISPLAY ORDER
   ===================================== */
@@ -525,29 +491,20 @@
     order
   ) {
 
-
     const orderElement =
-      document.createElement(
-        "div"
-      );
-
+      document.createElement("div");
 
     orderElement.className =
       "order";
 
 
-    /* =========================
-       STATUS
-    ========================== */
+    /* STATUS */
 
     const status =
-      order.status ||
-      "Pending";
-
+      order.status || "Pending";
 
     let statusClass =
       "pending";
-
 
     if (
       status === "Delivered"
@@ -557,7 +514,6 @@
         "delivered";
 
     }
-
 
     if (
       status === "Rejected"
@@ -569,19 +525,13 @@
     }
 
 
-
-    /* =========================
-       PAYMENT
-    ========================== */
+    /* PAYMENT */
 
     const paymentMode =
-      order.paymentMode ||
-      "";
-
+      order.paymentMode || "";
 
     let paymentText =
       "⏳ Payment mode not selected yet";
-
 
     if (
       paymentMode === "UPI"
@@ -591,7 +541,6 @@
         "💳 Payment Mode: UPI";
 
     }
-
 
     if (
       paymentMode === "Cash"
@@ -603,13 +552,9 @@
     }
 
 
+    /* ITEMS */
 
-    /* =========================
-       ITEMS
-    ========================== */
-
-    let itemsHTML =
-      "";
+    let itemsHTML = "";
 
 
     if (
@@ -620,21 +565,17 @@
         (item) => {
 
           const name =
-            item.name ||
-            "Food item";
-
+            item.name || "Food item";
 
           const quantity =
             Number(
               item.quantity || 1
             );
 
-
           const price =
             Number(
               item.price || 0
             );
-
 
           const itemTotal =
             price * quantity;
@@ -656,7 +597,6 @@
 
               </span>
 
-
               <span class="item-price">
 
                 ₹${itemTotal.toFixed(2)}
@@ -673,10 +613,7 @@
     }
 
 
-
-    /* =========================
-       TOTAL
-    ========================== */
+    /* TOTAL */
 
     const total =
       Number(
@@ -684,10 +621,7 @@
       );
 
 
-
-    /* =========================
-       HTML
-    ========================== */
+    /* HTML */
 
     orderElement.innerHTML = `
 
@@ -701,17 +635,13 @@
 
         </div>
 
-
-        <div
-          class="status ${statusClass}"
-        >
+        <div class="status ${statusClass}">
 
           ${escapeHTML(status)}
 
         </div>
 
       </div>
-
 
 
       <div class="payment">
@@ -721,7 +651,6 @@
       </div>
 
 
-
       <div class="items">
 
         ${itemsHTML}
@@ -729,13 +658,11 @@
       </div>
 
 
-
       <div class="total">
 
         Total: ₹${total.toFixed(2)}
 
       </div>
-
 
 
       <div class="date">
@@ -754,21 +681,18 @@
   }
 
 
-
   /* =====================================
      LOAD MY ORDERS
+     NO FIREBASE INDEX REQUIRED
   ===================================== */
 
   async function loadMyOrders(user) {
 
-
     loading.style.display =
       "block";
 
-
     loading.textContent =
       "Loading your orders...";
-
 
     ordersContainer.innerHTML =
       "";
@@ -776,17 +700,23 @@
 
     try {
 
-
-      /* ===============================
-         CURRENT USER ORDERS
-      =============================== */
-
       const ordersRef =
         collection(
           db,
           "orders"
         );
 
+
+      /*
+        IMPORTANT:
+
+        Only "where" is used here.
+
+        We do NOT use orderBy().
+
+        Therefore Firebase does not
+        require a composite index.
+      */
 
       const ordersQuery =
         query(
@@ -797,11 +727,6 @@
             "userId",
             "==",
             user.uid
-          ),
-
-          orderBy(
-            "createdAt",
-            "desc"
           )
 
         );
@@ -817,9 +742,7 @@
         "none";
 
 
-      /* ===============================
-         NO ORDERS
-      =============================== */
+      /* NO ORDERS */
 
       if (
         snapshot.empty
@@ -855,17 +778,61 @@
       }
 
 
+      /*
+        Convert Firestore documents
+        into an array.
+      */
 
-      /* ===============================
-         DISPLAY ORDERS
-      =============================== */
+      const orders = [];
+
 
       snapshot.forEach(
         (docSnapshot) => {
 
+          orders.push({
+
+            id:
+              docSnapshot.id,
+
+            data:
+              docSnapshot.data()
+
+          });
+
+        }
+      );
+
+
+      /*
+        Sort newest orders first
+        in the browser.
+
+        This replaces Firestore
+        orderBy().
+      */
+
+      orders.sort(
+        (a, b) => {
+
+          return (
+            getOrderTime(b.data) -
+            getOrderTime(a.data)
+          );
+
+        }
+      );
+
+
+      /*
+        Display sorted orders.
+      */
+
+      orders.forEach(
+        (order) => {
+
           displayOrder(
-            docSnapshot.id,
-            docSnapshot.data()
+            order.id,
+            order.data
           );
 
         }
@@ -876,7 +843,6 @@
 
     catch (error) {
 
-
       console.error(
         "MY ORDERS ERROR:",
         error
@@ -885,40 +851,6 @@
 
       loading.style.display =
         "none";
-
-
-      if (
-        error.code ===
-        "failed-precondition"
-      ) {
-
-        ordersContainer.innerHTML = `
-
-          <div class="error">
-
-            <h3>
-              ⚠️ Firebase Index Required
-            </h3>
-
-            <p>
-              Firebase needs an index to
-              sort your orders.
-            </p>
-
-            <p>
-              Open the Firebase link shown
-              in the browser console and
-              create the index.
-            </p>
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
 
 
       ordersContainer.innerHTML = `
@@ -943,7 +875,6 @@
   }
 
 
-
   /* =====================================
      LOGIN CHECK
   ===================================== */
@@ -951,7 +882,6 @@
   onAuthStateChanged(
     auth,
     async (user) => {
-
 
       if (!user) {
 
@@ -970,7 +900,6 @@
 
     }
   );
-
 
 
   /* =====================================
