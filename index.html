@@ -5,51 +5,48 @@
 
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>GENZ FOOD SHOP</title>
 
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
+  <link rel="stylesheet" href="style.css">
 
   <style>
 
-    /* Hide the shop until Firebase checks login */
-
+    /* Hide shop until Firebase checks login */
     body {
       display: none;
     }
 
     /* Header buttons */
-
     .header-right {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .profile-btn {
+    .profile-btn,
+    .owner-btn {
       display: inline-block;
-
       padding: 11px 16px;
-
-      background: #ff5a1f;
-
       color: white;
-
       text-decoration: none;
-
       border-radius: 12px;
-
       font-weight: 700;
+      cursor: pointer;
     }
 
-    .profile-btn:hover {
+    .profile-btn {
+      background: #ff5a1f;
+    }
+
+    .owner-btn {
+      display: none;
+      background: #171717;
+    }
+
+    .profile-btn:hover,
+    .owner-btn:hover {
       opacity: 0.9;
     }
 
@@ -59,7 +56,8 @@
         gap: 6px;
       }
 
-      .profile-btn {
+      .profile-btn,
+      .owner-btn {
         padding: 9px 10px;
         font-size: 13px;
       }
@@ -103,6 +101,7 @@
 
     <div class="header-right">
 
+
       <!-- PROFILE -->
 
       <a
@@ -110,6 +109,17 @@
         class="profile-btn"
       >
         👤 Profile
+      </a>
+
+
+      <!-- OWNER -->
+
+      <a
+        id="ownerBtn"
+        href="owner.html"
+        class="owner-btn"
+      >
+        👑 Owner
       </a>
 
 
@@ -279,7 +289,7 @@
 
 
   <!-- =========================
-       FIREBASE LOGIN CHECK
+       FIREBASE LOGIN + OWNER CHECK
   ========================== -->
 
   <script type="module">
@@ -336,9 +346,24 @@
     const app =
       initializeApp(firebaseConfig);
 
-
     const auth =
       getAuth(app);
+
+
+    /* =========================
+       OWNER EMAIL
+    ========================== */
+
+    const OWNER_EMAIL =
+      "snsuhail19@gmail.com";
+
+
+    /* =========================
+       OWNER BUTTON
+    ========================== */
+
+    const ownerBtn =
+      document.getElementById("ownerBtn");
 
 
     /* =========================
@@ -349,30 +374,59 @@
       auth,
       (user) => {
 
-        if (user) {
+        if (!user) {
 
           /*
-            Already logged in.
-
-            Show the food shop.
+            Not logged in.
+            Send to login page.
           */
 
-          document.body.style.display =
-            "block";
+          window.location.replace(
+            "login.html"
+          );
+
+          return;
+        }
+
+
+        /*
+          User is logged in.
+          Show the food shop.
+        */
+
+        document.body.style.display =
+          "block";
+
+
+        /* =========================
+           CHECK OWNER
+        ========================== */
+
+        if (
+          user.email &&
+          user.email.toLowerCase() ===
+          OWNER_EMAIL.toLowerCase()
+        ) {
+
+          /*
+            Owner account:
+            show Owner button.
+          */
+
+          ownerBtn.style.display =
+            "inline-block";
 
         }
 
         else {
 
           /*
-            Not logged in.
-
-            Send user to login page.
+            Normal customer:
+            keep Owner button hidden.
           */
 
-          window.location.replace(
-            "login.html"
-          );
+          ownerBtn.style.display =
+            "none";
 
         }
 
