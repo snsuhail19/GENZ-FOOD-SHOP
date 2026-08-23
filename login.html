@@ -2,398 +2,382 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>GENZ FOOD SHOP</title>
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
+  <title>Login - GENZ FOOD SHOP</title>
 
   <style>
-
-    /* Hide website while Firebase checks login */
+    * {
+      box-sizing: border-box;
+    }
 
     body {
-      display: none;
-    }
-
-    /* Header right side */
-
-    .header-right {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff8f3;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      padding: 20px;
     }
 
-    /* Profile button */
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: white;
+      padding: 30px;
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
 
-    .profile-btn {
-      display: inline-block;
-
-      padding: 11px 16px;
+    .logo {
+      width: 65px;
+      height: 65px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
 
       background: #ff5a1f;
-
       color: white;
 
-      text-decoration: none;
+      border-radius: 18px;
 
-      border-radius: 12px;
+      font-size: 32px;
+      font-weight: 900;
+    }
 
+    h1 {
+      text-align: center;
+      margin: 0;
+      font-size: 27px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      margin: 8px 0 28px;
+      font-size: 14px;
+    }
+
+    .step {
+      color: #ff5a1f;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
       font-weight: 700;
+      margin-top: 16px;
+      margin-bottom: 7px;
+    }
 
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 11px;
+      font-size: 15px;
+      font-family: Arial, Helvetica, sans-serif;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #ff5a1f;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 16px;
+      font-size: 15px;
+      font-weight: 800;
       cursor: pointer;
     }
 
-    .profile-btn:hover {
-      opacity: 0.9;
+    .google-btn {
+      background: #171717;
+      color: white;
     }
 
-
-    /* Mobile */
-
-    @media (max-width: 600px) {
-
-      .header-right {
-        gap: 6px;
-      }
-
-      .profile-btn {
-        padding: 9px 10px;
-        font-size: 13px;
-      }
-
+    .continue-btn {
+      background: #ff5a1f;
+      color: white;
     }
 
+    .logout-btn {
+      background: #eee;
+      color: #222;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .user-info {
+      background: #fff8f3;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .user-info strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .user-info span {
+      color: #777;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff3ec;
+      color: #8b3c17;
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .loading {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+
+    .success {
+      text-align: center;
+      color: #16803c;
+      font-weight: 700;
+      margin-top: 15px;
+    }
   </style>
-
 </head>
-
 
 <body>
 
+  <div class="container">
 
-  <!-- ==================================
-       HEADER
-  =================================== -->
+    <div class="logo">G</div>
 
-  <header class="header">
+    <h1>GENZ FOOD SHOP</h1>
+
+    <p class="subtitle">
+      Login to continue to our food shop
+    </p>
 
 
-    <div class="brand">
+    <!-- =====================================
+         STEP 1 - GOOGLE LOGIN
+    ====================================== -->
 
+    <div id="step1">
 
-      <div class="logo">
-        G
+      <div class="step">
+        STEP 1
       </div>
 
+      <h2>Login with Google</h2>
 
-      <div>
-
-        <h1>
-          GENZ FOOD SHOP
-        </h1>
-
-        <p>
-          Indian Foods & Snacks
-        </p>
-
-      </div>
-
-
-    </div>
-
-
-    <!-- HEADER BUTTONS -->
-
-    <div class="header-right">
-
-
-      <!-- PROFILE -->
-
-      <a
-        href="login.html"
-        class="profile-btn"
-      >
-        👤 Profile
-      </a>
-
-
-      <!-- CART -->
+      <p style="color:#777;font-size:14px;">
+        Continue with your Gmail account to create your profile.
+      </p>
 
       <button
-        class="cart-btn"
-        onclick="openCart()"
+        id="googleBtn"
+        class="google-btn"
       >
-
-        🛒 Cart
-
-        <span id="cartCount">
-          0
-        </span>
-
+        Continue with Google
       </button>
-
 
     </div>
 
 
-  </header>
+    <!-- =====================================
+         STEP 2 - USER DETAILS
+    ====================================== -->
 
-
-
-  <!-- ==================================
-       MAIN
-  =================================== -->
-
-  <main>
-
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-
-      <div>
-
-
-        <span class="tag">
-          🔥 Fresh & Tasty
-        </span>
-
-
-        <h2>
-
-          Your favourite Indian snacks,
-
-          <span>
-            just a click away.
-          </span>
-
-        </h2>
-
-
-        <p>
-
-          Choose your food, add it to cart
-          and continue to payment.
-
-          THE WEBSITE IS NOT COMPLETED,
-          IT IS UNDER DEVELOPMENT,
-          BE PATIENT.
-
-        </p>
-
-
-        <a
-          href="#menu"
-          class="hero-btn"
-        >
-
-          Explore Menu
-
-        </a>
-
-
-      </div>
-
-
-    </section>
-
-
-
-    <!-- ==================================
-         MENU
-    =================================== -->
-
-    <section
-      id="menu"
-      class="menu-section"
+    <div
+      id="step2"
+      class="hidden"
     >
 
+      <div class="step">
+        STEP 2
+      </div>
 
-      <div class="section-title">
+      <h2>Your Information</h2>
 
+      <div class="user-info">
 
-        <p>
-          OUR MENU
-        </p>
+        <strong id="googleName">
+          -
+        </strong>
 
-
-        <h2>
-          Indian Foods & Snacks
-        </h2>
-
+        <span id="googleEmail">
+          -
+        </span>
 
       </div>
 
 
-      <div
-        id="foodGrid"
-        class="food-grid"
-      ></div>
+      <label for="mobile">
+        Mobile Number
+      </label>
+
+      <input
+        id="mobile"
+        type="tel"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="9876543210"
+      >
 
 
-    </section>
+      <label for="address">
+        Address
+      </label>
+
+      <textarea
+        id="address"
+        placeholder="House number, street, area..."
+      ></textarea>
 
 
-  </main>
+      <label for="city">
+        City
+      </label>
+
+      <input
+        id="city"
+        type="text"
+        placeholder="Your city"
+      >
 
 
+      <label for="pincode">
+        PIN Code
+      </label>
 
-  <!-- ==================================
-       CART MODAL
-  =================================== -->
-
-  <div
-    id="cartModal"
-    class="modal"
-  >
-
-
-    <div class="modal-content">
+      <input
+        id="pincode"
+        type="text"
+        inputmode="numeric"
+        maxlength="6"
+        placeholder="600001"
+      >
 
 
       <button
-        class="close"
-        onclick="closeCart()"
+        id="continueBtn"
+        class="continue-btn"
       >
-        ×
+        Continue to Shop →
       </button>
 
 
-      <h2>
-        Your Cart
-      </h2>
-
-
-      <div
-        id="cartItems"
-      ></div>
-
-
-      <div class="cart-footer">
-
-
-        <strong>
-
-          Total: ₹
-
-          <span id="cartTotal">
-            0
-          </span>
-
-        </strong>
-
-
-        <button
-          class="checkout-btn"
-          onclick="goToPayment()"
-        >
-
-          Proceed to Payment →
-
-        </button>
-
-
-      </div>
-
+      <button
+        id="logoutBtn"
+        class="logout-btn"
+      >
+        Logout
+      </button>
 
     </div>
 
+
+    <!-- MESSAGE -->
+
+    <div
+      id="message"
+      class="message hidden"
+    ></div>
+
+    <div
+      id="success"
+      class="success hidden"
+    >
+      Login successful. Opening shop...
+    </div>
 
   </div>
 
 
-
-  <!-- ==================================
-       FOOTER
-  =================================== -->
-
-  <footer>
-
-    <p>
-
-      © 2026 GENZ FOOD SHOP
-      • Indian Foods & Snacks
-
-    </p>
-
-  </footer>
-
-
-
-  <!-- ==================================
-       YOUR EXISTING SCRIPT
-  =================================== -->
-
-  <script src="script.js"></script>
-
-
-
-  <!-- ==================================
-       FIREBASE LOGIN CHECK
-  =================================== -->
+  <!-- =====================================
+       FIREBASE
+  ====================================== -->
 
   <script type="module">
 
-
     import {
       initializeApp
-    }
-
-    from
+    } from
       "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 
     import {
       getAuth,
-      onAuthStateChanged
-    }
-
-    from
+      GoogleAuthProvider,
+      signInWithPopup,
+      onAuthStateChanged,
+      signOut
+    } from
       "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc
+    } from
+      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-    /* ==================================
+
+    /* =====================================
        FIREBASE CONFIG
-    =================================== */
+    ====================================== */
 
     const firebaseConfig = {
-
 
       apiKey:
         "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
 
-
       authDomain:
         "genz-food-shop.firebaseapp.com",
-
 
       projectId:
         "genz-food-shop",
 
-
       storageBucket:
         "genz-food-shop.firebasestorage.app",
-
 
       messagingSenderId:
         "259228392374",
 
-
       appId:
         "1:259228392374:web:6af3a0d3c93597a5b5bf17",
-
 
       measurementId:
         "G-LT095LEWJ6"
@@ -401,69 +385,593 @@
     };
 
 
-
-    /* ==================================
-       START FIREBASE
-    =================================== */
+    /* =====================================
+       INITIALIZE
+    ====================================== */
 
     const app =
       initializeApp(firebaseConfig);
 
-
     const auth =
       getAuth(app);
 
+    const db =
+      getFirestore(app);
+
+    const provider =
+      new GoogleAuthProvider();
 
 
-    /* ==================================
-       LOGIN CHECK
-    =================================== */
+    /* =====================================
+       ELEMENTS
+    ====================================== */
 
-    onAuthStateChanged(
+    const step1 =
+      document.getElementById("step1");
 
-      auth,
+    const step2 =
+      document.getElementById("step2");
 
-      (user) => {
+    const googleBtn =
+      document.getElementById("googleBtn");
+
+    const continueBtn =
+      document.getElementById("continueBtn");
+
+    const logoutBtn =
+      document.getElementById("logoutBtn");
+
+    const message =
+      document.getElementById("message");
+
+    const success =
+      document.getElementById("success");
 
 
-        if (user) {
+    let currentUser = null;
+
+
+    /* =====================================
+       MESSAGE
+    ====================================== */
+
+    function showMessage(text) {
+
+      message.textContent =
+        text;
+
+      message.classList.remove(
+        "hidden"
+      );
+
+    }
+
+
+    function hideMessage() {
+
+      message.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    /* =====================================
+       LOAD EXISTING PROFILE
+    ====================================== */
+
+    async function loadExistingProfile(user) {
+
+      try {
+
+        const profileRef =
+          doc(
+            db,
+            "users",
+            user.uid
+          );
+
+        const snapshot =
+          await getDoc(
+            profileRef
+          );
+
+
+        if (snapshot.exists()) {
+
+          const profile =
+            snapshot.data();
+
+
+          document.getElementById(
+            "mobile"
+          ).value =
+            (profile.mobile || "")
+              .replace("+91", "");
+
+
+          document.getElementById(
+            "address"
+          ).value =
+            profile.address || "";
+
+
+          document.getElementById(
+            "city"
+          ).value =
+            profile.city || "";
+
+
+          document.getElementById(
+            "pincode"
+          ).value =
+            profile.pincode || "";
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "PROFILE LOAD ERROR:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =====================================
+       GOOGLE LOGIN
+    ====================================== */
+
+    googleBtn.addEventListener(
+      "click",
+      async () => {
+
+        hideMessage();
+
+        googleBtn.disabled = true;
+
+        googleBtn.textContent =
+          "Opening Google...";
+
+
+        try {
+
+          const result =
+            await signInWithPopup(
+              auth,
+              provider
+            );
+
+
+          currentUser =
+            result.user;
+
+
+          document.getElementById(
+            "googleName"
+          ).textContent =
+            currentUser.displayName ||
+            "Google User";
+
+
+          document.getElementById(
+            "googleEmail"
+          ).textContent =
+            currentUser.email ||
+            "";
+
+
+          await loadExistingProfile(
+            currentUser
+          );
+
+
+          step1.classList.add(
+            "hidden"
+          );
+
+          step2.classList.remove(
+            "hidden"
+          );
+
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "GOOGLE LOGIN ERROR:",
+            error
+          );
+
+
+          showMessage(
+            "Google login failed: " +
+            (
+              error.code ||
+              error.message
+            )
+          );
+
+
+          googleBtn.disabled =
+            false;
+
+          googleBtn.textContent =
+            "Continue with Google";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       SAVE USER INFORMATION
+    ====================================== */
+
+    continueBtn.addEventListener(
+      "click",
+      async () => {
+
+        hideMessage();
+
+
+        if (!currentUser) {
+
+          showMessage(
+            "Please login with Google first."
+          );
+
+          return;
+
+        }
+
+
+        const mobile =
+          document
+            .getElementById("mobile")
+            .value
+            .trim()
+            .replace(/\D/g, "");
+
+
+        const address =
+          document
+            .getElementById("address")
+            .value
+            .trim();
+
+
+        const city =
+          document
+            .getElementById("city")
+            .value
+            .trim();
+
+
+        const pincode =
+          document
+            .getElementById("pincode")
+            .value
+            .trim();
+
+
+        /* VALIDATION */
+
+        if (
+          !/^[6-9]\d{9}$/.test(
+            mobile
+          )
+        ) {
+
+          showMessage(
+            "Please enter a valid 10-digit Indian mobile number."
+          );
+
+          return;
+
+        }
+
+
+        if (!address) {
+
+          showMessage(
+            "Please enter your address."
+          );
+
+          return;
+
+        }
+
+
+        if (!city) {
+
+          showMessage(
+            "Please enter your city."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !/^\d{6}$/.test(
+            pincode
+          )
+        ) {
+
+          showMessage(
+            "Please enter a valid 6-digit PIN code."
+          );
+
+          return;
+
+        }
+
+
+        continueBtn.disabled =
+          true;
+
+        continueBtn.textContent =
+          "Saving...";
+
+
+        try {
+
+          const profile = {
+
+            name:
+              currentUser.displayName || "",
+
+            email:
+              currentUser.email || "",
+
+            mobile:
+              "+91" + mobile,
+
+            address:
+              address,
+
+            city:
+              city,
+
+            pincode:
+              pincode,
+
+            photoURL:
+              currentUser.photoURL || "",
+
+            updatedAt:
+              new Date().toISOString()
+
+          };
+
+
+          await setDoc(
+
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            ),
+
+            profile,
+
+            {
+              merge: true
+            }
+
+          );
+
+
+          success.classList.remove(
+            "hidden"
+          );
+
+
+          continueBtn.textContent =
+            "Opening Shop...";
 
 
           /*
-            USER IS LOGGED IN
-
-            Show the shop.
+             USER IS NOW LOGGED IN.
+             OPEN THE SHOP.
           */
 
-          document.body.style.display =
-            "block";
+          setTimeout(
+            () => {
 
+              window.location.href =
+                "index.html";
+
+            },
+            700
+          );
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "SAVE ERROR:",
+            error
+          );
+
+
+          showMessage(
+            "Could not save your information: " +
+            (
+              error.code ||
+              error.message
+            )
+          );
+
+
+          continueBtn.disabled =
+            false;
+
+          continueBtn.textContent =
+            "Continue to Shop →";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       LOGOUT
+    ====================================== */
+
+    logoutBtn.addEventListener(
+      "click",
+      async () => {
+
+        try {
+
+          await signOut(auth);
+
+
+          currentUser =
+            null;
+
+
+          step2.classList.add(
+            "hidden"
+          );
+
+          step1.classList.remove(
+            "hidden"
+          );
+
+
+          document.getElementById(
+            "mobile"
+          ).value = "";
+
+          document.getElementById(
+            "address"
+          ).value = "";
+
+          document.getElementById(
+            "city"
+          ).value = "";
+
+          document.getElementById(
+            "pincode"
+          ).value = "";
+
+
+          googleBtn.disabled =
+            false;
+
+          googleBtn.textContent =
+            "Continue with Google";
+
+
+          hideMessage();
+
+        }
+
+        catch (error) {
+
+          showMessage(
+            "Logout failed: " +
+            (
+              error.code ||
+              error.message
+            )
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       CHECK CURRENT LOGIN
+    ====================================== */
+
+    onAuthStateChanged(
+      auth,
+      async (user) => {
+
+        /*
+          IMPORTANT:
+
+          If user is already logged in,
+          DO NOT redirect to login.html.
+
+          Instead show their information
+          and allow them to continue.
+        */
+
+        if (user) {
+
+          currentUser =
+            user;
+
+
+          document.getElementById(
+            "googleName"
+          ).textContent =
+            user.displayName ||
+            "Google User";
+
+
+          document.getElementById(
+            "googleEmail"
+          ).textContent =
+            user.email ||
+            "";
+
+
+          await loadExistingProfile(
+            user
+          );
+
+
+          step1.classList.add(
+            "hidden"
+          );
+
+          step2.classList.remove(
+            "hidden"
+          );
 
         }
 
         else {
 
-
           /*
-            USER IS NOT LOGGED IN
+            No user = stay on the
+            Google login screen.
 
-            Send to login page.
+            DO NOT redirect to login.html.
           */
 
-          window.location.replace(
-            "login.html"
+          step1.classList.remove(
+            "hidden"
+          );
+
+          step2.classList.add(
+            "hidden"
           );
 
         }
 
-
       }
-
     );
 
-
   </script>
-
 
 </body>
 
