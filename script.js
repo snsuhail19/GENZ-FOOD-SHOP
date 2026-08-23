@@ -60,122 +60,476 @@ const foods = [
   }
 ];
 
-let cart = JSON.parse(localStorage.getItem("genzCart")) || [];
+
+// ================================
+// CART
+// ================================
+
+let cart =
+  JSON.parse(
+    localStorage.getItem("genzCart")
+  ) || [];
+
+
+// ================================
+// SAVE CART
+// ================================
 
 function saveCart() {
-  localStorage.setItem("genzCart", JSON.stringify(cart));
+
+  localStorage.setItem(
+    "genzCart",
+    JSON.stringify(cart)
+  );
+
   updateCartCount();
+
 }
+
+
+// ================================
+// CART COUNT
+// ================================
 
 function updateCartCount() {
-  document.getElementById("cartCount").textContent =
-    cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const cartCount =
+    document.getElementById("cartCount");
+
+  if (!cartCount) return;
+
+  cartCount.textContent =
+    cart.reduce(
+      (sum, item) =>
+        sum + item.quantity,
+      0
+    );
+
 }
+
+
+// ================================
+// RENDER FOOD ITEMS
+// ================================
 
 function renderFoods() {
-  const grid = document.getElementById("foodGrid");
-  grid.innerHTML = foods.map(food => `
-    <article class="food-card">
-      <img src="${food.image}" alt="${food.name}" loading="lazy">
-      <div class="food-info">
-        <h3>${food.name}</h3>
-        <p>${food.description}</p>
-        <div class="food-bottom">
-          <span class="price">₹${food.price}</span>
-          <button class="add-btn" onclick="addToCart(${food.id})">+ Add</button>
+
+  const grid =
+    document.getElementById("foodGrid");
+
+  if (!grid) return;
+
+  grid.innerHTML =
+    foods.map(
+      food => `
+
+      <article class="food-card">
+
+        <img
+          src="${food.image}"
+          alt="${food.name}"
+          loading="lazy"
+        >
+
+        <div class="food-info">
+
+          <h3>
+            ${food.name}
+          </h3>
+
+          <p>
+            ${food.description}
+          </p>
+
+          <div class="food-bottom">
+
+            <span class="price">
+              ₹${food.price}
+            </span>
+
+            <button
+              class="add-btn"
+              onclick="addToCart(${food.id})"
+            >
+              + Add
+            </button>
+
+          </div>
+
         </div>
-      </div>
-    </article>
-  `).join("");
+
+      </article>
+
+    `
+    ).join("");
+
 }
+
+
+// ================================
+// ADD TO CART
+// ================================
 
 function addToCart(id) {
-  const food = foods.find(f => f.id === id);
-  const existing = cart.find(item => item.id === id);
+
+  const food =
+    foods.find(
+      f => f.id === id
+    );
+
+  if (!food) return;
+
+
+  const existing =
+    cart.find(
+      item => item.id === id
+    );
+
 
   if (existing) {
+
     existing.quantity++;
-  } else {
-    cart.push({...food, quantity: 1});
+
   }
 
+  else {
+
+    cart.push({
+      ...food,
+      quantity: 1
+    });
+
+  }
+
+
   saveCart();
-  openCart();
+
+
+  // IMPORTANT:
+  // Cart popup will NOT open automatically.
+  // Customer can click the Cart button manually.
+
+
+  // Small confirmation
+  const button =
+    document.querySelector(
+      `.add-btn[onclick="addToCart(${id})"]`
+    );
+
+  if (button) {
+
+    const originalText =
+      button.textContent;
+
+    button.textContent =
+      "✓ Added";
+
+    button.disabled =
+      true;
+
+
+    setTimeout(() => {
+
+      button.textContent =
+        originalText;
+
+      button.disabled =
+        false;
+
+    }, 800);
+
+  }
+
 }
 
-function changeQuantity(id, amount) {
-  const item = cart.find(i => i.id === id);
+
+// ================================
+// CHANGE QUANTITY
+// ================================
+
+function changeQuantity(
+  id,
+  amount
+) {
+
+  const item =
+    cart.find(
+      i => i.id === id
+    );
+
+
   if (!item) return;
+
 
   item.quantity += amount;
 
-  if (item.quantity <= 0) {
-    cart = cart.filter(i => i.id !== id);
+
+  if (
+    item.quantity <= 0
+  ) {
+
+    cart =
+      cart.filter(
+        i => i.id !== id
+      );
+
   }
 
+
   saveCart();
+
   renderCart();
+
 }
+
+
+// ================================
+// REMOVE ITEM
+// ================================
 
 function removeItem(id) {
-  cart = cart.filter(i => i.id !== id);
+
+  cart =
+    cart.filter(
+      i => i.id !== id
+    );
+
   saveCart();
+
   renderCart();
+
 }
+
+
+// ================================
+// GET TOTAL
+// ================================
 
 function getTotal() {
-  return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  return cart.reduce(
+    (sum, item) =>
+      sum +
+      item.price *
+      item.quantity,
+    0
+  );
+
 }
+
+
+// ================================
+// RENDER CART
+// ================================
 
 function renderCart() {
-  const container = document.getElementById("cartItems");
 
-  if (cart.length === 0) {
-    container.innerHTML = '<div class="empty">Your cart is empty 🛒</div>';
-    document.getElementById("cartTotal").textContent = "0";
+  const container =
+    document.getElementById(
+      "cartItems"
+    );
+
+  if (!container) return;
+
+
+  if (
+    cart.length === 0
+  ) {
+
+    container.innerHTML =
+      '<div class="empty">Your cart is empty 🛒</div>';
+
+
+    const total =
+      document.getElementById(
+        "cartTotal"
+      );
+
+    if (total) {
+
+      total.textContent =
+        "0";
+
+    }
+
     return;
+
   }
 
-  container.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <img src="${item.image}" alt="${item.name}">
-      <div class="cart-info">
-        <h3>${item.name}</h3>
-        <p>₹${item.price} × ${item.quantity} = ₹${item.price * item.quantity}</p>
-      </div>
-      <div class="qty">
-        <button onclick="changeQuantity(${item.id}, -1)">−</button>
-        <strong>${item.quantity}</strong>
-        <button onclick="changeQuantity(${item.id}, 1)">+</button>
-        <button class="remove" onclick="removeItem(${item.id})">Remove</button>
-      </div>
-    </div>
-  `).join("");
 
-  document.getElementById("cartTotal").textContent = getTotal();
+  container.innerHTML =
+    cart.map(
+      item => `
+
+      <div class="cart-item">
+
+        <img
+          src="${item.image}"
+          alt="${item.name}"
+        >
+
+        <div class="cart-info">
+
+          <h3>
+            ${item.name}
+          </h3>
+
+          <p>
+            ₹${item.price} ×
+            ${item.quantity}
+            =
+            ₹${item.price * item.quantity}
+          </p>
+
+        </div>
+
+
+        <div class="qty">
+
+          <button
+            onclick="changeQuantity(${item.id}, -1)"
+          >
+            −
+          </button>
+
+
+          <strong>
+            ${item.quantity}
+          </strong>
+
+
+          <button
+            onclick="changeQuantity(${item.id}, 1)"
+          >
+            +
+          </button>
+
+
+          <button
+            class="remove"
+            onclick="removeItem(${item.id})"
+          >
+            Remove
+          </button>
+
+        </div>
+
+      </div>
+
+    `
+    ).join("");
+
+
+  const total =
+    document.getElementById(
+      "cartTotal"
+    );
+
+  if (total) {
+
+    total.textContent =
+      getTotal();
+
+  }
+
 }
+
+
+// ================================
+// OPEN CART
+// ================================
 
 function openCart() {
-  document.getElementById("cartModal").style.display = "block";
+
+  const modal =
+    document.getElementById(
+      "cartModal"
+    );
+
+  if (!modal) return;
+
+
+  modal.style.display =
+    "block";
+
   renderCart();
+
 }
+
+
+// ================================
+// CLOSE CART
+// ================================
 
 function closeCart() {
-  document.getElementById("cartModal").style.display = "none";
+
+  const modal =
+    document.getElementById(
+      "cartModal"
+    );
+
+  if (!modal) return;
+
+
+  modal.style.display =
+    "none";
+
 }
+
+
+// ================================
+// GO TO PAYMENT
+// ================================
 
 function goToPayment() {
-  if (cart.length === 0) {
-    alert("Please add food to your cart first.");
+
+  if (
+    cart.length === 0
+  ) {
+
+    alert(
+      "Please add food to your cart first."
+    );
+
     return;
+
   }
-  window.location.href = "payment.html";
+
+
+  window.location.href =
+    "payment.html";
+
 }
 
-window.onclick = function(event) {
-  const modal = document.getElementById("cartModal");
-  if (event.target === modal) closeCart();
-};
+
+// ================================
+// CLOSE CART WHEN CLICKING OUTSIDE
+// ================================
+
+window.onclick =
+  function(event) {
+
+    const modal =
+      document.getElementById(
+        "cartModal"
+      );
+
+
+    if (
+      event.target === modal
+    ) {
+
+      closeCart();
+
+    }
+
+  };
+
+
+// ================================
+// START
+// ================================
 
 renderFoods();
+
 updateCartCount();
