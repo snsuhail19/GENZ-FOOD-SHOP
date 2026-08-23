@@ -13,12 +13,10 @@
 
   <style>
 
-    /* Hide shop until Firebase checks login */
     body {
       display: none;
     }
 
-    /* Header buttons */
     .header-right {
       display: flex;
       align-items: center;
@@ -81,10 +79,6 @@
 <body>
 
 
-  <!-- =========================
-       HEADER
-  ========================== -->
-
   <header class="header">
 
     <div class="brand">
@@ -111,8 +105,6 @@
     <div class="header-right">
 
 
-      <!-- PROFILE -->
-
       <a
         href="profile.html"
         class="profile-btn"
@@ -124,7 +116,7 @@
       <!-- MY ORDERS -->
 
       <a
-        href="orders.html"
+        href="myorder.html"
         class="orders-btn"
       >
         📦 My Orders
@@ -163,14 +155,8 @@
 
 
 
-  <!-- =========================
-       MAIN
-  ========================== -->
-
   <main>
 
-
-    <!-- HERO -->
 
     <section class="hero">
 
@@ -206,10 +192,6 @@
 
 
 
-    <!-- =========================
-         MENU
-    ========================== -->
-
     <section
       id="menu"
       class="menu-section"
@@ -239,9 +221,7 @@
 
 
 
-  <!-- =========================
-       CART
-  ========================== -->
+  <!-- CART -->
 
   <div
     id="cartModal"
@@ -287,10 +267,6 @@
 
 
 
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
   <footer>
 
     <p>
@@ -301,15 +277,11 @@
 
 
 
-  <!-- YOUR EXISTING SCRIPT -->
-
   <script src="script.js"></script>
 
 
 
-  <!-- =========================
-       FIREBASE LOGIN + OWNER CHECK
-  ========================== -->
+  <!-- FIREBASE LOGIN + OWNER CHECK -->
 
   <script type="module">
 
@@ -327,10 +299,6 @@
     from
       "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-
-    /* =========================
-       FIREBASE CONFIG
-    ========================= */
 
     const firebaseConfig = {
 
@@ -358,10 +326,6 @@
     };
 
 
-    /* =========================
-       INITIALIZE FIREBASE
-    ========================= */
-
     const app =
       initializeApp(firebaseConfig);
 
@@ -369,25 +333,13 @@
       getAuth(app);
 
 
-    /* =========================
-       OWNER EMAIL
-    ========================= */
-
     const OWNER_EMAIL =
       "snsuhail19@gmail.com";
 
 
-    /* =========================
-       OWNER BUTTON
-    ========================= */
-
     const ownerBtn =
       document.getElementById("ownerBtn");
 
-
-    /* =========================
-       CHECK LOGIN
-    ========================= */
 
     onAuthStateChanged(
       auth,
@@ -395,31 +347,18 @@
 
         if (!user) {
 
-          /*
-            Not logged in.
-            Send to login page.
-          */
-
           window.location.replace(
             "login.html"
           );
 
           return;
+
         }
 
-
-        /*
-          User is logged in.
-          Show the food shop.
-        */
 
         document.body.style.display =
           "block";
 
-
-        /* =========================
-           CHECK OWNER
-        ========================= */
 
         if (
           user.email &&
@@ -427,22 +366,12 @@
           OWNER_EMAIL.toLowerCase()
         ) {
 
-          /*
-            Owner account:
-            show Owner button.
-          */
-
           ownerBtn.style.display =
             "inline-block";
 
         }
 
         else {
-
-          /*
-            Normal customer:
-            keep Owner button hidden.
-          */
 
           ownerBtn.style.display =
             "none";
