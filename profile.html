@@ -28,7 +28,7 @@
       background: white;
       border-radius: 22px;
       padding: 28px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 35px rgba(0,0,0,.08);
     }
 
     .top {
@@ -89,8 +89,6 @@
       word-break: break-word;
     }
 
-    /* LOCATION */
-
     .location-box {
       background: #fff3ec;
       border: 1px solid #ffd8c7;
@@ -144,8 +142,6 @@
       color: #c00;
     }
 
-    /* INPUTS */
-
     label {
       display: block;
       font-weight: 700;
@@ -179,7 +175,7 @@
     }
 
     button:disabled {
-      opacity: 0.6;
+      opacity: .6;
       cursor: not-allowed;
     }
 
@@ -206,7 +202,7 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
     .loading {
@@ -238,6 +234,13 @@
       font-weight: 800;
       text-decoration: none;
     }
+
+    .sync-status {
+      text-align: center;
+      font-size: 11px;
+      color: #999;
+      margin-top: 12px;
+    }
   </style>
 </head>
 
@@ -246,27 +249,19 @@
 <div class="container">
 
   <div class="top">
-
-    <div class="logo">
-      G
-    </div>
+    <div class="logo">G</div>
 
     <div>
       <h1>My Profile</h1>
       <p class="subtitle">GENZ FOOD SHOP</p>
     </div>
-
   </div>
 
-
-  <!-- LOADING -->
 
   <div id="loading" class="loading">
-    Loading your profile...
+    Loading...
   </div>
 
-
-  <!-- PROFILE VIEW -->
 
   <div id="profileView" class="hidden">
 
@@ -287,18 +282,13 @@
         <div id="viewMobile" class="value">Not added</div>
       </div>
 
-      <!-- LOCATION -->
-
       <div class="profile-row">
 
         <div class="label">
           DELIVERY LOCATION
         </div>
 
-        <div
-          id="viewLocation"
-          class="value"
-        >
+        <div id="viewLocation" class="value">
           Location not added
         </div>
 
@@ -315,8 +305,6 @@
 
     </div>
 
-
-    <!-- LOCATION BOX -->
 
     <div class="location-box">
 
@@ -345,38 +333,26 @@
     </div>
 
 
-    <button
-      id="editBtn"
-      class="edit-btn"
-    >
+    <button id="editBtn" class="edit-btn">
       ✏️ Edit Profile
     </button>
 
-
-    <button
-      id="shopBtn"
-      class="shop-btn"
-    >
+    <button id="shopBtn" class="shop-btn">
       🛒 Go to Shop
     </button>
 
-
-    <button
-      id="logoutBtn"
-      class="logout-btn"
-    >
+    <button id="logoutBtn" class="logout-btn">
       🚪 Logout
     </button>
+
+    <div id="syncStatus" class="sync-status">
+      ✓ Profile loaded
+    </div>
 
   </div>
 
 
-  <!-- EDIT PROFILE -->
-
-  <div
-    id="editView"
-    class="hidden"
-  >
+  <div id="editView" class="hidden">
 
     <label for="editName">
       Full Name
@@ -400,15 +376,6 @@
       maxlength="10"
       placeholder="9876543210"
     >
-
-
-    <!-- IMPORTANT:
-         NO ADDRESS
-         NO CITY
-         NO PIN CODE
-
-         LOCATION CANNOT BE MANUALLY EDITED.
-    -->
 
 
     <div class="location-box">
@@ -437,25 +404,16 @@
     </div>
 
 
-    <button
-      id="saveBtn"
-      class="save-btn"
-    >
+    <button id="saveBtn" class="save-btn">
       💾 Save Changes
     </button>
 
-
-    <button
-      id="cancelBtn"
-      class="cancel-btn"
-    >
+    <button id="cancelBtn" class="cancel-btn">
       Cancel
     </button>
 
   </div>
 
-
-  <!-- MESSAGE -->
 
   <div
     id="message"
@@ -465,8 +423,6 @@
 </div>
 
 
-<!-- FIREBASE -->
-
 <script type="module">
 
 import {
@@ -474,14 +430,12 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-
 import {
   getAuth,
   onAuthStateChanged,
   signOut
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 
 import {
   getFirestore,
@@ -492,9 +446,9 @@ import {
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* =====================================
-   FIREBASE CONFIG
-===================================== */
+/* ================================
+   FIREBASE
+================================ */
 
 const firebaseConfig = {
 
@@ -522,10 +476,6 @@ const firebaseConfig = {
 };
 
 
-/* =====================================
-   INITIALIZE
-===================================== */
-
 const app =
   initializeApp(firebaseConfig);
 
@@ -536,9 +486,9 @@ const db =
   getFirestore(app);
 
 
-/* =====================================
+/* ================================
    ELEMENTS
-===================================== */
+================================ */
 
 const loading =
   document.getElementById("loading");
@@ -564,22 +514,77 @@ const locationStatus =
 const editLocationStatus =
   document.getElementById("editLocationStatus");
 
+const syncStatus =
+  document.getElementById("syncStatus");
+
 
 let currentUser = null;
 
 
-/* =====================================
+/* ================================
+   LOCAL CACHE
+================================ */
+
+function getCacheKey(uid) {
+  return "genz_profile_" + uid;
+}
+
+
+function saveProfileCache(profile) {
+
+  if (!currentUser) return;
+
+  try {
+
+    localStorage.setItem(
+      getCacheKey(currentUser.uid),
+      JSON.stringify(profile)
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "Cache save failed:",
+      error
+    );
+
+  }
+
+}
+
+
+function getProfileCache(uid) {
+
+  try {
+
+    const cached =
+      localStorage.getItem(
+        getCacheKey(uid)
+      );
+
+    if (!cached) {
+      return null;
+    }
+
+    return JSON.parse(cached);
+
+  } catch (error) {
+
+    return null;
+
+  }
+
+}
+
+
+/* ================================
    MESSAGE
-===================================== */
+================================ */
 
 function showMessage(
   title,
   details = ""
 ) {
-
-  loading.classList.add(
-    "hidden"
-  );
 
   message.innerHTML =
     "<div class='error-title'>" +
@@ -594,9 +599,9 @@ function showMessage(
 }
 
 
-/* =====================================
+/* ================================
    DISPLAY PROFILE
-===================================== */
+================================ */
 
 function displayProfile(profile) {
 
@@ -604,7 +609,7 @@ function displayProfile(profile) {
     "viewName"
   ).textContent =
     profile.name ||
-    currentUser.displayName ||
+    currentUser?.displayName ||
     "-";
 
 
@@ -612,7 +617,7 @@ function displayProfile(profile) {
     "viewEmail"
   ).textContent =
     profile.email ||
-    currentUser.email ||
+    currentUser?.email ||
     "-";
 
 
@@ -622,8 +627,6 @@ function displayProfile(profile) {
     profile.mobile ||
     "Not added";
 
-
-  /* LOCATION */
 
   const latitude =
     profile.latitude;
@@ -663,9 +666,7 @@ function displayProfile(profile) {
       "hidden"
     );
 
-  }
-
-  else {
+  } else {
 
     locationElement.textContent =
       "Location not added";
@@ -677,13 +678,11 @@ function displayProfile(profile) {
   }
 
 
-  /* EDIT FIELDS */
-
   document.getElementById(
     "editName"
   ).value =
     profile.name ||
-    currentUser.displayName ||
+    currentUser?.displayName ||
     "";
 
 
@@ -696,15 +695,69 @@ function displayProfile(profile) {
 }
 
 
-/* =====================================
-   LOAD PROFILE
-===================================== */
+/* ================================
+   SHOW PROFILE IMMEDIATELY
+================================ */
 
-async function loadProfile(user) {
+function showProfileImmediately(user) {
 
-  currentUser =
-    user;
+  currentUser = user;
 
+  const cached =
+    getProfileCache(user.uid);
+
+
+  const instantProfile = cached || {
+
+    name:
+      user.displayName || "",
+
+    email:
+      user.email || "",
+
+    mobile: "",
+
+    latitude: null,
+
+    longitude: null
+
+  };
+
+
+  displayProfile(
+    instantProfile
+  );
+
+
+  loading.classList.add(
+    "hidden"
+  );
+
+  profileView.classList.remove(
+    "hidden"
+  );
+
+
+  if (cached) {
+
+    syncStatus.textContent =
+      "✓ Showing saved profile • Syncing...";
+
+  } else {
+
+    syncStatus.textContent =
+      "✓ Account loaded • Syncing...";
+
+  }
+
+}
+
+
+/* ================================
+   FIRESTORE SYNC
+================================ */
+
+async function syncProfile(user) {
 
   try {
 
@@ -730,9 +783,7 @@ async function loadProfile(user) {
       profile =
         snapshot.data();
 
-    }
-
-    else {
+    } else {
 
       profile = {
 
@@ -753,46 +804,39 @@ async function loadProfile(user) {
     }
 
 
+    saveProfileCache(
+      profile
+    );
+
+
     displayProfile(
       profile
     );
 
 
-    loading.classList.add(
-      "hidden"
-    );
+    syncStatus.textContent =
+      "✓ Profile synced";
 
-    profileView.classList.remove(
-      "hidden"
-    );
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error(
-      "PROFILE ERROR:",
+      "PROFILE SYNC ERROR:",
       error
     );
 
 
-    showMessage(
-      "Unable to load profile",
-      "Firebase error: " +
-      (
-        error.code ||
-        error.message
-      )
-    );
+    syncStatus.textContent =
+      "⚠ Offline / sync unavailable";
 
   }
 
 }
 
 
-/* =====================================
-   GET CURRENT LOCATION
-===================================== */
+/* ================================
+   LOCATION
+================================ */
 
 function getCurrentLocation(
   statusElement,
@@ -849,7 +893,6 @@ function getCurrentLocation(
       const longitude =
         position.coords.longitude;
 
-
       const accuracy =
         position.coords.accuracy;
 
@@ -870,11 +913,8 @@ function getCurrentLocation(
 
           {
 
-            latitude:
-              latitude,
-
-            longitude:
-              longitude,
+            latitude,
+            longitude,
 
             locationAccuracy:
               accuracy,
@@ -891,29 +931,32 @@ function getCurrentLocation(
         );
 
 
-        /* UPDATE DISPLAY */
-
-        document.getElementById(
-          "viewLocation"
-        ).textContent =
-          "📍 Location saved";
+        const cached =
+          getProfileCache(
+            currentUser.uid
+          ) || {};
 
 
-        const mapLink =
-          document.getElementById(
-            "mapLink"
-          );
+        cached.latitude =
+          latitude;
 
-
-        mapLink.href =
-          "https://www.google.com/maps?q=" +
-          latitude +
-          "," +
+        cached.longitude =
           longitude;
 
+        cached.locationAccuracy =
+          accuracy;
 
-        mapLink.classList.remove(
-          "hidden"
+        cached.locationUpdatedAt =
+          new Date().toISOString();
+
+
+        saveProfileCache(
+          cached
+        );
+
+
+        displayProfile(
+          cached
         );
 
 
@@ -928,9 +971,7 @@ function getCurrentLocation(
           "📍 Update My Location";
 
 
-      }
-
-      catch (error) {
+      } catch (error) {
 
         console.error(
           "LOCATION SAVE ERROR:",
@@ -944,7 +985,6 @@ function getCurrentLocation(
             error.code ||
             error.message
           );
-
 
         statusElement.className =
           "location-status location-error";
@@ -964,12 +1004,6 @@ function getCurrentLocation(
 
     (error) => {
 
-      console.error(
-        "LOCATION ERROR:",
-        error
-      );
-
-
       let text =
         "❌ Could not get your location.";
 
@@ -980,11 +1014,9 @@ function getCurrentLocation(
       ) {
 
         text =
-          "❌ Location permission denied. Please allow location access in browser settings.";
+          "❌ Location permission denied. Please allow location access.";
 
-      }
-
-      else if (
+      } else if (
         error.code ===
         error.POSITION_UNAVAILABLE
       ) {
@@ -992,9 +1024,7 @@ function getCurrentLocation(
         text =
           "❌ Your location is currently unavailable.";
 
-      }
-
-      else if (
+      } else if (
         error.code ===
         error.TIMEOUT
       ) {
@@ -1022,14 +1052,11 @@ function getCurrentLocation(
 
     {
 
-      enableHighAccuracy:
-        true,
+      enableHighAccuracy: true,
 
-      timeout:
-        15000,
+      timeout: 15000,
 
-      maximumAge:
-        0
+      maximumAge: 0
 
     }
 
@@ -1038,9 +1065,9 @@ function getCurrentLocation(
 }
 
 
-/* =====================================
-   LOCATION BUTTON
-===================================== */
+/* ================================
+   LOCATION BUTTONS
+================================ */
 
 locationBtn.addEventListener(
   "click",
@@ -1055,10 +1082,6 @@ locationBtn.addEventListener(
 );
 
 
-/* =====================================
-   EDIT LOCATION BUTTON
-===================================== */
-
 editLocationBtn.addEventListener(
   "click",
   () => {
@@ -1072,9 +1095,9 @@ editLocationBtn.addEventListener(
 );
 
 
-/* =====================================
-   LOGIN CHECK
-===================================== */
+/* ================================
+   AUTH
+================================ */
 
 onAuthStateChanged(
   auth,
@@ -1082,15 +1105,34 @@ onAuthStateChanged(
 
     if (!user) {
 
-      window.location.href =
-        "login.html";
+      window.location.replace(
+        "login.html"
+      );
 
       return;
 
     }
 
 
-    loadProfile(
+    currentUser =
+      user;
+
+
+    /*
+      IMPORTANT:
+      Show the page immediately.
+    */
+
+    showProfileImmediately(
+      user
+    );
+
+
+    /*
+      Firebase loads in background.
+    */
+
+    syncProfile(
       user
     );
 
@@ -1098,9 +1140,9 @@ onAuthStateChanged(
 );
 
 
-/* =====================================
-   EDIT PROFILE
-===================================== */
+/* ================================
+   EDIT
+================================ */
 
 document
   .getElementById("editBtn")
@@ -1124,9 +1166,9 @@ document
   );
 
 
-/* =====================================
+/* ================================
    CANCEL
-===================================== */
+================================ */
 
 document
   .getElementById("cancelBtn")
@@ -1149,9 +1191,9 @@ document
   );
 
 
-/* =====================================
+/* ================================
    SAVE PROFILE
-===================================== */
+================================ */
 
 document
   .getElementById("saveBtn")
@@ -1220,10 +1262,6 @@ document
       }
 
 
-      /* =================================
-         CHECK LOCATION
-      ================================= */
-
       const profileRef =
         doc(
           db,
@@ -1276,16 +1314,13 @@ document
 
         const profile = {
 
-          name:
-            name,
+          name,
 
           email:
             currentUser.email || "",
 
           mobile:
             "+91" + mobile,
-
-          /* LOCATION IS NOT USER EDITABLE */
 
           latitude:
             existingProfile.latitude,
@@ -1311,15 +1346,16 @@ document
 
 
         await setDoc(
-
           profileRef,
-
           profile,
-
           {
             merge: true
           }
+        );
 
+
+        saveProfileCache(
+          profile
         );
 
 
@@ -1337,6 +1373,10 @@ document
         );
 
 
+        syncStatus.textContent =
+          "✓ Profile updated";
+
+
         message.innerHTML =
           "✅ Profile updated successfully.";
 
@@ -1344,9 +1384,8 @@ document
           "hidden"
         );
 
-      }
 
-      catch (error) {
+      } catch (error) {
 
         console.error(
           "SAVE ERROR:",
@@ -1376,9 +1415,9 @@ document
   );
 
 
-/* =====================================
-   GO TO SHOP
-===================================== */
+/* ================================
+   SHOP
+================================ */
 
 document
   .getElementById("shopBtn")
@@ -1393,9 +1432,9 @@ document
   );
 
 
-/* =====================================
+/* ================================
    LOGOUT
-===================================== */
+================================ */
 
 document
   .getElementById("logoutBtn")
@@ -1423,12 +1462,11 @@ document
         );
 
 
-        window.location.href =
-          "login.html";
+        window.location.replace(
+          "login.html"
+        );
 
-      }
-
-      catch (error) {
+      } catch (error) {
 
         console.error(
           "LOGOUT ERROR:",
@@ -1457,5 +1495,4 @@ document
 </script>
 
 </body>
-
 </html>
