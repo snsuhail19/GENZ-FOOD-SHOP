@@ -52,7 +52,7 @@
     }
 
     .field {
-      margin-bottom: 14px;
+      margin-bottom: 15px;
     }
 
     .field label {
@@ -135,6 +135,44 @@
       padding-top: 15px;
     }
 
+    /* PAYMENT */
+
+    .payment-title {
+      margin-top: 25px;
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .payment-option {
+      border: 2px solid #ddd;
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .payment-option:hover {
+      border-color: #ff5a1f;
+    }
+
+    .payment-option input {
+      margin-right: 8px;
+    }
+
+    .payment-option strong {
+      font-size: 16px;
+    }
+
+    .payment-option p {
+      margin: 6px 0 0 25px;
+      color: #777;
+      font-size: 13px;
+    }
+
     .pay {
       width: 100%;
       padding: 15px;
@@ -145,11 +183,11 @@
       font-size: 16px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
     .pay:disabled {
-      opacity: 0.6;
+      opacity: .6;
       cursor: not-allowed;
     }
 
@@ -193,7 +231,6 @@
       padding: 12px;
       border-radius: 10px;
       margin-bottom: 18px;
-      line-height: 1.5;
     }
 
     .loading {
@@ -215,6 +252,10 @@
 
       .qty {
         flex-wrap: wrap;
+      }
+
+      .payment-options {
+        grid-template-columns: 1fr;
       }
 
     }
@@ -252,7 +293,6 @@
 </header>
 
 
-
 <main class="checkout">
 
 
@@ -264,25 +304,18 @@
   </a>
 
 
-  <!-- MESSAGE -->
-
   <div
     id="message"
     class="message"
   ></div>
 
 
-  <!-- LOADING -->
-
   <div
     id="loading"
     class="box loading"
   >
-
     Checking your account...
-
   </div>
-
 
 
   <!-- ORDER -->
@@ -294,7 +327,7 @@
   >
 
     <h2>
-      Your Order
+      🛒 Your Order
     </h2>
 
     <div id="items"></div>
@@ -341,8 +374,7 @@
   </div>
 
 
-
-  <!-- CUSTOMER DETAILS -->
+  <!-- CUSTOMER -->
 
   <div
     class="box"
@@ -351,13 +383,13 @@
   >
 
     <h2>
-      Customer Details
+      👤 Customer Details
     </h2>
 
 
     <div class="field">
 
-      <label for="name">
+      <label>
         Name
       </label>
 
@@ -370,10 +402,9 @@
     </div>
 
 
-
     <div class="field">
 
-      <label for="phone">
+      <label>
         Phone
       </label>
 
@@ -388,10 +419,9 @@
     </div>
 
 
-
     <div class="field">
 
-      <label for="address">
+      <label>
         Delivery Address
       </label>
 
@@ -403,19 +433,64 @@
     </div>
 
 
+    <!-- PAYMENT METHOD -->
+
+    <h2 class="payment-title">
+      💳 Payment Method
+    </h2>
+
+
+    <div class="payment-options">
+
+      <label class="payment-option">
+
+        <input
+          type="radio"
+          name="paymentMethod"
+          value="UPI"
+        >
+
+        <strong>
+          📱 UPI
+        </strong>
+
+        <p>
+          Pay using UPI
+        </p>
+
+      </label>
+
+
+      <label class="payment-option">
+
+        <input
+          type="radio"
+          name="paymentMethod"
+          value="Cash on Delivery"
+        >
+
+        <strong>
+          💵 Cash on Delivery
+        </strong>
+
+        <p>
+          Pay when your order arrives
+        </p>
+
+      </label>
+
+    </div>
+
 
     <button
       id="placeOrderBtn"
       class="pay"
       onclick="placeOrder()"
     >
-
       Place Order
-
     </button>
 
   </div>
-
 
 
   <!-- SUCCESS -->
@@ -449,21 +524,6 @@
     <br>
 
 
-    <p>
-      <strong>
-        Payment gateway is not connected yet.
-      </strong>
-    </p>
-
-
-    <p>
-      Your order has been saved successfully.
-    </p>
-
-
-    <br>
-
-
     <a
       class="back"
       href="index.html"
@@ -477,696 +537,596 @@
 </main>
 
 
-
-<!-- =====================================
-     FIREBASE
-===================================== -->
-
 <script type="module">
 
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-  import {
-    initializeApp
-  }
-  from
-    "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
+import {
+  getAuth,
+  onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-  import {
-    getAuth,
-    onAuthStateChanged
-  }
-  from
-    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-  import {
-    getFirestore,
-    doc,
-    getDoc,
-    addDoc,
-    collection,
-    serverTimestamp
-  }
-  from
-    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+/* FIREBASE */
 
+const firebaseConfig = {
 
-  /* =====================================
-     FIREBASE CONFIG
-  ===================================== */
+  apiKey:
+    "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
 
-  const firebaseConfig = {
+  authDomain:
+    "genz-food-shop.firebaseapp.com",
 
-    apiKey:
-      "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+  projectId:
+    "genz-food-shop",
 
-    authDomain:
-      "genz-food-shop.firebaseapp.com",
+  storageBucket:
+    "genz-food-shop.firebasestorage.app",
 
-    projectId:
-      "genz-food-shop",
+  messagingSenderId:
+    "259228392374",
 
-    storageBucket:
-      "genz-food-shop.firebasestorage.app",
+  appId:
+    "1:259228392374:web:6af3a0d3c93597a5b5bf17",
 
-    messagingSenderId:
-      "259228392374",
+  measurementId:
+    "G-LT095LEWJ6"
 
-    appId:
-      "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+};
 
-    measurementId:
-      "G-LT095LEWJ6"
 
-  };
+const app =
+  initializeApp(firebaseConfig);
 
+const auth =
+  getAuth(app);
 
+const db =
+  getFirestore(app);
 
-  /* =====================================
-     INITIALIZE FIREBASE
-  ===================================== */
 
-  const app =
-    initializeApp(firebaseConfig);
+/* OWNER */
 
+const OWNER_EMAIL =
+  "snsuhail19@gmail.com";
 
-  const auth =
-    getAuth(app);
 
+/* CART */
 
-  const db =
-    getFirestore(app);
+let cart =
+  JSON.parse(
+    localStorage.getItem("genzCart")
+  ) || [];
 
 
+let currentUser =
+  null;
 
-  /* =====================================
-     CART
-  ===================================== */
 
-  let cart =
-    JSON.parse(
-      localStorage.getItem("genzCart")
-    ) || [];
+/* ELEMENTS */
 
+const loading =
+  document.getElementById("loading");
 
+const orderBox =
+  document.getElementById("orderBox");
 
-  /* =====================================
-     CURRENT USER
-  ===================================== */
+const customerBox =
+  document.getElementById("customerBox");
 
-  let currentUser = null;
+const successBox =
+  document.getElementById("successBox");
 
+const message =
+  document.getElementById("message");
 
 
-  /* =====================================
-     ELEMENTS
-  ===================================== */
+/* MESSAGE */
 
-  const loading =
-    document.getElementById("loading");
+function showMessage(text) {
 
+  message.textContent =
+    text;
 
-  const orderBox =
-    document.getElementById("orderBox");
+  message.style.display =
+    "block";
 
+}
 
-  const customerBox =
-    document.getElementById("customerBox");
 
+function hideMessage() {
 
-  const successBox =
-    document.getElementById("successBox");
+  message.style.display =
+    "none";
 
+}
 
-  const message =
-    document.getElementById("message");
 
+/* PROFILE */
 
+async function loadProfile(user) {
 
-  /* =====================================
-     MESSAGE
-  ===================================== */
+  try {
 
-  function showMessage(text) {
-
-    message.textContent =
-      text;
-
-    message.style.display =
-      "block";
-
-  }
-
-
-
-  function hideMessage() {
-
-    message.style.display =
-      "none";
-
-  }
-
-
-
-  /* =====================================
-     LOAD SAVED PROFILE
-  ===================================== */
-
-  async function loadProfile(user) {
-
-    try {
-
-      const profileRef =
-        doc(
-          db,
-          "users",
-          user.uid
-        );
-
-
-      const profileSnapshot =
-        await getDoc(
-          profileRef
-        );
-
-
-      if (
-        profileSnapshot.exists()
-      ) {
-
-        const profile =
-          profileSnapshot.data();
-
-
-        document.getElementById(
-          "name"
-        ).value =
-          profile.name || user.displayName || "";
-
-
-        document.getElementById(
-          "phone"
-        ).value =
-          (profile.mobile || "")
-            .replace("+91", "");
-
-
-        document.getElementById(
-          "address"
-        ).value =
-          profile.address || "";
-
-      }
-
-      else {
-
-        document.getElementById(
-          "name"
-        ).value =
-          user.displayName || "";
-
-      }
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "Profile loading error:",
-        error
+    const profileRef =
+      doc(
+        db,
+        "users",
+        user.uid
       );
 
-      /*
-        Profile loading is not required
-        to place an order, so we continue.
-      */
+    const snapshot =
+      await getDoc(
+        profileRef
+      );
 
-      document.getElementById(
-        "name"
-      ).value =
-        user.displayName || "";
+
+    if (snapshot.exists()) {
+
+      const profile =
+        snapshot.data();
+
+
+      document.getElementById("name").value =
+        profile.name ||
+        user.displayName ||
+        "";
+
+
+      document.getElementById("phone").value =
+        (profile.mobile || "")
+          .replace("+91", "");
+
+
+      document.getElementById("address").value =
+        profile.address ||
+        "";
+
+    }
+
+    else {
+
+      document.getElementById("name").value =
+        user.displayName ||
+        "";
 
     }
 
   }
 
+  catch (error) {
+
+    console.error(error);
+
+    document.getElementById("name").value =
+      user.displayName ||
+      "";
+
+  }
+
+}
 
 
-  /* =====================================
-     SAVE CART
-  ===================================== */
+/* CART */
 
-  function saveCart() {
+function saveCart() {
 
-    localStorage.setItem(
-      "genzCart",
-      JSON.stringify(cart)
+  localStorage.setItem(
+    "genzCart",
+    JSON.stringify(cart)
+  );
+
+  render();
+
+}
+
+
+window.changeQuantity =
+function(id, amount) {
+
+  const item =
+    cart.find(
+      i => i.id === id
     );
 
-    render();
+  if (!item) return;
+
+  item.quantity += amount;
+
+
+  if (item.quantity <= 0) {
+
+    cart =
+      cart.filter(
+        i => i.id !== id
+      );
 
   }
 
 
+  saveCart();
 
-  /* =====================================
-     CHANGE QUANTITY
-  ===================================== */
-
-  function changeQuantity(
-    id,
-    amount
-  ) {
-
-    const item =
-      cart.find(
-        i => i.id === id
-      );
+};
 
 
-    if (!item) return;
+/* RENDER */
+
+function render() {
+
+  const box =
+    document.getElementById("items");
 
 
-    item.quantity += amount;
+  if (cart.length === 0) {
 
+    box.innerHTML = `
+      <div class="empty">
+        Your cart is empty.
+        <br><br>
+        <a class="back" href="index.html">
+          Go to Menu
+        </a>
+      </div>
+    `;
 
-    if (
-      item.quantity <= 0
-    ) {
+    document.getElementById("subtotal")
+      .textContent = "0";
 
-      cart =
-        cart.filter(
-          i => i.id !== id
-        );
+    document.getElementById("delivery")
+      .textContent = "0";
 
-    }
+    document.getElementById("total")
+      .textContent = "0";
 
-
-    saveCart();
+    return;
 
   }
 
 
+  box.innerHTML =
+    cart.map(item => `
 
-  /* =====================================
-     RENDER CART
-  ===================================== */
+      <div class="item">
 
-  function render() {
+        <img
+          src="${item.image}"
+          alt="${item.name}"
+        >
 
-    const box =
-      document.getElementById(
-        "items"
-      );
+        <div class="info">
 
+          <h3>
+            ${item.name}
+          </h3>
 
-    if (
-      cart.length === 0
-    ) {
-
-      box.innerHTML = `
-
-        <div class="empty">
-
-          Your cart is empty.
-
-          <br><br>
-
-          <a
-            class="back"
-            href="index.html"
-          >
-            Go to Menu
-          </a>
+          <p>
+            ₹${item.price} each
+          </p>
 
         </div>
 
-      `;
 
+        <div class="qty">
 
-      document.getElementById(
-        "subtotal"
-      ).textContent =
-        "0";
-
-
-      document.getElementById(
-        "total"
-      ).textContent =
-        "0";
-
-
-      return;
-
-    }
-
-
-
-    box.innerHTML =
-      cart.map(
-        item => `
-
-        <div class="item">
-
-          <img
-            src="${item.image}"
-            alt="${item.name}"
+          <button
+            onclick="changeQuantity(${item.id}, -1)"
           >
-
-
-          <div class="info">
-
-            <h3>
-              ${item.name}
-            </h3>
-
-            <p>
-              ₹${item.price} each
-            </p>
-
-          </div>
-
-
-          <div class="qty">
-
-            <button
-              onclick="changeQuantity(${item.id}, -1)"
-            >
-              −
-            </button>
-
-
-            <strong>
-              ${item.quantity}
-            </strong>
-
-
-            <button
-              onclick="changeQuantity(${item.id}, 1)"
-            >
-              +
-            </button>
-
-          </div>
-
+            −
+          </button>
 
           <strong>
-            ₹${item.price * item.quantity}
+            ${item.quantity}
           </strong>
+
+          <button
+            onclick="changeQuantity(${item.id}, 1)"
+          >
+            +
+          </button>
 
         </div>
 
-      `
-      ).join("");
+
+        <strong>
+          ₹${item.price * item.quantity}
+        </strong>
+
+      </div>
+
+    `).join("");
 
 
-
-    const subtotal =
-      cart.reduce(
-        (sum, item) =>
-          sum +
-          item.price *
-          item.quantity,
-        0
-      );
-
-
-    document.getElementById(
-      "subtotal"
-    ).textContent =
-      subtotal;
+  const subtotal =
+    cart.reduce(
+      (sum, item) =>
+        sum +
+        item.price *
+        item.quantity,
+      0
+    );
 
 
-    document.getElementById(
-      "delivery"
-    ).textContent =
-      "0";
+  document.getElementById("subtotal")
+    .textContent = subtotal;
+
+  document.getElementById("delivery")
+    .textContent = "0";
+
+  document.getElementById("total")
+    .textContent = subtotal;
+
+}
 
 
-    document.getElementById(
-      "total"
-    ).textContent =
-      subtotal;
+/* PLACE ORDER */
+
+window.placeOrder =
+async function() {
+
+  hideMessage();
+
+
+  if (!currentUser) {
+
+    showMessage(
+      "Please login first."
+    );
+
+    return;
 
   }
 
 
+  if (cart.length === 0) {
 
-  /* =====================================
-     PLACE ORDER
-  ===================================== */
+    showMessage(
+      "Your cart is empty."
+    );
 
-  window.placeOrder =
-    async function () {
+    return;
 
+  }
 
-      hideMessage();
 
+  const name =
+    document.getElementById("name")
+      .value.trim();
 
-      if (!currentUser) {
 
-        showMessage(
-          "You are not logged in. Please login first."
-        );
+  let phone =
+    document.getElementById("phone")
+      .value.trim();
 
-        return;
 
-      }
+  const address =
+    document.getElementById("address")
+      .value.trim();
 
 
-      if (
-        cart.length === 0
-      ) {
+  const paymentElement =
+    document.querySelector(
+      'input[name="paymentMethod"]:checked'
+    );
 
-        showMessage(
-          "Your cart is empty."
-        );
 
-        return;
+  if (
+    !name ||
+    !phone ||
+    !address
+  ) {
 
-      }
+    showMessage(
+      "Please fill in all customer details."
+    );
 
+    return;
 
+  }
 
-      /* GET CUSTOMER DETAILS */
 
-      const name =
-        document.getElementById(
-          "name"
-        ).value.trim();
+  if (!paymentElement) {
 
+    showMessage(
+      "Please select UPI or Cash on Delivery."
+    );
 
-      let phone =
-        document.getElementById(
-          "phone"
-        ).value.trim();
+    return;
 
+  }
 
-      const address =
-        document.getElementById(
-          "address"
-        ).value.trim();
 
+  phone =
+    phone.replace(
+      /\D/g,
+      ""
+    );
 
 
-      /* VALIDATION */
+  if (
+    !/^[6-9]\d{9}$/.test(phone)
+  ) {
 
-      if (
-        !name ||
-        !phone ||
-        !address
-      ) {
+    showMessage(
+      "Please enter a valid 10-digit Indian mobile number."
+    );
 
-        showMessage(
-          "Please fill in your name, phone number and delivery address."
-        );
+    return;
 
-        return;
+  }
 
-      }
 
+  const paymentMethod =
+    paymentElement.value;
 
-      phone =
-        phone.replace(
-          /\D/g,
-          ""
-        );
 
+  const total =
+    cart.reduce(
+      (sum, item) =>
+        sum +
+        item.price *
+        item.quantity,
+      0
+    );
 
-      if (
-        !/^[6-9]\d{9}$/.test(
-          phone
-        )
-      ) {
 
-        showMessage(
-          "Please enter a valid 10-digit Indian mobile number."
-        );
+  const orderItems =
+    cart.map(item => ({
 
-        return;
+      id:
+        item.id,
 
-      }
+      name:
+        item.name,
 
+      price:
+        item.price,
 
+      quantity:
+        item.quantity,
 
-      /* TOTAL */
+      image:
+        item.image,
 
-      const total =
-        cart.reduce(
-          (sum, item) =>
-            sum +
-            item.price *
-            item.quantity,
-          0
-        );
+      itemTotal:
+        item.price *
+        item.quantity
 
+    }));
 
 
-      /* ORDER ITEMS */
+  const button =
+    document.getElementById(
+      "placeOrderBtn"
+    );
 
-      const orderItems =
-        cart.map(
-          item => ({
 
-            id:
-              item.id,
+  button.disabled =
+    true;
 
-            name:
-              item.name,
+  button.textContent =
+    "Placing Order...";
 
-            price:
-              item.price,
 
-            quantity:
-              item.quantity,
+  try {
 
-            image:
-              item.image,
+    /*
+      If the owner places an order,
+      Firestore will mark it as Owner.
+    */
 
-            itemTotal:
-              item.price *
-              item.quantity
+    const isOwner =
+      currentUser.email &&
+      currentUser.email.toLowerCase() ===
+      OWNER_EMAIL.toLowerCase();
 
-          })
-        );
 
+    const orderData = {
 
+      userId:
+        currentUser.uid,
 
-      /* DISABLE BUTTON */
+      customerType:
+        isOwner
+          ? "Owner"
+          : "Customer",
 
-      const button =
-        document.getElementById(
-          "placeOrderBtn"
-        );
+      customerName:
+        name,
 
+      customerEmail:
+        currentUser.email || "",
 
-      button.disabled =
-        true;
+      phone:
+        "+91" + phone,
 
+      address:
+        address,
 
-      button.textContent =
-        "Placing Order...";
+      items:
+        orderItems,
 
+      subtotal:
+        total,
 
+      delivery:
+        0,
 
-      try {
+      total:
+        total,
 
+      paymentMethod:
+        paymentMethod,
 
-        /* =================================
-           SAVE ORDER TO FIRESTORE
-        ================================= */
+      paymentStatus:
+        paymentMethod === "UPI"
+          ? "Pending"
+          : "Pending",
 
-        const orderData = {
+      status:
+        "Pending",
 
-          userId:
-            currentUser.uid,
+      createdAt:
+        serverTimestamp()
 
-          customerName:
-            name,
+    };
 
-          customerEmail:
-            currentUser.email || "",
 
-          phone:
-            "+91" + phone,
+    const orderRef =
+      await addDoc(
+        collection(
+          db,
+          "orders"
+        ),
+        orderData
+      );
 
-          address:
-            address,
 
-          items:
-            orderItems,
+    /* CLEAR CART */
 
-          subtotal:
-            total,
+    cart = [];
 
-          delivery:
-            0,
+    localStorage.removeItem(
+      "genzCart"
+    );
 
-          total:
-            total,
 
-          status:
-            "Pending",
+    /* SUCCESS */
 
-          paymentStatus:
-            "Not Paid",
+    document.getElementById("orderId")
+      .textContent =
+      "Order ID: " +
+      orderRef.id;
 
-          createdAt:
-            serverTimestamp()
 
-        };
+    const lines =
+      orderItems.map(
+        item =>
+          `${item.name} × ${item.quantity} = ₹${item.itemTotal}`
+      ).join("\n");
 
 
+    document.getElementById("orderText")
+      .textContent =
 
-        const orderRef =
-          await addDoc(
-            collection(
-              db,
-              "orders"
-            ),
-            orderData
-          );
+`Order Type: ${isOwner ? "Owner Order" : "Customer Order"}
 
-
-
-        /* =================================
-           CLEAR CART
-        ================================= */
-
-        cart = [];
-
-
-        localStorage.removeItem(
-          "genzCart"
-        );
-
-
-
-        /* =================================
-           SHOW SUCCESS
-        ================================= */
-
-        document.getElementById(
-          "orderId"
-        ).textContent =
-          "Order ID: " +
-          orderRef.id;
-
-
-        const lines =
-          orderItems.map(
-            item =>
-              `${item.name} × ${item.quantity} = ₹${item.itemTotal}`
-          ).join("\n");
-
-
-        document.getElementById(
-          "orderText"
-        ).textContent =
-
-`Customer: ${name}
+Customer: ${name}
 
 Email: ${currentUser.email || "-"}
 
@@ -1180,115 +1140,93 @@ ${lines}
 
 Total: ₹${total}
 
-Status: Pending`;
+Payment: ${paymentMethod}
+
+Payment Status: Pending
+
+Order Status: Pending`;
 
 
+    customerBox.style.display =
+      "none";
 
-        customerBox.style.display =
-          "none";
+    orderBox.style.display =
+      "none";
 
+    successBox.style.display =
+      "block";
 
-        orderBox.style.display =
-          "none";
+  }
 
+  catch (error) {
 
-        successBox.style.display =
-          "block";
+    console.error(error);
 
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "ORDER ERROR:",
-          error
-        );
-
-
-        showMessage(
-          "Could not place order: " +
-          (
-            error.code ||
-            error.message
-          )
-        );
+    showMessage(
+      "Could not place order: " +
+      (
+        error.code ||
+        error.message
+      )
+    );
 
 
-        button.disabled =
-          false;
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Place Order";
+
+  }
+
+};
 
 
-        button.textContent =
-          "Place Order";
+/* LOGIN */
 
-      }
+onAuthStateChanged(
+  auth,
+  async user => {
 
-    };
+    if (!user) {
 
+      window.location.replace(
+        "login.html"
+      );
 
-
-  /* =====================================
-     LOGIN CHECK
-  ===================================== */
-
-  onAuthStateChanged(
-    auth,
-    async (user) => {
-
-
-      if (!user) {
-
-        window.location.replace(
-          "login.html"
-        );
-
-        return;
-
-      }
-
-
-      currentUser =
-        user;
-
-
-      loading.style.display =
-        "none";
-
-
-      if (
-        cart.length === 0
-      ) {
-
-        orderBox.style.display =
-          "block";
-
-        customerBox.style.display =
-          "none";
-
-      }
-
-      else {
-
-        orderBox.style.display =
-          "block";
-
-        customerBox.style.display =
-          "block";
-
-        await loadProfile(user);
-
-      }
-
-
-      render();
+      return;
 
     }
-  );
+
+
+    currentUser =
+      user;
+
+
+    loading.style.display =
+      "none";
+
+
+    orderBox.style.display =
+      "block";
+
+
+    if (cart.length > 0) {
+
+      customerBox.style.display =
+        "block";
+
+      await loadProfile(user);
+
+    }
+
+
+    render();
+
+  }
+);
 
 </script>
 
-
 </body>
-
 </html>
