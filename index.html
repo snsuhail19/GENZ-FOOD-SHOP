@@ -5,7 +5,10 @@
 
   <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>GENZ FOOD SHOP</title>
 
@@ -13,60 +16,147 @@
 
   <style>
 
+    /* ================================
+       HEADER
+    ================================= */
+
     body {
       display: none;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      position: relative;
     }
 
-    .profile-btn,
-    .owner-btn,
-    .orders-btn {
-      display: inline-block;
-      padding: 11px 16px;
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 700;
+    /* CART */
+
+    .cart-btn {
+      border: 0;
       cursor: pointer;
+      font-weight: 700;
+      background: #171717;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 12px;
     }
 
-    .profile-btn {
+    .cart-btn span {
+      display: inline-block;
+      min-width: 22px;
+      padding: 2px 6px;
+      margin-left: 4px;
+      border-radius: 20px;
       background: #ff5a1f;
     }
 
-    .orders-btn {
-      background: #16803a;
+    /* MENU BUTTON */
+
+    .menu-btn {
+      border: 0;
+      cursor: pointer;
+      background: #ff5a1f;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
     }
 
-    .owner-btn {
+    .menu-btn:hover {
+      opacity: .9;
+    }
+
+    /* DROPDOWN MENU */
+
+    .dropdown-menu {
       display: none;
-      background: #171717;
+      position: absolute;
+      top: 55px;
+      right: 0;
+      width: 210px;
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 12px 35px rgba(0,0,0,.15);
+      z-index: 200;
     }
 
-    .profile-btn:hover,
-    .owner-btn:hover,
-    .orders-btn:hover {
-      opacity: 0.9;
+    .dropdown-menu.show {
+      display: block;
     }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 13px 12px;
+      border-radius: 11px;
+      text-decoration: none;
+      color: #171717;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .menu-item:hover {
+      background: #fff3ec;
+    }
+
+    .owner-menu {
+      display: none;
+    }
+
+    /* MOBILE */
 
     @media (max-width: 600px) {
 
-      .header-right {
-        gap: 6px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
+      .header {
+        padding: 12px 4%;
       }
 
-      .profile-btn,
-      .owner-btn,
-      .orders-btn {
+      .brand {
+        gap: 8px;
+      }
+
+      .brand h1 {
+        font-size: 14px;
+      }
+
+      .brand p {
+        font-size: 9px;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        font-size: 21px;
+        border-radius: 11px;
+      }
+
+      .cart-btn {
         padding: 9px 10px;
         font-size: 13px;
+      }
+
+      .menu-btn {
+        padding: 9px 10px;
+        font-size: 13px;
+      }
+
+      .dropdown-menu {
+        top: 48px;
+        right: 0;
+        width: 190px;
       }
 
     }
@@ -79,37 +169,91 @@
 <body>
 
 
-  <header class="header">
+<!-- =========================================
+     HEADER
+========================================= -->
 
-    <div class="brand">
+<header class="header">
 
-      <div class="logo">
-        G
-      </div>
 
-      <div>
+  <!-- SHOP NAME -->
 
-        <h1>
-          GENZ FOOD SHOP
-        </h1>
+  <div class="brand">
 
-        <p>
-          Indian Foods & Snacks
-        </p>
+    <div class="logo">
+      G
+    </div>
 
-      </div>
+    <div>
+
+      <h1>
+        GENZ FOOD SHOP
+      </h1>
+
+      <p>
+        Indian Foods & Snacks
+      </p>
 
     </div>
 
+  </div>
 
-    <div class="header-right">
 
+  <!-- RIGHT SIDE -->
+
+  <div class="header-right">
+
+
+    <!-- CART -->
+
+    <button
+      class="cart-btn"
+      onclick="openCart()"
+    >
+
+      🛒 Cart
+
+      <span id="cartCount">
+        0
+      </span>
+
+    </button>
+
+
+    <!-- MENU -->
+
+    <button
+      id="menuBtn"
+      class="menu-btn"
+      onclick="toggleMenu()"
+    >
+
+      ☰ Menu
+
+    </button>
+
+
+    <!-- DROPDOWN -->
+
+    <div
+      id="dropdownMenu"
+      class="dropdown-menu"
+    >
+
+
+      <!-- PROFILE -->
 
       <a
         href="profile.html"
-        class="profile-btn"
+        class="menu-item"
       >
-        👤 Profile
+
+        👤
+
+        <span>
+          Profile
+        </span>
+
       </a>
 
 
@@ -117,271 +261,426 @@
 
       <a
         href="myorder.html"
-        class="orders-btn"
+        class="menu-item"
       >
-        📦 My Orders
+
+        📦
+
+        <span>
+          My Orders
+        </span>
+
       </a>
 
 
       <!-- OWNER -->
 
       <a
-        id="ownerBtn"
+        id="ownerMenu"
         href="owner.html"
-        class="owner-btn"
+        class="menu-item owner-menu"
       >
-        👑 Owner
+
+        👑
+
+        <span>
+          Owner
+        </span>
+
       </a>
 
-
-      <!-- CART -->
-
-      <button
-        class="cart-btn"
-        onclick="openCart()"
-      >
-
-        🛒 Cart
-
-        <span id="cartCount">
-          0
-        </span>
-
-      </button>
-
-    </div>
-
-  </header>
-
-
-
-  <main>
-
-
-    <section class="hero">
-
-      <div>
-
-        <span class="tag">
-          🔥 Fresh & Tasty
-        </span>
-
-        <h2>
-          Your favourite Indian snacks,
-          <span>just a click away.</span>
-        </h2>
-
-        <p>
-          Choose your food, add it to cart and
-          continue to payment.
-          THE WEBSITE IS NOT COMPLETED,
-          IT IS UNDER DEVELOPMENT,
-          BE PATIENT.
-        </p>
-
-        <a
-          href="#menu"
-          class="hero-btn"
-        >
-          Explore Menu
-        </a>
-
-      </div>
-
-    </section>
-
-
-
-    <section
-      id="menu"
-      class="menu-section"
-    >
-
-      <div class="section-title">
-
-        <p>
-          OUR MENU
-        </p>
-
-        <h2>
-          Indian Foods & Snacks
-        </h2>
-
-      </div>
-
-
-      <div
-        id="foodGrid"
-        class="food-grid"
-      ></div>
-
-    </section>
-
-  </main>
-
-
-
-  <!-- CART -->
-
-  <div
-    id="cartModal"
-    class="modal"
-  >
-
-    <div class="modal-content">
-
-      <button
-        class="close"
-        onclick="closeCart()"
-      >
-        ×
-      </button>
-
-      <h2>
-        Your Cart
-      </h2>
-
-      <div id="cartItems"></div>
-
-
-      <div class="cart-footer">
-
-        <strong>
-          Total: ₹
-          <span id="cartTotal">0</span>
-        </strong>
-
-
-        <button
-          class="checkout-btn"
-          onclick="goToPayment()"
-        >
-          Proceed to Payment →
-        </button>
-
-      </div>
 
     </div>
 
   </div>
 
-
-
-  <footer>
-
-    <p>
-      © 2026 GENZ FOOD SHOP • Indian Foods & Snacks
-    </p>
-
-  </footer>
+</header>
 
 
 
-  <script src="script.js"></script>
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div>
+
+      <span class="tag">
+        🔥 Fresh & Tasty
+      </span>
+
+
+      <h2>
+
+        Your favourite Indian snacks,
+
+        <span>
+          just a click away.
+        </span>
+
+      </h2>
+
+
+      <p>
+
+        Choose your food, add it to cart and
+        continue to payment.
+
+        THE WEBSITE IS NOT COMPLETED,
+        IT IS UNDER DEVELOPMENT,
+        BE PATIENT.
+
+      </p>
+
+
+      <a
+        href="#menu"
+        class="hero-btn"
+      >
+
+        Explore Menu
+
+      </a>
+
+    </div>
+
+  </section>
 
 
 
-  <!-- FIREBASE LOGIN + OWNER CHECK -->
+  <!-- =========================================
+       FOOD MENU
+  ========================================= -->
 
-  <script type="module">
-
-    import {
-      initializeApp
-    }
-    from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-
-    import {
-      getAuth,
-      onAuthStateChanged
-    }
-    from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  <section
+    id="menu"
+    class="menu-section"
+  >
 
 
-    const firebaseConfig = {
+    <div class="section-title">
 
-      apiKey:
-        "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+      <p>
+        OUR MENU
+      </p>
 
-      authDomain:
-        "genz-food-shop.firebaseapp.com",
+      <h2>
+        Indian Foods & Snacks
+      </h2>
 
-      projectId:
-        "genz-food-shop",
-
-      storageBucket:
-        "genz-food-shop.firebasestorage.app",
-
-      messagingSenderId:
-        "259228392374",
-
-      appId:
-        "1:259228392374:web:6af3a0d3c93597a5b5bf17",
-
-      measurementId:
-        "G-LT095LEWJ6"
-
-    };
+    </div>
 
 
-    const app =
-      initializeApp(firebaseConfig);
-
-    const auth =
-      getAuth(app);
-
-
-    const OWNER_EMAIL =
-      "snsuhail19@gmail.com";
+    <div
+      id="foodGrid"
+      class="food-grid"
+    ></div>
 
 
-    const ownerBtn =
-      document.getElementById("ownerBtn");
+  </section>
 
 
-    onAuthStateChanged(
-      auth,
-      (user) => {
-
-        if (!user) {
-
-          window.location.replace(
-            "login.html"
-          );
-
-          return;
-
-        }
+</main>
 
 
-        document.body.style.display =
-          "block";
+
+<!-- =========================================
+     CART MODAL
+========================================= -->
+
+<div
+  id="cartModal"
+  class="modal"
+>
 
 
-        if (
-          user.email &&
-          user.email.toLowerCase() ===
-          OWNER_EMAIL.toLowerCase()
-        ) {
+  <div class="modal-content">
 
-          ownerBtn.style.display =
-            "inline-block";
 
-        }
+    <button
+      class="close"
+      onclick="closeCart()"
+    >
 
-        else {
+      ×
 
-          ownerBtn.style.display =
-            "none";
+    </button>
 
-        }
 
-      }
+    <h2>
+      Your Cart
+    </h2>
+
+
+    <div
+      id="cartItems"
+    ></div>
+
+
+    <div class="cart-footer">
+
+
+      <strong>
+
+        Total: ₹
+
+        <span id="cartTotal">
+          0
+        </span>
+
+      </strong>
+
+
+      <button
+        class="checkout-btn"
+        onclick="goToPayment()"
+      >
+
+        Proceed to Payment →
+
+      </button>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+  <p>
+    © 2026 GENZ FOOD SHOP • Indian Foods & Snacks
+  </p>
+
+</footer>
+
+
+
+<!-- =========================================
+     YOUR EXISTING SCRIPT
+========================================= -->
+
+<script src="script.js"></script>
+
+
+
+<!-- =========================================
+     MENU + FIREBASE
+========================================= -->
+
+<script type="module">
+
+
+  import {
+    initializeApp
+  }
+
+  from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+  import {
+    getAuth,
+    onAuthStateChanged
+  }
+
+  from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+
+  /* =========================================
+     FIREBASE CONFIG
+  ========================================= */
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+    authDomain:
+      "genz-food-shop.firebaseapp.com",
+
+    projectId:
+      "genz-food-shop",
+
+    storageBucket:
+      "genz-food-shop.firebasestorage.app",
+
+    messagingSenderId:
+      "259228392374",
+
+    appId:
+      "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+    measurementId:
+      "G-LT095LEWJ6"
+
+  };
+
+
+
+  /* =========================================
+     INITIALIZE FIREBASE
+  ========================================= */
+
+  const app =
+    initializeApp(
+      firebaseConfig
     );
 
-  </script>
+
+  const auth =
+    getAuth(app);
+
+
+
+  /* =========================================
+     OWNER EMAIL
+  ========================================= */
+
+  const OWNER_EMAIL =
+    "snsuhail19@gmail.com";
+
+
+
+  const ownerMenu =
+    document.getElementById(
+      "ownerMenu"
+    );
+
+
+
+  /* =========================================
+     AUTHENTICATION
+  ========================================= */
+
+  onAuthStateChanged(
+    auth,
+    (user) => {
+
+
+      /* NOT LOGGED IN */
+
+      if (!user) {
+
+        window.location.replace(
+          "login.html"
+        );
+
+        return;
+
+      }
+
+
+      /* SHOW WEBSITE */
+
+      document.body.style.display =
+        "block";
+
+
+      /* OWNER CHECK */
+
+      if (
+        user.email &&
+        user.email.toLowerCase() ===
+        OWNER_EMAIL.toLowerCase()
+      ) {
+
+        ownerMenu.style.display =
+          "flex";
+
+      }
+
+      else {
+
+        ownerMenu.style.display =
+          "none";
+
+      }
+
+    }
+
+  );
+
+
+
+  /* =========================================
+     CLOSE MENU WHEN CLICKING OUTSIDE
+  ========================================= */
+
+  document.addEventListener(
+    "click",
+    (event) => {
+
+
+      const menu =
+        document.getElementById(
+          "dropdownMenu"
+        );
+
+
+      const button =
+        document.getElementById(
+          "menuBtn"
+        );
+
+
+      if (
+        !menu.contains(event.target) &&
+        !button.contains(event.target)
+      ) {
+
+        menu.classList.remove(
+          "show"
+        );
+
+      }
+
+    }
+
+  );
+
+
+
+</script>
+
+
+
+<!-- =========================================
+     MENU TOGGLE
+========================================= -->
+
+<script>
+
+  function toggleMenu() {
+
+    const menu =
+      document.getElementById(
+        "dropdownMenu"
+      );
+
+
+    menu.classList.toggle(
+      "show"
+    );
+
+  }
+
+</script>
 
 
 </body>
