@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>My Profile - GENZ FOOD SHOP</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      background: #fff8f3;
+
+      padding: 25px 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+
+      margin: 0 auto;
+
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 28px;
+
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      width: 55px;
+      height: 55px;
+
+      display: grid;
+      place-items: center;
+
+      background: #ff5a1f;
+      color: white;
+
+      border-radius: 15px;
+
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+
+      font-size: 24px;
+    }
+
+    .subtitle {
+      margin: 5px 0 0;
+
+      color: #777;
+
+      font-size: 14px;
+    }
+
+    .profile-card {
+      background: #fff8f3;
+
+      border-radius: 15px;
+
+      padding: 18px;
+
+      margin-bottom: 20px;
+    }
+
+    .profile-row {
+      padding: 12px 0;
+
+      border-bottom: 1px solid #eee;
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #777;
+
+      font-size: 12px;
+
+      margin-bottom: 4px;
+    }
+
+    .value {
+      font-size: 16px;
+
+      font-weight: 700;
+
+      word-break: break-word;
+    }
+
+    label {
+      display: block;
+
+      font-weight: 700;
+
+      margin-top: 15px;
+
+      margin-bottom: 7px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+
+      padding: 13px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 11px;
+
+      font-size: 15px;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #ff5a1f;
+    }
+
+    textarea {
+      min-height: 90px;
+
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+
+      border: 0;
+
+      border-radius: 11px;
+
+      padding: 14px;
+
+      margin-top: 15px;
+
+      font-size: 15px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background: #ff5a1f;
+
+      color: white;
+    }
+
+    .save-btn {
+      background: #ff5a1f;
+
+      color: white;
+    }
+
+    .cancel-btn {
+      background: #eee;
+
+      color: #222;
+    }
+
+    .shop-btn {
+      background: #171717;
+
+      color: white;
+    }
+
+    .logout-btn {
+      background: #fff;
+
+      color: #d22;
+
+      border: 1px solid #ddd;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      margin-top: 15px;
+
+      padding: 12px;
+
+      border-radius: 10px;
+
+      background: #fff3ec;
+
+      color: #8b3c17;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+    .loading {
+      text-align: center;
+
+      padding: 30px 10px;
+
+      color: #777;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+  <!-- HEADER -->
+
+  <div class="top">
+
+    <div class="logo">
+      G
+    </div>
+
+    <div>
+
+      <h1>
+        My Profile
+      </h1>
+
+      <p class="subtitle">
+        GENZ FOOD SHOP
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    id="loading"
+    class="loading"
+  >
+
+    Loading your profile...
+
+  </div>
+
+
+  <!-- PROFILE VIEW -->
+
+  <div
+    id="profileView"
+    class="hidden"
+  >
+
+    <div class="profile-card">
+
+
+      <div class="profile-row">
+
+        <div class="label">
+          NAME
+        </div>
+
+        <div
+          id="viewName"
+          class="value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="profile-row">
+
+        <div class="label">
+          GMAIL
+        </div>
+
+        <div
+          id="viewEmail"
+          class="value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="profile-row">
+
+        <div class="label">
+          MOBILE
+        </div>
+
+        <div
+          id="viewMobile"
+          class="value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="profile-row">
+
+        <div class="label">
+          ADDRESS
+        </div>
+
+        <div
+          id="viewAddress"
+          class="value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="profile-row">
+
+        <div class="label">
+          CITY
+        </div>
+
+        <div
+          id="viewCity"
+          class="value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="profile-row">
+
+        <div class="label">
+          PIN CODE
+        </div>
+
+        <div
+          id="viewPincode"
+          class="value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <button
+      id="editBtn"
+      class="edit-btn"
+    >
+      ✏️ Edit Profile
+    </button>
+
+
+    <button
+      id="shopBtn"
+      class="shop-btn"
+    >
+      🛒 Go to Shop
+    </button>
+
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+    >
+      🚪 Logout
+    </button>
+
+
+  </div>
+
+
+  <!-- EDIT PROFILE -->
+
+  <div
+    id="editView"
+    class="hidden"
+  >
+
+
+    <label for="editName">
+      Full Name
+    </label>
+
+    <input
+      id="editName"
+      type="text"
+      placeholder="Your full name"
+    >
+
+
+    <label for="editMobile">
+      Mobile Number
+    </label>
+
+    <input
+      id="editMobile"
+      type="tel"
+      inputmode="numeric"
+      maxlength="10"
+      placeholder="9876543210"
+    >
+
+
+    <label for="editAddress">
+      Address
+    </label>
+
+    <textarea
+      id="editAddress"
+      placeholder="House number, street, area..."
+    ></textarea>
+
+
+    <label for="editCity">
+      City
+    </label>
+
+    <input
+      id="editCity"
+      type="text"
+      placeholder="Your city"
+    >
+
+
+    <label for="editPincode">
+      PIN Code
+    </label>
+
+    <input
+      id="editPincode"
+      type="text"
+      inputmode="numeric"
+      maxlength="6"
+      placeholder="600001"
+    >
+
+
+    <button
+      id="saveBtn"
+      class="save-btn"
+    >
+      💾 Save Changes
+    </button>
+
+
+    <button
+      id="cancelBtn"
+      class="cancel-btn"
+    >
+      Cancel
+    </button>
+
+
+  </div>
+
+
+  <!-- MESSAGE -->
+
+  <div
+    id="message"
+    class="message hidden"
+  ></div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     FIREBASE
+========================================= -->
+
+<script type="module">
+
+
+  import {
+    initializeApp
+  }
+
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  }
+
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc
+  }
+
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+
+  /* =====================================
+     FIREBASE CONFIG
+  ===================================== */
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+    authDomain:
+      "genz-food-shop.firebaseapp.com",
+
+    projectId:
+      "genz-food-shop",
+
+    storageBucket:
+      "genz-food-shop.firebasestorage.app",
+
+    messagingSenderId:
+      "259228392374",
+
+    appId:
+      "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+    measurementId:
+      "G-LT095LEWJ6"
+
+  };
+
+
+
+  /* =====================================
+     INITIALIZE
+  ===================================== */
+
+  const app =
+    initializeApp(firebaseConfig);
+
+
+  const auth =
+    getAuth(app);
+
+
+  const db =
+    getFirestore(app);
+
+
+
+  /* =====================================
+     ELEMENTS
+  ===================================== */
+
+  const loading =
+    document.getElementById("loading");
+
+
+  const profileView =
+    document.getElementById("profileView");
+
+
+  const editView =
+    document.getElementById("editView");
+
+
+  const message =
+    document.getElementById("message");
+
+
+
+  let currentUser = null;
+
+
+
+  /* =====================================
+     MESSAGE
+  ===================================== */
+
+  function showMessage(text) {
+
+    message.textContent = text;
+
+    message.classList.remove("hidden");
+
+  }
+
+
+
+  /* =====================================
+     HIDE MESSAGE
+  ===================================== */
+
+  function hideMessage() {
+
+    message.classList.add("hidden");
+
+  }
+
+
+
+  /* =====================================
+     SHOW PROFILE
+  ===================================== */
+
+  function displayProfile(profile) {
+
+
+    document.getElementById(
+      "viewName"
+    ).textContent =
+      profile.name || "-";
+
+
+    document.getElementById(
+      "viewEmail"
+    ).textContent =
+      profile.email || currentUser.email || "-";
+
+
+    document.getElementById(
+      "viewMobile"
+    ).textContent =
+      profile.mobile || "-";
+
+
+    document.getElementById(
+      "viewAddress"
+    ).textContent =
+      profile.address || "-";
+
+
+    document.getElementById(
+      "viewCity"
+    ).textContent =
+      profile.city || "-";
+
+
+    document.getElementById(
+      "viewPincode"
+    ).textContent =
+      profile.pincode || "-";
+
+
+    /* Fill edit fields */
+
+
+    document.getElementById(
+      "editName"
+    ).value =
+      profile.name || "";
+
+
+    document.getElementById(
+      "editMobile"
+    ).value =
+      (profile.mobile || "")
+        .replace("+91", "");
+
+
+    document.getElementById(
+      "editAddress"
+    ).value =
+      profile.address || "";
+
+
+    document.getElementById(
+      "editCity"
+    ).value =
+      profile.city || "";
+
+
+    document.getElementById(
+      "editPincode"
+    ).value =
+      profile.pincode || "";
+
+
+  }
+
+
+
+  /* =====================================
+     LOAD USER PROFILE
+  ===================================== */
+
+  async function loadProfile(user) {
+
+
+    currentUser = user;
+
+
+    try {
+
+
+      const profileRef =
+
+        doc(
+          db,
+          "users",
+          user.uid
+        );
+
+
+      const profileSnapshot =
+
+        await getDoc(
+          profileRef
+        );
+
+
+      let profile;
+
+
+      if (
+        profileSnapshot.exists()
+      ) {
+
+
+        profile =
+          profileSnapshot.data();
+
+
+      }
+
+      else {
+
+
+        /*
+          If the profile document
+          doesn't exist yet, create
+          basic information from Google.
+        */
+
+        profile = {
+
+          name:
+            user.displayName || "",
+
+          email:
+            user.email || "",
+
+          mobile:
+            "",
+
+          address:
+            "",
+
+          city:
+            "",
+
+          pincode:
+            ""
+
+        };
+
+      }
+
+
+      displayProfile(profile);
+
+
+      loading.classList.add(
+        "hidden"
+      );
+
+
+      profileView.classList.remove(
+        "hidden"
+      );
+
+
+    }
+
+    catch (error) {
+
+
+      console.error(error);
+
+
+      loading.classList.add(
+        "hidden"
+      );
+
+
+      showMessage(
+        "Could not load your profile: " +
+        (
+          error.code ||
+          error.message
+        )
+      );
+
+    }
+
+  }
+
+
+
+  /* =====================================
+     CHECK LOGIN
+  ===================================== */
+
+  onAuthStateChanged(
+
+    auth,
+
+    (user) => {
+
+
+      if (!user) {
+
+
+        /*
+          No logged-in user.
+        */
+
+        window.location.replace(
+          "login.html"
+        );
+
+
+        return;
+
+      }
+
+
+      loadProfile(user);
+
+    }
+
+  );
+
+
+
+  /* =====================================
+     EDIT PROFILE
+  ===================================== */
+
+  document
+    .getElementById("editBtn")
+    .addEventListener(
+      "click",
+      () => {
+
+
+        hideMessage();
+
+
+        profileView.classList.add(
+          "hidden"
+        );
+
+
+        editView.classList.remove(
+          "hidden"
+        );
+
+
+      }
+    );
+
+
+
+  /* =====================================
+     CANCEL EDIT
+  ===================================== */
+
+  document
+    .getElementById("cancelBtn")
+    .addEventListener(
+      "click",
+      () => {
+
+
+        hideMessage();
+
+
+        editView.classList.add(
+          "hidden"
+        );
+
+
+        profileView.classList.remove(
+          "hidden"
+        );
+
+
+      }
+    );
+
+
+
+  /* =====================================
+     SAVE CHANGES
+  ===================================== */
+
+  document
+    .getElementById("saveBtn")
+    .addEventListener(
+      "click",
+      async () => {
+
+
+        if (!currentUser) {
+
+
+          showMessage(
+            "You are not logged in."
+          );
+
+
+          return;
+
+        }
+
+
+        /* GET VALUES */
+
+
+        const name =
+
+          document
+            .getElementById("editName")
+            .value
+            .trim();
+
+
+        let mobile =
+
+          document
+            .getElementById("editMobile")
+            .value
+            .trim();
+
+
+        const address =
+
+          document
+            .getElementById("editAddress")
+            .value
+            .trim();
+
+
+        const city =
+
+          document
+            .getElementById("editCity")
+            .value
+            .trim();
+
+
+        const pincode =
+
+          document
+            .getElementById("editPincode")
+            .value
+            .trim();
+
+
+
+        /* VALIDATION */
+
+
+        if (!name) {
+
+          showMessage(
+            "Please enter your name."
+          );
+
+          return;
+
+        }
+
+
+        mobile =
+          mobile.replace(
+            /\D/g,
+            ""
+          );
+
+
+        if (
+          !/^[6-9]\d{9}$/.test(
+            mobile
+          )
+        ) {
+
+          showMessage(
+            "Please enter a valid 10-digit Indian mobile number."
+          );
+
+          return;
+
+        }
+
+
+        if (!address) {
+
+          showMessage(
+            "Please enter your address."
+          );
+
+          return;
+
+        }
+
+
+        if (!city) {
+
+          showMessage(
+            "Please enter your city."
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !/^\d{6}$/.test(
+            pincode
+          )
+        ) {
+
+          showMessage(
+            "Please enter a valid 6-digit PIN code."
+          );
+
+          return;
+
+        }
+
+
+
+        try {
+
+
+          const saveButton =
+            document.getElementById(
+              "saveBtn"
+            );
+
+
+          saveButton.disabled =
+            true;
+
+
+          saveButton.textContent =
+            "Saving...";
+
+
+          const profile = {
+
+
+            name:
+              name,
+
+
+            email:
+              currentUser.email || "",
+
+
+            mobile:
+              "+91" + mobile,
+
+
+            address:
+              address,
+
+
+            city:
+              city,
+
+
+            pincode:
+              pincode,
+
+
+            photoURL:
+              currentUser.photoURL || "",
+
+
+            updatedAt:
+              new Date().toISOString()
+
+          };
+
+
+
+          /*
+            IMPORTANT:
+
+            The profile is saved under
+            the logged-in user's UID.
+
+            users / USER_UID
+
+            Therefore each customer
+            gets their own profile.
+          */
+
+
+          await setDoc(
+
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            ),
+
+            profile,
+
+            {
+              merge: true
+            }
+
+          );
+
+
+          displayProfile(profile);
+
+
+          editView.classList.add(
+            "hidden"
+          );
+
+
+          profileView.classList.remove(
+            "hidden"
+          );
+
+
+          showMessage(
+            "✅ Profile updated successfully."
+          );
+
+
+          saveButton.disabled =
+            false;
+
+
+          saveButton.textContent =
+            "💾 Save Changes";
+
+
+        }
+
+        catch (error) {
+
+
+          console.error(error);
+
+
+          showMessage(
+            "Could not save changes: " +
+            (
+              error.code ||
+              error.message
+            )
+          );
+
+
+          document
+            .getElementById(
+              "saveBtn"
+            )
+            .disabled = false;
+
+
+          document
+            .getElementById(
+              "saveBtn"
+            )
+            .textContent =
+            "💾 Save Changes";
+
+        }
+
+      }
+    );
+
+
+
+  /* =====================================
+     GO TO SHOP
+  ===================================== */
+
+  document
+    .getElementById("shopBtn")
+    .addEventListener(
+      "click",
+      () => {
+
+        window.location.href =
+          "index.html";
+
+      }
+    );
+
+
+
+  /* =====================================
+     LOGOUT
+  ===================================== */
+
+  document
+    .getElementById("logoutBtn")
+    .addEventListener(
+      "click",
+      async () => {
+
+
+        try {
+
+
+          await signOut(auth);
+
+
+          /*
+            After logout Firebase will
+            detect that there is no user.
+          */
+
+
+          window.location.replace(
+            "login.html"
+          );
+
+
+        }
+
+        catch (error) {
+
+
+          showMessage(
+            "Logout failed: " +
+            (
+              error.code ||
+              error.message
+            )
+          );
+
+        }
+
+      }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
