@@ -51,40 +51,92 @@
       margin: 0 0 18px;
     }
 
-    .field {
-      margin-bottom: 15px;
+    /* CUSTOMER */
+
+    .customer-row {
+      background: #fff8f3;
+      border-radius: 13px;
+      padding: 14px;
+      margin-bottom: 12px;
     }
 
-    .field label {
-      display: block;
+    .customer-label {
+      color: #777;
+      font-size: 12px;
       font-weight: 700;
-      margin-bottom: 7px;
+      margin-bottom: 5px;
     }
 
-    .field input,
-    .field textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 11px;
-      font-size: 15px;
+    .customer-value {
+      font-size: 16px;
+      font-weight: 800;
+      word-break: break-word;
     }
 
-    .field textarea {
-      min-height: 85px;
-      resize: vertical;
-    }
+    /* LOCATION */
 
     .location-box {
-      background: #eef9f1;
-      color: #176b35;
-      padding: 13px;
-      border-radius: 11px;
-      margin: 12px 0;
+      background: #fff3ec;
+      border: 1px solid #ffd7c5;
+      border-radius: 15px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    .location-title {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .location-info {
+      color: #666;
       font-size: 13px;
       line-height: 1.5;
+      margin-bottom: 10px;
     }
+
+    .location-status {
+      font-size: 14px;
+      font-weight: 800;
+      margin-top: 10px;
+      word-break: break-word;
+    }
+
+    .location-success {
+      color: #16803c;
+    }
+
+    .location-error {
+      color: #c00;
+    }
+
+    .map-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #ff5a1f;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .refresh-location {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      border-radius: 10px;
+      background: #171717;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .refresh-location:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    /* ITEMS */
 
     .item {
       display: flex;
@@ -132,6 +184,8 @@
       cursor: pointer;
     }
 
+    /* SUMMARY */
+
     .summary-row {
       display: flex;
       justify-content: space-between;
@@ -144,6 +198,8 @@
       border-top: 2px solid #eee;
       padding-top: 15px;
     }
+
+    /* PAYMENT */
 
     .payment-title {
       margin-top: 25px;
@@ -160,6 +216,7 @@
       border-radius: 14px;
       padding: 16px;
       cursor: pointer;
+      transition: .2s;
     }
 
     .payment-option:hover {
@@ -180,6 +237,8 @@
       font-size: 13px;
     }
 
+    /* BUTTON */
+
     .pay {
       width: 100%;
       padding: 15px;
@@ -198,11 +257,15 @@
       cursor: not-allowed;
     }
 
+    /* EMPTY */
+
     .empty {
       text-align: center;
       padding: 30px;
       color: #777;
     }
+
+    /* SUCCESS */
 
     .success {
       display: none;
@@ -230,6 +293,8 @@
       white-space: pre-wrap;
       font-size: 14px;
     }
+
+    /* MESSAGE */
 
     .message {
       display: none;
@@ -271,7 +336,9 @@
 
 </head>
 
+
 <body>
+
 
 <header class="header">
 
@@ -300,6 +367,7 @@
 
 <main class="checkout">
 
+
   <a
     class="back"
     href="index.html"
@@ -308,11 +376,15 @@
   </a>
 
 
+  <!-- MESSAGE -->
+
   <div
     id="message"
     class="message"
   ></div>
 
+
+  <!-- LOADING -->
 
   <div
     id="loading"
@@ -322,7 +394,9 @@
   </div>
 
 
-  <!-- ORDER -->
+  <!-- =====================================
+       ORDER
+  ====================================== -->
 
   <div
     class="box"
@@ -378,7 +452,9 @@
   </div>
 
 
-  <!-- CUSTOMER -->
+  <!-- =====================================
+       CUSTOMER
+  ====================================== -->
 
   <div
     class="box"
@@ -391,63 +467,109 @@
     </h2>
 
 
-    <div class="field">
+    <div class="customer-row">
 
-      <label>
-        Name
-      </label>
+      <div class="customer-label">
+        NAME
+      </div>
 
-      <input
-        id="name"
-        type="text"
-        placeholder="Enter your name"
+      <div
+        id="customerName"
+        class="customer-value"
       >
+        Loading...
+      </div>
 
     </div>
 
 
-    <div class="field">
+    <div class="customer-row">
 
-      <label>
-        Phone
-      </label>
+      <div class="customer-label">
+        PHONE
+      </div>
 
-      <input
-        id="phone"
-        type="tel"
-        inputmode="numeric"
-        maxlength="10"
-        placeholder="9876543210"
+      <div
+        id="customerPhone"
+        class="customer-value"
       >
+        Loading...
+      </div>
 
     </div>
 
 
-    <div class="field">
+    <div class="customer-row">
 
-      <label>
-        Delivery Address
-      </label>
+      <div class="customer-label">
+        GMAIL
+      </div>
 
-      <textarea
-        id="address"
-        placeholder="Enter your full delivery address"
-      ></textarea>
+      <div
+        id="customerEmail"
+        class="customer-value"
+      >
+        Loading...
+      </div>
 
     </div>
 
 
-    <!-- LOCATION -->
+    <!-- =====================================
+         GPS LOCATION
+    ====================================== -->
 
-    <div
-      id="locationBox"
-      class="location-box"
-    >
-      📍 Checking saved delivery location...
+    <div class="location-box">
+
+      <div class="location-title">
+        📍 Delivery Location
+      </div>
+
+      <div class="location-info">
+
+        Your delivery location is taken from
+        your saved device GPS location.
+
+        <br><br>
+
+        You cannot manually enter or change
+        the delivery location here.
+
+      </div>
+
+
+      <div
+        id="locationStatus"
+        class="location-status"
+      >
+        Checking saved location...
+      </div>
+
+
+      <a
+        id="mapLink"
+        class="map-link"
+        href="#"
+        target="_blank"
+        style="display:none;"
+      >
+        🗺️ View Delivery Location on Google Maps
+      </a>
+
+
+      <button
+        id="refreshLocationBtn"
+        class="refresh-location"
+      >
+        📍 Get Current Location
+      </button>
+
     </div>
 
 
-    <!-- PAYMENT -->
+    <!-- =====================================
+         PAYMENT METHOD
+    ====================================== -->
 
     <h2 class="payment-title">
       💳 Payment Method
@@ -499,7 +621,6 @@
     <button
       id="placeOrderBtn"
       class="pay"
-      onclick="placeOrder()"
     >
       Place Order
     </button>
@@ -507,7 +628,9 @@
   </div>
 
 
-  <!-- SUCCESS -->
+  <!-- =====================================
+       SUCCESS
+  ====================================== -->
 
   <div
     class="box success"
@@ -547,10 +670,16 @@
 
   </div>
 
+
 </main>
 
 
 <script type="module">
+
+
+/* =====================================
+   FIREBASE IMPORTS
+===================================== */
 
 import {
   initializeApp
@@ -569,6 +698,7 @@ import {
   getFirestore,
   doc,
   getDoc,
+  setDoc,
   addDoc,
   collection,
   serverTimestamp
@@ -576,7 +706,9 @@ import {
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* FIREBASE */
+/* =====================================
+   FIREBASE CONFIG
+===================================== */
 
 const firebaseConfig = {
 
@@ -604,59 +736,119 @@ const firebaseConfig = {
 };
 
 
+/* =====================================
+   INITIALIZE FIREBASE
+===================================== */
+
 const app =
-  initializeApp(firebaseConfig);
+  initializeApp(
+    firebaseConfig
+  );
+
 
 const auth =
   getAuth(app);
+
 
 const db =
   getFirestore(app);
 
 
-/* OWNER */
+/* =====================================
+   OWNER
+===================================== */
 
 const OWNER_EMAIL =
   "snsuhail19@gmail.com";
 
 
-/* CART */
+/* =====================================
+   CART
+===================================== */
 
 let cart =
   JSON.parse(
-    localStorage.getItem("genzCart")
+    localStorage.getItem(
+      "genzCart"
+    )
   ) || [];
 
 
 let currentUser =
   null;
 
-let savedLocation =
+
+/* =====================================
+   PROFILE LOCATION
+===================================== */
+
+let userLatitude =
   null;
 
 
-/* ELEMENTS */
+let userLongitude =
+  null;
+
+
+let locationAccuracy =
+  null;
+
+
+/* =====================================
+   ELEMENTS
+===================================== */
 
 const loading =
-  document.getElementById("loading");
+  document.getElementById(
+    "loading"
+  );
+
 
 const orderBox =
-  document.getElementById("orderBox");
+  document.getElementById(
+    "orderBox"
+  );
+
 
 const customerBox =
-  document.getElementById("customerBox");
+  document.getElementById(
+    "customerBox"
+  );
+
 
 const successBox =
-  document.getElementById("successBox");
+  document.getElementById(
+    "successBox"
+  );
+
 
 const message =
-  document.getElementById("message");
+  document.getElementById(
+    "message"
+  );
 
-const locationBox =
-  document.getElementById("locationBox");
+
+const locationStatus =
+  document.getElementById(
+    "locationStatus"
+  );
 
 
-/* MESSAGE */
+const mapLink =
+  document.getElementById(
+    "mapLink"
+  );
+
+
+const refreshLocationBtn =
+  document.getElementById(
+    "refreshLocationBtn"
+  );
+
+
+/* =====================================
+   MESSAGE
+===================================== */
 
 function showMessage(text) {
 
@@ -677,7 +869,302 @@ function hideMessage() {
 }
 
 
-/* LOAD PROFILE */
+/* =====================================
+   SHOW LOCATION
+===================================== */
+
+function showSavedLocation(
+  latitude,
+  longitude,
+  accuracy
+) {
+
+  userLatitude =
+    Number(latitude);
+
+  userLongitude =
+    Number(longitude);
+
+  locationAccuracy =
+    accuracy ?
+    Number(accuracy) :
+    null;
+
+
+  locationStatus.textContent =
+    "✅ Delivery location saved";
+
+
+  locationStatus.className =
+    "location-status location-success";
+
+
+  mapLink.href =
+    "https://www.google.com/maps?q=" +
+    userLatitude +
+    "," +
+    userLongitude;
+
+
+  mapLink.style.display =
+    "inline-block";
+
+}
+
+
+/* =====================================
+   GET CURRENT GPS LOCATION
+===================================== */
+
+async function updateCurrentLocation() {
+
+  hideMessage();
+
+
+  if (!currentUser) {
+
+    showMessage(
+      "Please login first."
+    );
+
+    return false;
+
+  }
+
+
+  if (!navigator.geolocation) {
+
+    showMessage(
+      "Your browser does not support GPS location."
+    );
+
+    return false;
+
+  }
+
+
+  refreshLocationBtn.disabled =
+    true;
+
+
+  refreshLocationBtn.textContent =
+    "📍 Getting Location...";
+
+
+  locationStatus.textContent =
+    "Please allow location permission...";
+
+
+  locationStatus.className =
+    "location-status";
+
+
+  return new Promise(
+    (resolve) => {
+
+      navigator.geolocation.getCurrentPosition(
+
+        async (position) => {
+
+          const latitude =
+            position.coords.latitude;
+
+          const longitude =
+            position.coords.longitude;
+
+          const accuracy =
+            position.coords.accuracy;
+
+
+          try {
+
+            await setDoc(
+
+              doc(
+                db,
+                "users",
+                currentUser.uid
+              ),
+
+              {
+
+                latitude:
+                  latitude,
+
+                longitude:
+                  longitude,
+
+                locationAccuracy:
+                  accuracy,
+
+                locationUpdatedAt:
+                  new Date().toISOString()
+
+              },
+
+              {
+                merge: true
+              }
+
+            );
+
+
+            showSavedLocation(
+              latitude,
+              longitude,
+              accuracy
+            );
+
+
+            locationStatus.textContent =
+              "✅ Current location saved successfully.";
+
+
+            refreshLocationBtn.textContent =
+              "📍 Update Current Location";
+
+
+            refreshLocationBtn.disabled =
+              false;
+
+
+            resolve(true);
+
+          }
+
+          catch (error) {
+
+            console.error(
+              "LOCATION SAVE ERROR:",
+              error
+            );
+
+
+            locationStatus.textContent =
+              "❌ Could not save location.";
+
+
+            locationStatus.className =
+              "location-status location-error";
+
+
+            refreshLocationBtn.textContent =
+              "📍 Get Current Location";
+
+
+            refreshLocationBtn.disabled =
+              false;
+
+
+            showMessage(
+              "Could not save your location: " +
+              (
+                error.code ||
+                error.message
+              )
+            );
+
+
+            resolve(false);
+
+          }
+
+        },
+
+
+        (error) => {
+
+          console.error(
+            "GPS ERROR:",
+            error
+          );
+
+
+          let errorText =
+            "Could not get your location.";
+
+
+          if (
+            error.code ===
+            error.PERMISSION_DENIED
+          ) {
+
+            errorText =
+              "Location permission denied. Please allow location access in your browser settings.";
+
+          }
+
+          else if (
+            error.code ===
+            error.POSITION_UNAVAILABLE
+          ) {
+
+            errorText =
+              "Your location is currently unavailable. Please turn on GPS/location services.";
+
+          }
+
+          else if (
+            error.code ===
+            error.TIMEOUT
+          ) {
+
+            errorText =
+              "Location request timed out. Please try again.";
+
+          }
+
+
+          locationStatus.textContent =
+            "❌ " +
+            errorText;
+
+
+          locationStatus.className =
+            "location-status location-error";
+
+
+          refreshLocationBtn.disabled =
+            false;
+
+
+          refreshLocationBtn.textContent =
+            "📍 Get Current Location";
+
+
+          showMessage(
+            errorText
+          );
+
+
+          resolve(false);
+
+        },
+
+        {
+
+          enableHighAccuracy:
+            true,
+
+          timeout:
+            15000,
+
+          maximumAge:
+            0
+
+        }
+
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================
+   LOAD PROFILE
+===================================== */
 
 async function loadProfile(user) {
 
@@ -699,15 +1186,35 @@ async function loadProfile(user) {
 
     if (!snapshot.exists()) {
 
-      document.getElementById("name").value =
-        user.displayName || "";
+      document.getElementById(
+        "customerName"
+      ).textContent =
+        user.displayName ||
+        "Not available";
 
-      locationBox.textContent =
-        "⚠️ No saved GPS location. Please open Profile and add your location.";
 
-      savedLocation = null;
+      document.getElementById(
+        "customerEmail"
+      ).textContent =
+        user.email ||
+        "Not available";
 
-      return;
+
+      document.getElementById(
+        "customerPhone"
+      ).textContent =
+        "Not added";
+
+
+      locationStatus.textContent =
+        "❌ No saved location. Please get your location from My Profile.";
+
+
+      locationStatus.className =
+        "location-status location-error";
+
+
+      return false;
 
     }
 
@@ -716,87 +1223,114 @@ async function loadProfile(user) {
       snapshot.data();
 
 
-    document.getElementById("name").value =
+    /* NAME */
+
+    document.getElementById(
+      "customerName"
+    ).textContent =
       profile.name ||
       user.displayName ||
-      "";
+      "Not available";
 
 
-    document.getElementById("phone").value =
-      (profile.mobile || "")
-        .replace("+91", "");
+    /* PHONE */
+
+    document.getElementById(
+      "customerPhone"
+    ).textContent =
+      profile.mobile ||
+      "Not added";
 
 
-    document.getElementById("address").value =
-      profile.address ||
-      "";
+    /* EMAIL */
+
+    document.getElementById(
+      "customerEmail"
+    ).textContent =
+      profile.email ||
+      user.email ||
+      "Not available";
 
 
-    /*
-      LOAD SAVED GPS LOCATION
-    */
+    /* LOCATION */
 
     if (
-      profile.location &&
-      typeof profile.location.latitude === "number" &&
-      typeof profile.location.longitude === "number"
+      typeof profile.latitude ===
+        "number" &&
+
+      typeof profile.longitude ===
+        "number"
     ) {
 
-      savedLocation = {
+      showSavedLocation(
 
-        latitude:
-          profile.location.latitude,
+        profile.latitude,
 
-        longitude:
-          profile.location.longitude,
+        profile.longitude,
 
-        accuracy:
-          profile.location.accuracy || null
+        profile.locationAccuracy
 
-      };
+      );
 
 
-      locationBox.textContent =
-        "✅ Your saved delivery location is attached to this order. GPS accuracy: approximately " +
-        (
-          savedLocation.accuracy || "unknown"
-        ) +
-        " metres.";
+      return true;
 
     }
 
-    else {
 
-      savedLocation = null;
+    locationStatus.textContent =
+      "❌ No saved location found. Please get your current location.";
 
-      locationBox.textContent =
-        "⚠️ GPS location not saved. Please go to Profile → Edit Profile → Get My Location.";
 
-    }
+    locationStatus.className =
+      "location-status location-error";
+
+
+    return false;
 
   }
 
   catch (error) {
 
     console.error(
-      "PROFILE ERROR:",
+      "PROFILE LOAD ERROR:",
       error
     );
 
 
-    document.getElementById("name").value =
-      user.displayName || "";
+    showMessage(
+      "Could not load your profile: " +
+      (
+        error.code ||
+        error.message
+      )
+    );
 
 
-    locationBox.textContent =
-      "⚠️ Could not load your saved location.";
+    return false;
 
   }
 
 }
 
 
-/* CART */
+/* =====================================
+   LOCATION BUTTON
+===================================== */
+
+refreshLocationBtn.addEventListener(
+  "click",
+  async () => {
+
+    await updateCurrentLocation();
+
+  }
+);
+
+
+/* =====================================
+   CART SAVE
+===================================== */
 
 function saveCart() {
 
@@ -805,13 +1339,21 @@ function saveCart() {
     JSON.stringify(cart)
   );
 
+
   render();
 
 }
 
 
+/* =====================================
+   CHANGE QUANTITY
+===================================== */
+
 window.changeQuantity =
-function(id, amount) {
+function(
+  id,
+  amount
+) {
 
   const item =
     cart.find(
@@ -822,10 +1364,13 @@ function(id, amount) {
   if (!item) return;
 
 
-  item.quantity += amount;
+  item.quantity +=
+    amount;
 
 
-  if (item.quantity <= 0) {
+  if (
+    item.quantity <= 0
+  ) {
 
     cart =
       cart.filter(
@@ -840,35 +1385,59 @@ function(id, amount) {
 };
 
 
-/* RENDER */
+/* =====================================
+   RENDER CART
+===================================== */
 
 function render() {
 
   const box =
-    document.getElementById("items");
+    document.getElementById(
+      "items"
+    );
 
 
-  if (cart.length === 0) {
+  if (
+    cart.length === 0
+  ) {
 
     box.innerHTML = `
+
       <div class="empty">
+
         Your cart is empty.
+
         <br><br>
-        <a class="back" href="index.html">
+
+        <a
+          class="back"
+          href="index.html"
+        >
           Go to Menu
         </a>
+
       </div>
+
     `;
 
 
-    document.getElementById("subtotal")
-      .textContent = "0";
+    document.getElementById(
+      "subtotal"
+    ).textContent =
+      "0";
 
-    document.getElementById("delivery")
-      .textContent = "0";
 
-    document.getElementById("total")
-      .textContent = "0";
+    document.getElementById(
+      "delivery"
+    ).textContent =
+      "0";
+
+
+    document.getElementById(
+      "total"
+    ).textContent =
+      "0";
+
 
     return;
 
@@ -876,84 +1445,101 @@ function render() {
 
 
   box.innerHTML =
-    cart.map(item => `
 
-      <div class="item">
+    cart.map(
+      item => `
 
-        <img
-          src="${item.image}"
-          alt="${item.name}"
-        >
+        <div class="item">
 
-        <div class="info">
-
-          <h3>
-            ${item.name}
-          </h3>
-
-          <p>
-            ₹${item.price} each
-          </p>
-
-        </div>
-
-
-        <div class="qty">
-
-          <button
-            onclick="changeQuantity(${item.id}, -1)"
+          <img
+            src="${item.image}"
+            alt="${item.name}"
           >
-            −
-          </button>
+
+          <div class="info">
+
+            <h3>
+              ${item.name}
+            </h3>
+
+            <p>
+              ₹${item.price} each
+            </p>
+
+          </div>
+
+
+          <div class="qty">
+
+            <button
+              onclick="changeQuantity(${item.id}, -1)"
+            >
+              −
+            </button>
+
+            <strong>
+              ${item.quantity}
+            </strong>
+
+            <button
+              onclick="changeQuantity(${item.id}, 1)"
+            >
+              +
+            </button>
+
+          </div>
+
 
           <strong>
-            ${item.quantity}
+            ₹${item.price * item.quantity}
           </strong>
-
-          <button
-            onclick="changeQuantity(${item.id}, 1)"
-          >
-            +
-          </button>
 
         </div>
 
-
-        <strong>
-          ₹${item.price * item.quantity}
-        </strong>
-
-      </div>
-
-    `).join("");
+      `
+    ).join("");
 
 
   const subtotal =
     cart.reduce(
-      (sum, item) =>
+      (
+        sum,
+        item
+      ) =>
+
         sum +
         item.price *
         item.quantity,
+
       0
     );
 
 
-  document.getElementById("subtotal")
-    .textContent = subtotal;
+  document.getElementById(
+    "subtotal"
+  ).textContent =
+    subtotal;
 
-  document.getElementById("delivery")
-    .textContent = "0";
 
-  document.getElementById("total")
-    .textContent = subtotal;
+  document.getElementById(
+    "delivery"
+  ).textContent =
+    "0";
+
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    subtotal;
 
 }
 
 
-/* PLACE ORDER */
+/* =====================================
+   PLACE ORDER
+===================================== */
 
-window.placeOrder =
-async function() {
+async function placeOrder() {
 
   hideMessage();
 
@@ -969,7 +1555,9 @@ async function() {
   }
 
 
-  if (cart.length === 0) {
+  if (
+    cart.length === 0
+  ) {
 
     showMessage(
       "Your cart is empty."
@@ -980,40 +1568,31 @@ async function() {
   }
 
 
-  const name =
-    document.getElementById("name")
-      .value.trim();
+  /* =================================
+     LOCATION REQUIRED
+  ================================= */
 
+  if (
+    typeof userLatitude !==
+      "number" ||
 
-  let phone =
-    document.getElementById("phone")
-      .value.trim();
+    typeof userLongitude !==
+      "number"
+  ) {
 
+    showMessage(
+      "Delivery location required. Please get your current location before placing the order."
+    );
 
-  const address =
-    document.getElementById("address")
-      .value.trim();
+    return;
+
+  }
 
 
   const paymentElement =
     document.querySelector(
       'input[name="paymentMethod"]:checked'
     );
-
-
-  if (
-    !name ||
-    !phone ||
-    !address
-  ) {
-
-    showMessage(
-      "Please fill in all customer details."
-    );
-
-    return;
-
-  }
 
 
   if (!paymentElement) {
@@ -1027,76 +1606,50 @@ async function() {
   }
 
 
-  /*
-    GPS LOCATION REQUIRED
-  */
-
-  if (!savedLocation) {
-
-    showMessage(
-      "📍 Your delivery location is not saved. Please open Profile and add your location before placing an order."
-    );
-
-    return;
-
-  }
-
-
-  phone =
-    phone.replace(
-      /\D/g,
-      ""
-    );
-
-
-  if (!/^[6-9]\d{9}$/.test(phone)) {
-
-    showMessage(
-      "Please enter a valid 10-digit Indian mobile number."
-    );
-
-    return;
-
-  }
-
-
   const paymentMethod =
     paymentElement.value;
 
 
   const total =
     cart.reduce(
-      (sum, item) =>
+      (
+        sum,
+        item
+      ) =>
+
         sum +
         item.price *
         item.quantity,
+
       0
     );
 
 
   const orderItems =
-    cart.map(item => ({
+    cart.map(
+      item => ({
 
-      id:
-        item.id,
+        id:
+          item.id,
 
-      name:
-        item.name,
+        name:
+          item.name,
 
-      price:
-        item.price,
+        price:
+          item.price,
 
-      quantity:
-        item.quantity,
+        quantity:
+          item.quantity,
 
-      image:
-        item.image,
+        image:
+          item.image,
 
-      itemTotal:
-        item.price *
-        item.quantity
+        itemTotal:
+          item.price *
+          item.quantity
 
-    }));
+      })
+    );
 
 
   const button =
@@ -1108,21 +1661,30 @@ async function() {
   button.disabled =
     true;
 
+
   button.textContent =
     "Placing Order...";
 
 
   try {
 
+    /* ================================
+       OWNER CHECK
+    ================================= */
+
     const isOwner =
       currentUser.email &&
-      currentUser.email.toLowerCase() ===
-      OWNER_EMAIL.toLowerCase();
+
+      currentUser.email
+        .toLowerCase() ===
+
+      OWNER_EMAIL
+        .toLowerCase();
 
 
-    /*
-      ORDER DATA
-    */
+    /* ================================
+       ORDER DATA
+    ================================= */
 
     const orderData = {
 
@@ -1135,35 +1697,37 @@ async function() {
           : "Customer",
 
       customerName:
-        name,
+        document.getElementById(
+          "customerName"
+        ).textContent,
 
       customerEmail:
         currentUser.email || "",
 
       phone:
-        "+91" + phone,
+        document.getElementById(
+          "customerPhone"
+        ).textContent,
 
-      address:
-        address,
+      /* =================================
+         GPS LOCATION
+      ================================= */
 
+      latitude:
+        userLatitude,
 
-      /*
-        VERIFIED DELIVERY LOCATION
-      */
+      longitude:
+        userLongitude,
 
-      location: {
+      locationAccuracy:
+        locationAccuracy,
 
-        latitude:
-          savedLocation.latitude,
+      locationSource:
+        "device-gps",
 
-        longitude:
-          savedLocation.longitude,
-
-        accuracy:
-          savedLocation.accuracy
-
-      },
-
+      /* =================================
+         ORDER ITEMS
+      ================================= */
 
       items:
         orderItems,
@@ -1177,11 +1741,19 @@ async function() {
       total:
         total,
 
+      /* =================================
+         PAYMENT
+      ================================= */
+
       paymentMethod:
         paymentMethod,
 
       paymentStatus:
         "Pending",
+
+      /* =================================
+         STATUS
+      ================================= */
 
       status:
         "Pending",
@@ -1192,26 +1764,38 @@ async function() {
     };
 
 
+    /* =================================
+       SAVE ORDER
+    ================================= */
+
     const orderRef =
       await addDoc(
+
         collection(
           db,
           "orders"
         ),
+
         orderData
+
       );
 
 
-    /* CLEAR CART */
+    /* =================================
+       CLEAR CART
+    ================================= */
 
     cart = [];
+
 
     localStorage.removeItem(
       "genzCart"
     );
 
 
-    /* SUCCESS */
+    /* =================================
+       SUCCESS
+    ================================= */
 
     document.getElementById(
       "orderId"
@@ -1223,7 +1807,9 @@ async function() {
     const lines =
       orderItems.map(
         item =>
+
           `${item.name} × ${item.quantity} = ₹${item.itemTotal}`
+
       ).join("\n");
 
 
@@ -1233,18 +1819,19 @@ async function() {
 
 `Order Type: ${isOwner ? "Owner Order" : "Customer Order"}
 
-Customer: ${name}
+Customer: ${document.getElementById("customerName").textContent}
 
 Email: ${currentUser.email || "-"}
 
-Phone: +91${phone}
+Phone: ${document.getElementById("customerPhone").textContent}
 
-Address: ${address}
+Delivery Location:
+Latitude: ${userLatitude}
+Longitude: ${userLongitude}
+GPS Accuracy: ${locationAccuracy ? locationAccuracy.toFixed(1) + " meters" : "Not available"}
 
-GPS Location:
-Latitude: ${savedLocation.latitude}
-Longitude: ${savedLocation.longitude}
-Accuracy: approximately ${savedLocation.accuracy || "unknown"} metres
+Google Maps:
+https://www.google.com/maps?q=${userLatitude},${userLongitude}
 
 
 ${lines}
@@ -1262,8 +1849,10 @@ Order Status: Pending`;
     customerBox.style.display =
       "none";
 
+
     orderBox.style.display =
       "none";
+
 
     successBox.style.display =
       "block";
@@ -1273,7 +1862,7 @@ Order Status: Pending`;
   catch (error) {
 
     console.error(
-      "PLACE ORDER ERROR:",
+      "ORDER ERROR:",
       error
     );
 
@@ -1290,15 +1879,32 @@ Order Status: Pending`;
     button.disabled =
       false;
 
+
     button.textContent =
       "Place Order";
 
   }
 
-};
+}
 
 
-/* LOGIN */
+/* =====================================
+   PLACE ORDER BUTTON
+===================================== */
+
+document
+  .getElementById(
+    "placeOrderBtn"
+  )
+  .addEventListener(
+    "click",
+    placeOrder
+  );
+
+
+/* =====================================
+   LOGIN CHECK
+===================================== */
 
 onAuthStateChanged(
   auth,
@@ -1327,12 +1933,42 @@ onAuthStateChanged(
       "block";
 
 
-    if (cart.length > 0) {
+    if (
+      cart.length > 0
+    ) {
 
       customerBox.style.display =
         "block";
 
-      await loadProfile(user);
+
+      const hasLocation =
+        await loadProfile(
+          user
+        );
+
+
+      if (!hasLocation) {
+
+        /*
+          Disable order button until
+          a valid GPS location exists.
+        */
+
+        document.getElementById(
+          "placeOrderBtn"
+        ).disabled =
+          true;
+
+      }
+
+      else {
+
+        document.getElementById(
+          "placeOrderBtn"
+        ).disabled =
+          false;
+
+      }
 
     }
 
@@ -1345,4 +1981,5 @@ onAuthStateChanged(
 </script>
 
 </body>
+
 </html>
