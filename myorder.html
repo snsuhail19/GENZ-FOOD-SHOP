@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>My Orders - GENZ FOOD SHOP</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff8f3;
+      color: #171717;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .header {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.07);
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 10px 14px;
+      background: #ff5a1f;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* =========================
+       REFRESH
+    ========================== */
+
+    .refresh-btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      background: #171717;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    /* =========================
+       ORDERS
+    ========================== */
+
+    .orders {
+      display: grid;
+      gap: 15px;
+    }
+
+    .order {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .order-id {
+      font-weight: 800;
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    /* =========================
+       STATUS
+    ========================== */
+
+    .status {
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .delivered {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .rejected {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    /* =========================
+       PAYMENT
+    ========================== */
+
+    .payment {
+      background: #f6f6f6;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    /* =========================
+       ITEMS
+    ========================== */
+
+    .items {
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+
+    .item-name {
+      font-weight: 700;
+    }
+
+    .item-price {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       TOTAL
+    ========================== */
+
+    .total {
+      text-align: right;
+      font-size: 21px;
+      font-weight: 900;
+      margin-top: 15px;
+    }
+
+    /* =========================
+       DATE
+    ========================== */
+
+    .date {
+      color: #777;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    /* =========================
+       LOADING / EMPTY / ERROR
+    ========================== */
+
+    .loading,
+    .empty,
+    .error {
+      background: white;
+      padding: 35px 20px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+    }
+
+    .error {
+      color: #c00;
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 600px) {
+
+      body {
+        padding: 10px;
+      }
+
+      .header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .back-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .order {
+        padding: 16px;
+      }
+
+      .item {
+        align-items: flex-start;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <div class="header">
+
+    <div>
+
+      <h1>
+        📦 My Orders
+      </h1>
+
+      <p>
+        Track your GENZ FOOD SHOP orders
+      </p>
+
+    </div>
+
+
+    <a
+      href="index.html"
+      class="back-btn"
+    >
+      ← Back to Shop
+    </a>
+
+  </div>
+
+
+
+  <!-- =========================
+       REFRESH
+  ========================== -->
+
+  <button
+    id="refreshBtn"
+    class="refresh-btn"
+  >
+    🔄 Refresh Orders
+  </button>
+
+
+
+  <!-- =========================
+       LOADING
+  ========================== -->
+
+  <div
+    id="loading"
+    class="loading"
+  >
+
+    Checking your account...
+
+  </div>
+
+
+
+  <!-- =========================
+       ORDERS
+  ========================== -->
+
+  <div
+    id="orders"
+    class="orders"
+  ></div>
+
+
+</div>
+
+
+
+<!-- =====================================
+     FIREBASE
+===================================== -->
+
+<script type="module">
+
+
+  import {
+    initializeApp
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+  import {
+    getAuth,
+    onAuthStateChanged
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+  import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    orderBy,
+    getDocs
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+
+  /* =====================================
+     FIREBASE CONFIG
+  ===================================== */
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+    authDomain:
+      "genz-food-shop.firebaseapp.com",
+
+    projectId:
+      "genz-food-shop",
+
+    storageBucket:
+      "genz-food-shop.firebasestorage.app",
+
+    messagingSenderId:
+      "259228392374",
+
+    appId:
+      "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+    measurementId:
+      "G-LT095LEWJ6"
+
+  };
+
+
+
+  /* =====================================
+     INITIALIZE FIREBASE
+  ===================================== */
+
+  const app =
+    initializeApp(firebaseConfig);
+
+
+  const auth =
+    getAuth(app);
+
+
+  const db =
+    getFirestore(app);
+
+
+
+  /* =====================================
+     ELEMENTS
+  ===================================== */
+
+  const loading =
+    document.getElementById("loading");
+
+
+  const ordersContainer =
+    document.getElementById("orders");
+
+
+  const refreshBtn =
+    document.getElementById("refreshBtn");
+
+
+
+  /* =====================================
+     ESCAPE HTML
+  ===================================== */
+
+  function escapeHTML(value) {
+
+    return String(value)
+
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+
+      .replace(
+        /</g,
+        "&lt;"
+      )
+
+      .replace(
+        />/g,
+        "&gt;"
+      )
+
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+
+  /* =====================================
+     FORMAT DATE
+  ===================================== */
+
+  function formatDate(timestamp) {
+
+    if (!timestamp) {
+
+      return "Date not available";
+
+    }
+
+
+    try {
+
+      const date =
+        timestamp.toDate();
+
+
+      return date.toLocaleString(
+        "en-IN",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+
+    }
+
+    catch (error) {
+
+      return "Date not available";
+
+    }
+
+  }
+
+
+
+  /* =====================================
+     DISPLAY ORDER
+  ===================================== */
+
+  function displayOrder(
+    orderId,
+    order
+  ) {
+
+
+    const orderElement =
+      document.createElement(
+        "div"
+      );
+
+
+    orderElement.className =
+      "order";
+
+
+    /* =========================
+       STATUS
+    ========================== */
+
+    const status =
+      order.status ||
+      "Pending";
+
+
+    let statusClass =
+      "pending";
+
+
+    if (
+      status === "Delivered"
+    ) {
+
+      statusClass =
+        "delivered";
+
+    }
+
+
+    if (
+      status === "Rejected"
+    ) {
+
+      statusClass =
+        "rejected";
+
+    }
+
+
+
+    /* =========================
+       PAYMENT
+    ========================== */
+
+    const paymentMode =
+      order.paymentMode ||
+      "";
+
+
+    let paymentText =
+      "⏳ Payment mode not selected yet";
+
+
+    if (
+      paymentMode === "UPI"
+    ) {
+
+      paymentText =
+        "💳 Payment Mode: UPI";
+
+    }
+
+
+    if (
+      paymentMode === "Cash"
+    ) {
+
+      paymentText =
+        "💵 Payment Mode: Cash on Delivery";
+
+    }
+
+
+
+    /* =========================
+       ITEMS
+    ========================== */
+
+    let itemsHTML =
+      "";
+
+
+    if (
+      Array.isArray(order.items)
+    ) {
+
+      order.items.forEach(
+        (item) => {
+
+          const name =
+            item.name ||
+            "Food item";
+
+
+          const quantity =
+            Number(
+              item.quantity || 1
+            );
+
+
+          const price =
+            Number(
+              item.price || 0
+            );
+
+
+          const itemTotal =
+            price * quantity;
+
+
+          itemsHTML += `
+
+            <div class="item">
+
+              <span>
+
+                <span class="item-name">
+
+                  ${escapeHTML(name)}
+
+                </span>
+
+                × ${quantity}
+
+              </span>
+
+
+              <span class="item-price">
+
+                ₹${itemTotal.toFixed(2)}
+
+              </span>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+    }
+
+
+
+    /* =========================
+       TOTAL
+    ========================== */
+
+    const total =
+      Number(
+        order.total || 0
+      );
+
+
+
+    /* =========================
+       HTML
+    ========================== */
+
+    orderElement.innerHTML = `
+
+      <div class="order-header">
+
+        <div class="order-id">
+
+          Order ID:<br>
+
+          ${escapeHTML(orderId)}
+
+        </div>
+
+
+        <div
+          class="status ${statusClass}"
+        >
+
+          ${escapeHTML(status)}
+
+        </div>
+
+      </div>
+
+
+
+      <div class="payment">
+
+        ${escapeHTML(paymentText)}
+
+      </div>
+
+
+
+      <div class="items">
+
+        ${itemsHTML}
+
+      </div>
+
+
+
+      <div class="total">
+
+        Total: ₹${total.toFixed(2)}
+
+      </div>
+
+
+
+      <div class="date">
+
+        🕒 ${formatDate(order.createdAt)}
+
+      </div>
+
+    `;
+
+
+    ordersContainer.appendChild(
+      orderElement
+    );
+
+  }
+
+
+
+  /* =====================================
+     LOAD MY ORDERS
+  ===================================== */
+
+  async function loadMyOrders(user) {
+
+
+    loading.style.display =
+      "block";
+
+
+    loading.textContent =
+      "Loading your orders...";
+
+
+    ordersContainer.innerHTML =
+      "";
+
+
+    try {
+
+
+      /* ===============================
+         CURRENT USER ORDERS
+      =============================== */
+
+      const ordersRef =
+        collection(
+          db,
+          "orders"
+        );
+
+
+      const ordersQuery =
+        query(
+
+          ordersRef,
+
+          where(
+            "userId",
+            "==",
+            user.uid
+          ),
+
+          orderBy(
+            "createdAt",
+            "desc"
+          )
+
+        );
+
+
+      const snapshot =
+        await getDocs(
+          ordersQuery
+        );
+
+
+      loading.style.display =
+        "none";
+
+
+      /* ===============================
+         NO ORDERS
+      =============================== */
+
+      if (
+        snapshot.empty
+      ) {
+
+        ordersContainer.innerHTML = `
+
+          <div class="empty">
+
+            <h2>
+              📦 No Orders Yet
+            </h2>
+
+            <p>
+              You haven't placed any orders.
+            </p>
+
+            <br>
+
+            <a
+              href="index.html"
+              class="back-btn"
+            >
+              🍔 Order Food
+            </a>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+
+      /* ===============================
+         DISPLAY ORDERS
+      =============================== */
+
+      snapshot.forEach(
+        (docSnapshot) => {
+
+          displayOrder(
+            docSnapshot.id,
+            docSnapshot.data()
+          );
+
+        }
+      );
+
+
+    }
+
+    catch (error) {
+
+
+      console.error(
+        "MY ORDERS ERROR:",
+        error
+      );
+
+
+      loading.style.display =
+        "none";
+
+
+      if (
+        error.code ===
+        "failed-precondition"
+      ) {
+
+        ordersContainer.innerHTML = `
+
+          <div class="error">
+
+            <h3>
+              ⚠️ Firebase Index Required
+            </h3>
+
+            <p>
+              Firebase needs an index to
+              sort your orders.
+            </p>
+
+            <p>
+              Open the Firebase link shown
+              in the browser console and
+              create the index.
+            </p>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+
+      ordersContainer.innerHTML = `
+
+        <div class="error">
+
+          ❌ Could not load your orders.
+
+          <br><br>
+
+          ${escapeHTML(
+            error.code ||
+            error.message
+          )}
+
+        </div>
+
+      `;
+
+    }
+
+  }
+
+
+
+  /* =====================================
+     LOGIN CHECK
+  ===================================== */
+
+  onAuthStateChanged(
+    auth,
+    async (user) => {
+
+
+      if (!user) {
+
+        window.location.replace(
+          "login.html"
+        );
+
+        return;
+
+      }
+
+
+      await loadMyOrders(
+        user
+      );
+
+    }
+  );
+
+
+
+  /* =====================================
+     REFRESH
+  ===================================== */
+
+  refreshBtn.addEventListener(
+    "click",
+    async () => {
+
+      const user =
+        auth.currentUser;
+
+
+      if (!user) {
+
+        window.location.replace(
+          "login.html"
+        );
+
+        return;
+
+      }
+
+
+      await loadMyOrders(
+        user
+      );
+
+    }
+  );
+
+
+</script>
+
+
+</body>
+
+</html>
