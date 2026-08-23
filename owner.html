@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
+<head>  <meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<head>
+«»
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Owner Dashboard - GENZ FOOD SHOP</title>
-
-  <style>
+  <title>Owner Dashboard - GENZ FOOD SHOP</title>  <style>
 
     * {
       box-sizing: border-box;
@@ -23,15 +16,13 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #fff8f3;
       color: #171717;
-      padding: 15px;
+      padding: 20px;
     }
 
     .container {
-      max-width: 1150px;
+      max-width: 1100px;
       margin: auto;
     }
-
-    /* HEADER */
 
     .header {
       background: white;
@@ -53,49 +44,117 @@
     .owner {
       color: #777;
       font-size: 13px;
-      margin-top: 6px;
+      margin-top: 5px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .refresh {
       background: #ff5a1f;
       color: white;
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 15px;
-      font-weight: 700;
-      cursor: pointer;
+      margin-bottom: 15px;
     }
 
-    /* STATS */
+    /* =========================
+       BUSINESS SUMMARY
+    ========================== */
 
-    .stats {
+    .summary {
       display: grid;
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      gap: 15px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
       margin-bottom: 20px;
     }
 
-    .stat {
+    .summary-card {
       background: white;
-      padding: 18px;
       border-radius: 16px;
-      box-shadow:
-        0 8px 25px rgba(0,0,0,.06);
+      padding: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
     }
 
-    .stat p {
+    .summary-card p {
       margin: 0 0 8px;
       color: #777;
       font-size: 13px;
+      font-weight: 700;
     }
 
-    .stat strong {
-      font-size: 25px;
+    .summary-card h2 {
+      margin: 0;
+      font-size: 22px;
     }
 
-    /* ORDERS */
+    .sales {
+      color: #16803a;
+    }
+
+    .upi {
+      color: #6c3bbd;
+    }
+
+    .cash {
+      color: #b56b00;
+    }
+
+    .profit {
+      color: #00838f;
+    }
+
+    /* =========================
+       EXPENSE BOX
+    ========================== */
+
+    .expense-box {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+    }
+
+    .expense-box h2 {
+      margin-top: 0;
+    }
+
+    .expense-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .expense-row input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .expense-btn {
+      background: #171717;
+      color: white;
+    }
+
+    .expense-list {
+      margin-top: 15px;
+    }
+
+    .expense-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* =========================
+       ORDERS
+    ========================== */
 
     .orders {
       display: grid;
@@ -106,8 +165,7 @@
       background: white;
       border-radius: 18px;
       padding: 20px;
-      box-shadow:
-        0 8px 25px rgba(0,0,0,.06);
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
     }
 
     .order-header {
@@ -119,28 +177,29 @@
     }
 
     .order-id {
-      font-weight: 900;
-    }
-
-    .type {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      background: #171717;
-      color: white;
-      font-size: 11px;
       font-weight: 800;
-      margin-left: 5px;
     }
 
     .status {
-      display: inline-block;
       padding: 6px 10px;
       border-radius: 20px;
-      background: #fff0e9;
-      color: #ff5a1f;
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .delivered {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .rejected {
+      background: #f8d7da;
+      color: #721c24;
     }
 
     .customer {
@@ -151,7 +210,7 @@
     }
 
     .customer div {
-      margin: 7px 0;
+      margin: 6px 0;
       font-size: 14px;
     }
 
@@ -163,7 +222,7 @@
     .item {
       display: flex;
       justify-content: space-between;
-      padding: 9px 0;
+      padding: 8px 0;
       border-bottom: 1px solid #eee;
       font-size: 14px;
     }
@@ -175,91 +234,30 @@
       margin-top: 15px;
     }
 
-    /* PAYMENT */
-
-    .payment-box {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 15px;
-    }
-
-    .payment {
-      padding: 7px 11px;
-      border-radius: 10px;
-      background: #f1f1f1;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .paid {
-      background: #dff7e6;
-      color: #167534;
-    }
-
-    .pending {
-      background: #fff2d8;
-      color: #8a5a00;
-    }
-
-    /* CONTROLS */
+    /* =========================
+       CONTROLS
+    ========================== */
 
     .controls {
-      border-top: 1px solid #eee;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-top: 15px;
       padding-top: 15px;
+      border-top: 1px solid #eee;
     }
 
-    .controls-title {
-      font-weight: 800;
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
-
-    .status-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
-
-    .status-buttons button {
-      border: 0;
-      border-radius: 9px;
-      padding: 9px 11px;
-      font-size: 12px;
+    .controls select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: white;
       font-weight: 700;
-      cursor: pointer;
-      background: #eee;
     }
 
-    .status-buttons button:hover {
+    .save-btn {
       background: #ff5a1f;
       color: white;
-    }
-
-    .payment-buttons {
-      display: flex;
-      gap: 7px;
-      margin-top: 10px;
-    }
-
-    .payment-buttons button {
-      border: 0;
-      border-radius: 9px;
-      padding: 9px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .paid-btn {
-      background: #dff7e6;
-      color: #167534;
-    }
-
-    .pending-btn {
-      background: #fff2d8;
-      color: #8a5a00;
     }
 
     .loading,
@@ -275,18 +273,15 @@
       color: #c00;
     }
 
-    /* MOBILE */
+    @media (max-width: 800px) {
 
-    @media(max-width:800px) {
-
-      .stats {
-        grid-template-columns:
-          repeat(2, 1fr);
+      .summary {
+        grid-template-columns: repeat(2, 1fr);
       }
 
     }
 
-    @media(max-width:600px) {
+    @media (max-width: 600px) {
 
       body {
         padding: 10px;
@@ -297,856 +292,1114 @@
         flex-direction: column;
       }
 
-      .refresh {
-        width: 100%;
-      }
-
-      .stats {
+      .summary {
         grid-template-columns: 1fr 1fr;
       }
 
-      .stat strong {
-        font-size: 20px;
+      .expense-row {
+        flex-direction: column;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .controls select,
+      .save-btn {
+        width: 100%;
       }
 
     }
 
-  </style>
+  </style></head><body><div class="container">  <!-- =========================
+       HEADER
+  ========================== -->  <div class="header"><div>
 
-</head>
+  <h1>
+    👑 Owner Dashboard
+  </h1>
 
+  <div class="owner">
 
-<body>
+    GENZ FOOD SHOP
 
+    <br>
 
-<div class="container">
-
-
-  <!-- HEADER -->
-
-  <div class="header">
-
-    <div>
-
-      <h1>
-        👑 Owner Dashboard
-      </h1>
-
-      <div class="owner">
-
-        GENZ FOOD SHOP
-
-        <br>
-
-        Owner:
-        snsuhail19@gmail.com
-
-      </div>
-
-    </div>
-
-
-    <button
-      id="refreshBtn"
-      class="refresh"
-    >
-      🔄 Refresh
-    </button>
+    Owner: snsuhail19@gmail.com
 
   </div>
 
+</div>
 
-  <!-- STATS -->
+  </div>  <!-- =========================
+       REFRESH
+  ========================== --><button
+id="refreshBtn"
+class="refresh"
 
-  <div class="stats">
+«»
 
-    <div class="stat">
+🔄 Refresh Dashboard
 
-      <p>
-        Total Orders
-      </p>
+  </button>  <!-- =========================
+       BUSINESS SUMMARY
+  ========================== -->  <div class="summary"><div class="summary-card">
 
-      <strong id="totalOrders">
-        0
-      </strong>
+  <p>
+    TOTAL SALES
+  </p>
 
-    </div>
-
-
-    <div class="stat">
-
-      <p>
-        Delivered
-      </p>
-
-      <strong id="deliveredOrders">
-        0
-      </strong>
-
-    </div>
-
-
-    <div class="stat">
-
-      <p>
-        Pending
-      </p>
-
-      <strong id="pendingOrders">
-        0
-      </strong>
-
-    </div>
-
-
-    <div class="stat">
-
-      <p>
-        Total Sales
-      </p>
-
-      <strong>
-        ₹<span id="totalSales">0</span>
-      </strong>
-
-    </div>
-
-  </div>
-
-
-  <!-- ORDERS -->
-
-  <div
-    id="loading"
-    class="loading"
-  >
-    Checking owner access...
-  </div>
-
-
-  <div
-    id="orders"
-    class="orders"
-  ></div>
-
+  <h2 class="sales">
+    ₹<span id="totalSales">0</span>
+  </h2>
 
 </div>
 
 
-<script type="module">
+<div class="summary-card">
+
+  <p>
+    UPI SALES
+  </p>
+
+  <h2 class="upi">
+    ₹<span id="upiSales">0</span>
+  </h2>
+
+</div>
 
 
-import {
-  initializeApp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+<div class="summary-card">
+
+  <p>
+    CASH SALES
+  </p>
+
+  <h2 class="cash">
+    ₹<span id="cashSales">0</span>
+  </h2>
+
+</div>
 
 
-import {
-  getAuth,
-  onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+<div class="summary-card">
+
+  <p>
+    NET PROFIT
+  </p>
+
+  <h2 class="profit">
+    ₹<span id="netProfit">0</span>
+  </h2>
+
+</div>
+
+  </div>  <!-- =========================
+       EXPENSES
+  ========================== -->  <div class="expense-box"><h2>
+  💸 Business Expenses
+</h2>
+
+<p>
+  Add expenses such as ingredients, delivery, electricity,
+  packaging, etc.
+</p>
 
 
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  orderBy,
-  doc,
-  updateDoc
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+<div class="expense-row">
+
+  <input
+    id="expenseName"
+    type="text"
+    placeholder="Expense name"
+  >
 
 
-/* FIREBASE */
-
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
-
-  authDomain:
-    "genz-food-shop.firebaseapp.com",
-
-  projectId:
-    "genz-food-shop",
-
-  storageBucket:
-    "genz-food-shop.firebasestorage.app",
-
-  messagingSenderId:
-    "259228392374",
-
-  appId:
-    "1:259228392374:web:6af3a0d3c93597a5b5bf17",
-
-  measurementId:
-    "G-LT095LEWJ6"
-
-};
+  <input
+    id="expenseAmount"
+    type="number"
+    min="0"
+    placeholder="Amount ₹"
+  >
 
 
-const app =
-  initializeApp(firebaseConfig);
+  <button
+    id="addExpenseBtn"
+    class="expense-btn"
+  >
+    + Add Expense
+  </button>
 
-const auth =
-  getAuth(app);
-
-const db =
-  getFirestore(app);
-
-
-/* OWNER */
-
-const OWNER_EMAIL =
-  "snsuhail19@gmail.com";
+</div>
 
 
-/* ELEMENTS */
-
-const loading =
-  document.getElementById(
-    "loading"
-  );
-
-const ordersContainer =
-  document.getElementById(
-    "orders"
-  );
+<div
+  id="expenseList"
+  class="expense-list"
+></div>
 
 
-/* LOAD ORDERS */
+<strong>
+  Total Expenses:
+  ₹<span id="totalExpenses">0</span>
+</strong>
 
-async function loadOrders() {
+  </div>  <!-- =========================
+       LOADING
+  ========================== -->  <div
+    id="loading"
+    class="loading"
+  >
+    Checking owner access...
+  </div>  <!-- =========================
+       ORDERS
+  ========================== -->  <div
+    id="orders"
+    class="orders"
+  ></div></div><script type="module">
 
-  loading.style.display =
-    "block";
 
-  loading.textContent =
-    "Loading orders...";
-
-  ordersContainer.innerHTML =
-    "";
+  import {
+    initializeApp
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 
-  try {
+  import {
+    getAuth,
+    onAuthStateChanged
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    const ordersRef =
-      collection(
-        db,
-        "orders"
+
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy,
+    doc,
+    updateDoc,
+    addDoc,
+    serverTimestamp
+  }
+  from
+    "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+  /* ==============================
+     FIREBASE CONFIG
+  ============================== */
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+    authDomain:
+      "genz-food-shop.firebaseapp.com",
+
+    projectId:
+      "genz-food-shop",
+
+    storageBucket:
+      "genz-food-shop.firebasestorage.app",
+
+    messagingSenderId:
+      "259228392374",
+
+    appId:
+      "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+    measurementId:
+      "G-LT095LEWJ6"
+
+  };
+
+
+  /* ==============================
+     INITIALIZE
+  ============================== */
+
+  const app =
+    initializeApp(firebaseConfig);
+
+  const auth =
+    getAuth(app);
+
+  const db =
+    getFirestore(app);
+
+
+  /* ==============================
+     OWNER
+  ============================== */
+
+  const OWNER_EMAIL =
+    "snsuhail19@gmail.com";
+
+
+  const loading =
+    document.getElementById("loading");
+
+  const ordersContainer =
+    document.getElementById("orders");
+
+
+  let totalSales = 0;
+  let upiSales = 0;
+  let cashSales = 0;
+
+
+  /* ==============================
+     EXPENSES
+  ============================== */
+
+  let expenses = [];
+
+
+  async function loadExpenses() {
+
+    expenses = [];
+
+    try {
+
+      const expenseRef =
+        collection(
+          db,
+          "expenses"
+        );
+
+      const snapshot =
+        await getDocs(
+          expenseRef
+        );
+
+      snapshot.forEach(
+        (docSnapshot) => {
+
+          const data =
+            docSnapshot.data();
+
+          expenses.push({
+            id: docSnapshot.id,
+            name: data.name || "Expense",
+            amount: Number(data.amount || 0)
+          });
+
+        }
+      );
+
+      renderExpenses();
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "Expense error:",
+        error
+      );
+
+    }
+
+  }
+
+
+  function renderExpenses() {
+
+    const list =
+      document.getElementById(
+        "expenseList"
       );
 
 
-    const ordersQuery =
-      query(
-        ordersRef,
-        orderBy(
-          "createdAt",
-          "desc"
-        )
-      );
+    if (expenses.length === 0) {
 
+      list.innerHTML =
+        "<p>No expenses added yet.</p>";
 
-    const snapshot =
-      await getDocs(
-        ordersQuery
-      );
+    }
 
+    else {
 
-    loading.style.display =
-      "none";
+      list.innerHTML =
+        expenses.map(
+          expense => `
 
+            <div class="expense-item">
 
-    if (snapshot.empty) {
+              <span>
+                ${escapeHTML(expense.name)}
+              </span>
 
-      ordersContainer.innerHTML =
-        '<div class="empty">No orders yet.</div>';
+              <strong>
+                ₹${expense.amount.toFixed(2)}
+              </strong>
 
-      updateStats([]);
+            </div>
 
-      return;
+          `
+        ).join("");
 
     }
 
 
-    const allOrders = [];
+    const totalExpenses =
+      expenses.reduce(
+        (sum, expense) =>
+          sum + expense.amount,
+        0
+      );
 
 
-    snapshot.forEach(
-      orderSnapshot => {
-
-        const order =
-          orderSnapshot.data();
-
-
-        order._id =
-          orderSnapshot.id;
+    document.getElementById(
+      "totalExpenses"
+    ).textContent =
+      totalExpenses.toFixed(2);
 
 
-        allOrders.push(order);
+    updateProfit();
+
+  }
 
 
-        displayOrder(
-          orderSnapshot.id,
-          order
-        );
+  function updateProfit() {
+
+    const totalExpenses =
+      expenses.reduce(
+        (sum, expense) =>
+          sum + expense.amount,
+        0
+      );
+
+
+    const profit =
+      totalSales -
+      totalExpenses;
+
+
+    document.getElementById(
+      "netProfit"
+    ).textContent =
+      profit.toFixed(2);
+
+  }
+
+
+  document
+    .getElementById("addExpenseBtn")
+    .addEventListener(
+      "click",
+      async () => {
+
+        const name =
+          document
+            .getElementById("expenseName")
+            .value.trim();
+
+
+        const amount =
+          Number(
+            document
+              .getElementById("expenseAmount")
+              .value
+          );
+
+
+        if (!name || amount <= 0) {
+
+          alert(
+            "Enter expense name and valid amount."
+          );
+
+          return;
+
+        }
+
+
+        try {
+
+          await addDoc(
+            collection(
+              db,
+              "expenses"
+            ),
+            {
+              name: name,
+              amount: amount,
+              createdAt:
+                serverTimestamp()
+            }
+          );
+
+
+          document.getElementById(
+            "expenseName"
+          ).value = "";
+
+
+          document.getElementById(
+            "expenseAmount"
+          ).value = "";
+
+
+          await loadExpenses();
+
+        }
+
+        catch (error) {
+
+          alert(
+            "Could not add expense: " +
+            (
+              error.code ||
+              error.message
+            )
+          );
+
+        }
 
       }
     );
 
 
-    updateStats(
-      allOrders
-    );
+  /* ==============================
+     LOAD ORDERS
+  ============================== */
 
-  }
-
-  catch(error) {
-
-    console.error(error);
+  async function loadOrders() {
 
     loading.style.display =
-      "none";
+      "block";
+
+    loading.textContent =
+      "Loading orders...";
 
     ordersContainer.innerHTML =
+      "";
 
-      '<div class="error">' +
 
-      "Could not load orders.<br><br>" +
+    totalSales = 0;
+    upiSales = 0;
+    cashSales = 0;
 
-      (
-        error.code ||
-        error.message
-      ) +
 
-      "</div>";
+    try {
+
+      const ordersRef =
+        collection(
+          db,
+          "orders"
+        );
+
+
+      const ordersQuery =
+        query(
+          ordersRef,
+          orderBy(
+            "createdAt",
+            "desc"
+          )
+        );
+
+
+      const snapshot =
+        await getDocs(
+          ordersQuery
+        );
+
+
+      if (snapshot.empty) {
+
+        loading.style.display =
+          "none";
+
+
+        ordersContainer.innerHTML =
+          '<div class="empty">No orders yet.</div>';
+
+
+        updateSummary();
+
+        return;
+
+      }
+
+
+      loading.style.display =
+        "none";
+
+
+      snapshot.forEach(
+        (docSnapshot) => {
+
+          const order =
+            docSnapshot.data();
+
+
+          displayOrder(
+            docSnapshot.id,
+            order
+          );
+
+
+          /*
+             Count only Delivered
+             orders as sales/profit.
+          */
+
+          const status =
+            order.status ||
+            "Pending";
+
+
+          if (
+            status === "Delivered"
+          ) {
+
+            const total =
+              Number(
+                order.total || 0
+              );
+
+
+            totalSales += total;
+
+
+            const paymentMode =
+              (
+                order.paymentMode ||
+                ""
+              ).toLowerCase();
+
+
+            if (
+              paymentMode === "upi"
+            ) {
+
+              upiSales += total;
+
+            }
+
+
+            if (
+              paymentMode ===
+              "cash"
+            ) {
+
+              cashSales += total;
+
+            }
+
+          }
+
+        }
+      );
+
+
+      updateSummary();
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      loading.style.display =
+        "none";
+
+
+      ordersContainer.innerHTML =
+        '<div class="error">' +
+        "Could not load orders.<br><br>" +
+        (
+          error.code ||
+          error.message
+        ) +
+        "</div>";
+
+    }
 
   }
 
-}
+
+  /* ==============================
+     SUMMARY
+  ============================== */
+
+  function updateSummary() {
+
+    document.getElementById(
+      "totalSales"
+    ).textContent =
+      totalSales.toFixed(2);
 
 
-/* STATS */
-
-function updateStats(orders) {
-
-  let totalSales = 0;
-
-  let delivered = 0;
-
-  let pending = 0;
+    document.getElementById(
+      "upiSales"
+    ).textContent =
+      upiSales.toFixed(2);
 
 
-  orders.forEach(order => {
+    document.getElementById(
+      "cashSales"
+    ).textContent =
+      cashSales.toFixed(2);
+
+
+    updateProfit();
+
+  }
+
+
+  /* ==============================
+     DISPLAY ORDER
+  ============================== */
+
+  function displayOrder(
+    orderId,
+    order
+  ) {
+
+    const orderElement =
+      document.createElement(
+        "div"
+      );
+
+
+    orderElement.className =
+      "order";
+
+
+    let itemsHTML = "";
+
+
+    if (
+      Array.isArray(order.items)
+    ) {
+
+      order.items.forEach(
+        (item) => {
+
+          const name =
+            item.name ||
+            "Food item";
+
+
+          const quantity =
+            item.quantity ||
+            1;
+
+
+          const price =
+            Number(
+              item.price || 0
+            );
+
+
+          itemsHTML +=
+
+            '<div class="item">' +
+
+            '<span>' +
+
+            escapeHTML(name) +
+
+            " × " +
+
+            quantity +
+
+            "</span>" +
+
+            '<strong>₹' +
+
+            (
+              price * quantity
+            ).toFixed(2) +
+
+            "</strong>" +
+
+            "</div>";
+
+        }
+      );
+
+    }
+
+
+    const customerName =
+      order.customerName ||
+      order.name ||
+      "Not available";
+
+
+    const email =
+      order.customerEmail ||
+      order.email ||
+      "Not available";
+
+
+    const phone =
+      order.phone ||
+      order.mobile ||
+      "Not available";
+
+
+    const address =
+      order.address ||
+      "Not available";
+
+
+    const total =
+      Number(
+        order.total || 0
+      );
+
 
     const status =
       order.status ||
       "Pending";
 
 
-    if (status === "Delivered") {
+    const paymentMode =
+      order.paymentMode ||
+      "Not Selected";
 
-      delivered++;
 
-      totalSales +=
-        Number(
-          order.total || 0
-        );
+    let statusClass =
+      "pending";
+
+
+    if (
+      status === "Delivered"
+    ) {
+
+      statusClass =
+        "delivered";
 
     }
 
 
     if (
-      status === "Pending" ||
-      status === "Accepted" ||
-      status === "Preparing" ||
-      status === "Out for Delivery"
+      status === "Rejected"
     ) {
 
-      pending++;
+      statusClass =
+        "rejected";
 
     }
 
-  });
 
+    orderElement.innerHTML = `
 
-  document.getElementById(
-    "totalOrders"
-  ).textContent =
-    orders.length;
-
-
-  document.getElementById(
-    "deliveredOrders"
-  ).textContent =
-    delivered;
-
-
-  document.getElementById(
-    "pendingOrders"
-  ).textContent =
-    pending;
-
-
-  document.getElementById(
-    "totalSales"
-  ).textContent =
-    totalSales.toFixed(2);
-
-}
-
-
-/* DISPLAY ORDER */
-
-function displayOrder(
-  orderId,
-  order
-) {
-
-  const element =
-    document.createElement(
-      "div"
-    );
-
-
-  element.className =
-    "order";
-
-
-  let itemsHTML =
-    "";
-
-
-  if (
-    Array.isArray(
-      order.items
-    )
-  ) {
-
-    order.items.forEach(
-      item => {
-
-        const name =
-          item.name ||
-          "Food item";
-
-
-        const quantity =
-          item.quantity ||
-          1;
-
-
-        const price =
-          Number(
-            item.price || 0
-          );
-
-
-        itemsHTML +=
-
-          '<div class="item">' +
-
-          '<span>' +
-
-          name +
-
-          " × " +
-
-          quantity +
-
-          "</span>" +
-
-          '<strong>₹' +
-
-          (
-            price *
-            quantity
-          ).toFixed(2) +
-
-          "</strong>" +
-
-          "</div>";
-
-      }
-    );
-
-  }
-
-
-  const customerName =
-    order.customerName ||
-    order.name ||
-    "Not available";
-
-
-  const email =
-    order.customerEmail ||
-    order.email ||
-    "Not available";
-
-
-  const phone =
-    order.phone ||
-    order.mobile ||
-    "Not available";
-
-
-  const address =
-    order.address ||
-    "Not available";
-
-
-  const total =
-    Number(
-      order.total || 0
-    );
-
-
-  const status =
-    order.status ||
-    "Pending";
-
-
-  const paymentMethod =
-    order.paymentMethod ||
-    "Not selected";
-
-
-  const paymentStatus =
-    order.paymentStatus ||
-    "Pending";
-
-
-  const customerType =
-    order.customerType ||
-    "Customer";
-
-
-  element.innerHTML = `
-
-    <div class="order-header">
-
-      <div>
+      <div class="order-header">
 
         <div class="order-id">
 
-          Order #${orderId}
+          Order #${escapeHTML(orderId)}
 
-          <span class="type">
-            ${customerType}
-          </span>
+        </div>
+
+        <div class="status ${statusClass}">
+
+          ${escapeHTML(status)}
 
         </div>
 
       </div>
 
 
-      <div class="status">
-        ${status}
-      </div>
+      <div class="customer">
 
-    </div>
+        <div>
+          <strong>Name:</strong>
+          ${escapeHTML(customerName)}
+        </div>
 
+        <div>
+          <strong>Email:</strong>
+          ${escapeHTML(email)}
+        </div>
 
-    <div class="customer">
+        <div>
+          <strong>Phone:</strong>
+          ${escapeHTML(phone)}
+        </div>
 
-      <div>
-        <strong>Name:</strong>
-        ${customerName}
-      </div>
+        <div>
+          <strong>Address:</strong>
+          ${escapeHTML(address)}
+        </div>
 
-      <div>
-        <strong>Email:</strong>
-        ${email}
-      </div>
-
-      <div>
-        <strong>Phone:</strong>
-        ${phone}
-      </div>
-
-      <div>
-        <strong>Address:</strong>
-        ${address}
-      </div>
-
-    </div>
-
-
-    <div class="items">
-
-      ${itemsHTML}
-
-    </div>
-
-
-    <div class="payment-box">
-
-      <span class="payment">
-        💳 ${paymentMethod}
-      </span>
-
-      <span class="payment ${
-        paymentStatus === "Paid"
-          ? "paid"
-          : "pending"
-      }">
-
-        💰 Payment:
-        ${paymentStatus}
-
-      </span>
-
-    </div>
-
-
-    <div class="total">
-
-      Total:
-      ₹${total.toFixed(2)}
-
-    </div>
-
-
-    <div class="controls">
-
-      <div class="controls-title">
-        📦 Order Status
       </div>
 
 
-      <div class="status-buttons">
+      <div class="items">
+
+        ${itemsHTML}
+
+      </div>
+
+
+      <div class="total">
+
+        Total: ₹${total.toFixed(2)}
+
+      </div>
+
+
+      <div class="controls">
+
+        <select
+          id="status-${orderId}"
+        >
+
+          <option
+            value="Pending"
+            ${status === "Pending" ? "selected" : ""}
+          >
+            Pending
+          </option>
+
+          <option
+            value="Delivered"
+            ${status === "Delivered" ? "selected" : ""}
+          >
+            Delivered
+          </option>
+
+          <option
+            value="Rejected"
+            ${status === "Rejected" ? "selected" : ""}
+          >
+            Rejected
+          </option>
+
+        </select>
+
+
+        <select
+          id="payment-${orderId}"
+        >
+
+          <option
+            value=""
+            ${!order.paymentMode ? "selected" : ""}
+          >
+            Payment Mode
+          </option>
+
+          <option
+            value="UPI"
+            ${paymentMode === "UPI" ? "selected" : ""}
+          >
+            💳 UPI
+          </option>
+
+          <option
+            value="Cash"
+            ${paymentMode === "Cash" ? "selected" : ""}
+          >
+            💵 Cash on Delivery
+          </option>
+
+        </select>
+
 
         <button
-          onclick="changeStatus('${orderId}', 'Pending')"
+          class="save-btn"
+          onclick="saveOrder(
+            '${orderId}'
+          )"
         >
-          Pending
-        </button>
-
-        <button
-          onclick="changeStatus('${orderId}', 'Accepted')"
-        >
-          Accepted
-        </button>
-
-        <button
-          onclick="changeStatus('${orderId}', 'Preparing')"
-        >
-          Preparing
-        </button>
-
-        <button
-          onclick="changeStatus('${orderId}', 'Out for Delivery')"
-        >
-          Out for Delivery
-        </button>
-
-        <button
-          onclick="changeStatus('${orderId}', 'Delivered')"
-        >
-          Delivered
-        </button>
-
-        <button
-          onclick="changeStatus('${orderId}', 'Rejected')"
-        >
-          Rejected
+          💾 Save
         </button>
 
       </div>
 
-
-      <div class="controls-title"
-           style="margin-top:15px;">
-
-        💳 Payment Status
-
-      </div>
+    `;
 
 
-      <div class="payment-buttons">
+    ordersContainer.appendChild(
+      orderElement
+    );
 
-        <button
-          class="paid-btn"
-          onclick="changePaymentStatus('${orderId}', 'Paid')"
-        >
-          ✅ Paid
-        </button>
-
-        <button
-          class="pending-btn"
-          onclick="changePaymentStatus('${orderId}', 'Pending')"
-        >
-          ⏳ Pending
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
+  }
 
 
-  ordersContainer.appendChild(
-    element
-  );
+  /* ==============================
+     SAVE ORDER
+  ============================== */
 
-}
+  window.saveOrder =
+    async function(orderId) {
+
+      const status =
+        document.getElementById(
+          "status-" + orderId
+        ).value;
 
 
-/* CHANGE ORDER STATUS */
+      const paymentMode =
+        document.getElementById(
+          "payment-" + orderId
+        ).value;
 
-window.changeStatus =
-async function(
-  orderId,
-  newStatus
-) {
 
-  try {
+      if (!paymentMode) {
 
-    await updateDoc(
+        alert(
+          "Please select UPI or Cash on Delivery."
+        );
 
-      doc(
-        db,
-        "orders",
-        orderId
-      ),
+        return;
 
-      {
-        status:
-          newStatus
       }
 
-    );
+
+      try {
+
+        await updateDoc(
+          doc(
+            db,
+            "orders",
+            orderId
+          ),
+          {
+
+            status:
+              status,
+
+            paymentMode:
+              paymentMode
+
+          }
+        );
 
 
-    loadOrders();
-
-  }
-
-  catch(error) {
-
-    console.error(error);
-
-    alert(
-      "Could not update order: " +
-      (
-        error.code ||
-        error.message
-      )
-    );
-
-  }
-
-};
+        alert(
+          "Order updated successfully."
+        );
 
 
-/* CHANGE PAYMENT STATUS */
+        await loadOrders();
 
-window.changePaymentStatus =
-async function(
-  orderId,
-  newStatus
-) {
-
-  try {
-
-    await updateDoc(
-
-      doc(
-        db,
-        "orders",
-        orderId
-      ),
-
-      {
-        paymentStatus:
-          newStatus
       }
 
-    );
+      catch (error) {
+
+        console.error(error);
+
+        alert(
+          "Could not update order: " +
+          (
+            error.code ||
+            error.message
+          )
+        );
+
+      }
+
+    };
 
 
-    loadOrders();
+  /* ==============================
+     SECURITY / HTML ESCAPE
+  ============================== */
 
-  }
+  function escapeHTML(value) {
 
-  catch(error) {
-
-    console.error(error);
-
-    alert(
-      "Could not update payment: " +
-      (
-        error.code ||
-        error.message
+    return String(value)
+      .replace(
+        /&/g,
+        "&amp;"
       )
-    );
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
   }
 
-};
+
+  /* ==============================
+     AUTHENTICATION
+  ============================== */
+
+  onAuthStateChanged(
+    auth,
+    async (user) => {
+
+      if (!user) {
+
+        window.location.href =
+          "login.html";
+
+        return;
+
+      }
 
 
-/* AUTH */
+      const email =
+        (
+          user.email || ""
+        ).toLowerCase();
 
-onAuthStateChanged(
-  auth,
-  async user => {
 
-    if (!user) {
+      if (
+        email !==
+        OWNER_EMAIL.toLowerCase()
+      ) {
 
-      window.location.href =
-        "login.html";
+        loading.innerHTML =
+          "❌ Access denied.<br><br>" +
+          "This page is only available to the shop owner.";
 
-      return;
+        return;
+
+      }
+
+
+      await loadExpenses();
+
+      await loadOrders();
 
     }
-
-
-    const email =
-      (
-        user.email || ""
-      ).toLowerCase();
-
-
-    if (
-      email !==
-      OWNER_EMAIL.toLowerCase()
-    ) {
-
-      loading.innerHTML =
-        "❌ Access denied.<br><br>" +
-        "This page is only available to the shop owner.";
-
-      return;
-
-    }
-
-
-    await loadOrders();
-
-  }
-);
-
-
-/* REFRESH */
-
-document
-  .getElementById(
-    "refreshBtn"
-  )
-  .addEventListener(
-    "click",
-    loadOrders
   );
 
 
-</script>
+  /* ==============================
+     REFRESH
+  ============================== */
 
-</body>
+  document
+    .getElementById("refreshBtn")
+    .addEventListener(
+      "click",
+      async () => {
+
+        await loadExpenses();
+
+        await loadOrders();
+
+      }
+    );
+
+
+</script></body>
 </html>
