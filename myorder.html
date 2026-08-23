@@ -77,6 +77,43 @@
       margin-bottom: 15px;
     }
 
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #e9f8ef;
+      color: #16803c;
+      padding: 9px 13px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #16803c;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .35;
+      }
+
+      100% {
+        opacity: 1;
+      }
+
+    }
+
     .orders {
       display: grid;
       gap: 15px;
@@ -252,6 +289,20 @@
   </div>
 
 
+  <!-- LIVE CONNECTION -->
+
+  <div
+    id="liveStatus"
+    class="live-status"
+  >
+
+    <span class="live-dot"></span>
+
+    Live Updates Enabled
+
+  </div>
+
+
   <!-- REFRESH -->
 
   <button
@@ -310,7 +361,7 @@
     collection,
     query,
     where,
-    getDocs
+    onSnapshot
   }
   from
     "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -347,14 +398,16 @@
 
 
   /* =====================================
-     INITIALIZE
+     INITIALIZE FIREBASE
   ===================================== */
 
   const app =
     initializeApp(firebaseConfig);
 
+
   const auth =
     getAuth(app);
+
 
   const db =
     getFirestore(app);
@@ -367,11 +420,24 @@
   const loading =
     document.getElementById("loading");
 
+
   const ordersContainer =
     document.getElementById("orders");
 
+
   const refreshBtn =
     document.getElementById("refreshBtn");
+
+
+  const liveStatus =
+    document.getElementById("liveStatus");
+
+
+  /* =====================================
+     CURRENT USER
+  ===================================== */
+
+  let currentUser = null;
 
 
   /* =====================================
@@ -382,21 +448,36 @@
 
     return String(value)
 
-      .replace(/&/g, "&amp;")
+      .replace(
+        /&/g,
+        "&amp;"
+      )
 
-      .replace(/</g, "&lt;")
+      .replace(
+        /</g,
+        "&lt;"
+      )
 
-      .replace(/>/g, "&gt;")
+      .replace(
+        />/g,
+        "&gt;"
+      )
 
-      .replace(/"/g, "&quot;")
+      .replace(
+        /"/g,
+        "&quot;"
+      )
 
-      .replace(/'/g, "&#039;");
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
   }
 
 
   /* =====================================
-     GET DATE VALUE
+     GET ORDER TIME
   ===================================== */
 
   function getOrderTime(order) {
@@ -410,14 +491,31 @@
 
     }
 
+
     if (
       order.createdAt &&
       typeof order.createdAt.toDate === "function"
     ) {
 
-      return order.createdAt.toDate().getTime();
+      return order.createdAt
+        .toDate()
+        .getTime();
 
     }
+
+
+    if (
+      order.createdAt &&
+      typeof order.createdAt.seconds === "number"
+    ) {
+
+      return (
+        order.createdAt.seconds *
+        1000
+      );
+
+    }
+
 
     return 0;
 
@@ -436,38 +534,60 @@
 
     }
 
+
     try {
 
       let date;
 
+
       if (
-        typeof timestamp.toDate === "function"
+        typeof timestamp.toDate ===
+        "function"
       ) {
 
-        date = timestamp.toDate();
+        date =
+          timestamp.toDate();
 
       }
 
       else {
 
-        date = new Date(timestamp);
+        date =
+          new Date(timestamp);
 
       }
 
-      if (isNaN(date.getTime())) {
+
+      if (
+        isNaN(
+          date.getTime()
+        )
+      ) {
 
         return "Date not available";
 
       }
 
+
       return date.toLocaleString(
         "en-IN",
         {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
+
+          day:
+            "2-digit",
+
+          month:
+            "short",
+
+          year:
+            "numeric",
+
+          hour:
+            "2-digit",
+
+          minute:
+            "2-digit"
+
         }
       );
 
@@ -492,19 +612,27 @@
   ) {
 
     const orderElement =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     orderElement.className =
       "order";
 
 
-    /* STATUS */
+    /* =================================
+       STATUS
+    ================================= */
 
     const status =
-      order.status || "Pending";
+      order.status ||
+      "Pending";
+
 
     let statusClass =
       "pending";
+
 
     if (
       status === "Delivered"
@@ -514,6 +642,7 @@
         "delivered";
 
     }
+
 
     if (
       status === "Rejected"
@@ -525,13 +654,18 @@
     }
 
 
-    /* PAYMENT */
+    /* =================================
+       PAYMENT
+    ================================= */
 
     const paymentMode =
-      order.paymentMode || "";
+      order.paymentMode ||
+      "";
+
 
     let paymentText =
       "⏳ Payment mode not selected yet";
+
 
     if (
       paymentMode === "UPI"
@@ -541,6 +675,7 @@
         "💳 Payment Mode: UPI";
 
     }
+
 
     if (
       paymentMode === "Cash"
@@ -552,33 +687,44 @@
     }
 
 
-    /* ITEMS */
+    /* =================================
+       ITEMS
+    ================================= */
 
     let itemsHTML = "";
 
 
     if (
-      Array.isArray(order.items)
+      Array.isArray(
+        order.items
+      )
     ) {
 
       order.items.forEach(
         (item) => {
 
           const name =
-            item.name || "Food item";
+            item.name ||
+            "Food item";
+
 
           const quantity =
             Number(
-              item.quantity || 1
+              item.quantity ||
+              1
             );
+
 
           const price =
             Number(
-              item.price || 0
+              item.price ||
+              0
             );
 
+
           const itemTotal =
-            price * quantity;
+            price *
+            quantity;
 
 
           itemsHTML += `
@@ -613,15 +759,20 @@
     }
 
 
-    /* TOTAL */
+    /* =================================
+       TOTAL
+    ================================= */
 
     const total =
       Number(
-        order.total || 0
+        order.total ||
+        0
       );
 
 
-    /* HTML */
+    /* =================================
+       HTML
+    ================================= */
 
     orderElement.innerHTML = `
 
@@ -635,7 +786,10 @@
 
         </div>
 
-        <div class="status ${statusClass}">
+
+        <div
+          class="status ${statusClass}"
+        >
 
           ${escapeHTML(status)}
 
@@ -646,28 +800,37 @@
 
       <div class="payment">
 
-        ${escapeHTML(paymentText)}
+        ${escapeHTML(
+          paymentText
+        )}
 
       </div>
 
 
       <div class="items">
 
-        ${itemsHTML}
+        ${
+          itemsHTML ||
+          '<div class="date">No items found.</div>'
+        }
 
       </div>
 
 
       <div class="total">
 
-        Total: ₹${total.toFixed(2)}
+        Total:
+        ₹${total.toFixed(2)}
 
       </div>
 
 
       <div class="date">
 
-        🕒 ${formatDate(order.createdAt)}
+        🕒
+        ${formatDate(
+          order.createdAt
+        )}
 
       </div>
 
@@ -682,195 +845,242 @@
 
 
   /* =====================================
-     LOAD MY ORDERS
-     NO FIREBASE INDEX REQUIRED
+     REAL-TIME MY ORDERS
   ===================================== */
 
-  async function loadMyOrders(user) {
+  function listenToMyOrders(
+    user
+  ) {
 
     loading.style.display =
       "block";
 
+
     loading.textContent =
-      "Loading your orders...";
+      "Connecting to live orders...";
+
 
     ordersContainer.innerHTML =
       "";
 
 
-    try {
+    liveStatus.innerHTML = `
 
-      const ordersRef =
-        collection(
-          db,
-          "orders"
+      <span class="live-dot"></span>
+
+      Connecting...
+
+    `;
+
+
+    const ordersRef =
+      collection(
+        db,
+        "orders"
+      );
+
+
+    const ordersQuery =
+      query(
+
+        ordersRef,
+
+        where(
+          "userId",
+          "==",
+          user.uid
+        )
+
+      );
+
+
+    /*
+      onSnapshot creates a REAL-TIME
+      listener.
+
+      Whenever the order changes in
+      Firestore, this function runs
+      automatically.
+    */
+
+    onSnapshot(
+
+      ordersQuery,
+
+      (snapshot) => {
+
+        loading.style.display =
+          "none";
+
+
+        ordersContainer.innerHTML =
+          "";
+
+
+        liveStatus.innerHTML = `
+
+          <span class="live-dot"></span>
+
+          Live Updates Enabled
+
+        `;
+
+
+        /* =================================
+           NO ORDERS
+        ================================= */
+
+        if (
+          snapshot.empty
+        ) {
+
+          ordersContainer.innerHTML = `
+
+            <div class="empty">
+
+              <h2>
+                📦 No Orders Yet
+              </h2>
+
+              <p>
+                You haven't placed any orders.
+              </p>
+
+              <br>
+
+              <a
+                href="index.html"
+                class="back-btn"
+              >
+                🍔 Order Food
+              </a>
+
+            </div>
+
+          `;
+
+          return;
+
+        }
+
+
+        /* =================================
+           CONVERT FIRESTORE DATA
+        ================================= */
+
+        const orders = [];
+
+
+        snapshot.forEach(
+          (docSnapshot) => {
+
+            orders.push({
+
+              id:
+                docSnapshot.id,
+
+              data:
+                docSnapshot.data()
+
+            });
+
+          }
         );
 
 
-      /*
-        IMPORTANT:
+        /* =================================
+           SORT NEWEST FIRST
+        ================================= */
 
-        Only "where" is used here.
+        orders.sort(
+          (a, b) => {
 
-        We do NOT use orderBy().
+            return (
+              getOrderTime(
+                b.data
+              ) -
 
-        Therefore Firebase does not
-        require a composite index.
-      */
+              getOrderTime(
+                a.data
+              )
+            );
 
-      const ordersQuery =
-        query(
-
-          ordersRef,
-
-          where(
-            "userId",
-            "==",
-            user.uid
-          )
-
+          }
         );
 
 
-      const snapshot =
-        await getDocs(
-          ordersQuery
+        /* =================================
+           DISPLAY ORDERS
+        ================================= */
+
+        orders.forEach(
+          (order) => {
+
+            displayOrder(
+
+              order.id,
+
+              order.data
+
+            );
+
+          }
+        );
+
+      },
+
+
+      /* =================================
+         REAL-TIME ERROR
+      ================================= */
+
+      (error) => {
+
+        console.error(
+          "LIVE ORDERS ERROR:",
+          error
         );
 
 
-      loading.style.display =
-        "none";
+        loading.style.display =
+          "none";
 
 
-      /* NO ORDERS */
+        liveStatus.innerHTML = `
 
-      if (
-        snapshot.empty
-      ) {
+          ❌ Connection Error
+
+        `;
+
+
+        liveStatus.style.background =
+          "#f8d7da";
+
+
+        liveStatus.style.color =
+          "#721c24";
+
 
         ordersContainer.innerHTML = `
 
-          <div class="empty">
+          <div class="error">
 
-            <h2>
-              📦 No Orders Yet
-            </h2>
+            ❌ Could not load your orders.
 
-            <p>
-              You haven't placed any orders.
-            </p>
+            <br><br>
 
-            <br>
-
-            <a
-              href="index.html"
-              class="back-btn"
-            >
-              🍔 Order Food
-            </a>
+            ${escapeHTML(
+              error.code ||
+              error.message
+            )}
 
           </div>
 
         `;
 
-        return;
-
       }
 
-
-      /*
-        Convert Firestore documents
-        into an array.
-      */
-
-      const orders = [];
-
-
-      snapshot.forEach(
-        (docSnapshot) => {
-
-          orders.push({
-
-            id:
-              docSnapshot.id,
-
-            data:
-              docSnapshot.data()
-
-          });
-
-        }
-      );
-
-
-      /*
-        Sort newest orders first
-        in the browser.
-
-        This replaces Firestore
-        orderBy().
-      */
-
-      orders.sort(
-        (a, b) => {
-
-          return (
-            getOrderTime(b.data) -
-            getOrderTime(a.data)
-          );
-
-        }
-      );
-
-
-      /*
-        Display sorted orders.
-      */
-
-      orders.forEach(
-        (order) => {
-
-          displayOrder(
-            order.id,
-            order.data
-          );
-
-        }
-      );
-
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "MY ORDERS ERROR:",
-        error
-      );
-
-
-      loading.style.display =
-        "none";
-
-
-      ordersContainer.innerHTML = `
-
-        <div class="error">
-
-          ❌ Could not load your orders.
-
-          <br><br>
-
-          ${escapeHTML(
-            error.code ||
-            error.message
-          )}
-
-        </div>
-
-      `;
-
-    }
+    );
 
   }
 
@@ -880,8 +1090,10 @@
   ===================================== */
 
   onAuthStateChanged(
+
     auth,
-    async (user) => {
+
+    (user) => {
 
       if (!user) {
 
@@ -894,42 +1106,37 @@
       }
 
 
-      await loadMyOrders(
+      currentUser =
+        user;
+
+
+      listenToMyOrders(
         user
       );
 
     }
+
   );
 
 
   /* =====================================
      REFRESH
+     
+     This now reloads the page.
+     The live listener will reconnect
+     automatically.
   ===================================== */
 
   refreshBtn.addEventListener(
+
     "click",
-    async () => {
 
-      const user =
-        auth.currentUser;
+    () => {
 
-
-      if (!user) {
-
-        window.location.replace(
-          "login.html"
-        );
-
-        return;
-
-      }
-
-
-      await loadMyOrders(
-        user
-      );
+      window.location.reload();
 
     }
+
   );
 
 
