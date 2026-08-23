@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -20,81 +21,61 @@
     body {
       margin: 0;
       min-height: 100vh;
-
       font-family: Arial, Helvetica, sans-serif;
-
       background: #fff8f3;
-
+      color: #171717;
       padding: 25px 15px;
     }
 
     .container {
       width: 100%;
       max-width: 500px;
-
       margin: 0 auto;
-
       background: white;
-
       border-radius: 22px;
-
       padding: 28px;
-
-      box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
     }
 
     .top {
       display: flex;
       align-items: center;
       gap: 15px;
-
       margin-bottom: 25px;
     }
 
     .logo {
       width: 55px;
       height: 55px;
-
       display: grid;
       place-items: center;
-
       background: #ff5a1f;
       color: white;
-
       border-radius: 15px;
-
       font-size: 28px;
       font-weight: 900;
     }
 
     h1 {
       margin: 0;
-
       font-size: 24px;
     }
 
     .subtitle {
       margin: 5px 0 0;
-
       color: #777;
-
       font-size: 14px;
     }
 
     .profile-card {
       background: #fff8f3;
-
       border-radius: 15px;
-
       padding: 18px;
-
       margin-bottom: 20px;
     }
 
     .profile-row {
       padding: 12px 0;
-
       border-bottom: 1px solid #eee;
     }
 
@@ -104,44 +85,31 @@
 
     .label {
       color: #777;
-
       font-size: 12px;
-
       margin-bottom: 4px;
     }
 
     .value {
       font-size: 16px;
-
       font-weight: 700;
-
       word-break: break-word;
     }
 
     label {
       display: block;
-
       font-weight: 700;
-
       margin-top: 15px;
-
       margin-bottom: 7px;
     }
 
     input,
     textarea {
       width: 100%;
-
       padding: 13px;
-
       border: 1px solid #ddd;
-
       border-radius: 11px;
-
       font-size: 15px;
-
       font-family: Arial, Helvetica, sans-serif;
-
       outline: none;
     }
 
@@ -152,92 +120,71 @@
 
     textarea {
       min-height: 90px;
-
       resize: vertical;
     }
 
     button {
       width: 100%;
-
       border: 0;
-
       border-radius: 11px;
-
       padding: 14px;
-
       margin-top: 15px;
-
       font-size: 15px;
-
       font-weight: 800;
-
       cursor: pointer;
     }
 
-    .edit-btn {
-      background: #ff5a1f;
-
-      color: white;
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
+    .edit-btn,
     .save-btn {
       background: #ff5a1f;
-
       color: white;
     }
 
     .cancel-btn {
       background: #eee;
-
       color: #222;
     }
 
     .shop-btn {
       background: #171717;
-
       color: white;
     }
 
     .logout-btn {
-      background: #fff;
-
+      background: white;
       color: #d22;
-
       border: 1px solid #ddd;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-
-      cursor: not-allowed;
     }
 
     .hidden {
       display: none;
     }
 
-    .message {
-      margin-top: 15px;
-
-      padding: 12px;
-
-      border-radius: 10px;
-
-      background: #fff3ec;
-
-      color: #8b3c17;
-
-      font-size: 14px;
-
-      line-height: 1.5;
-    }
-
     .loading {
       text-align: center;
-
       padding: 30px 10px;
-
       color: #777;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 13px;
+      border-radius: 10px;
+      background: #fff3ec;
+      color: #8b3c17;
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .error-title {
+      font-weight: 800;
+      margin-bottom: 5px;
     }
 
   </style>
@@ -274,6 +221,7 @@
   </div>
 
 
+
   <!-- LOADING -->
 
   <div
@@ -286,7 +234,8 @@
   </div>
 
 
-  <!-- PROFILE VIEW -->
+
+  <!-- PROFILE -->
 
   <div
     id="profileView"
@@ -338,7 +287,7 @@
           id="viewMobile"
           class="value"
         >
-          -
+          Not added
         </div>
 
       </div>
@@ -354,7 +303,7 @@
           id="viewAddress"
           class="value"
         >
-          -
+          Not added
         </div>
 
       </div>
@@ -370,7 +319,7 @@
           id="viewCity"
           class="value"
         >
-          -
+          Not added
         </div>
 
       </div>
@@ -386,13 +335,14 @@
           id="viewPincode"
           class="value"
         >
-          -
+          Not added
         </div>
 
       </div>
 
 
     </div>
+
 
 
     <button
@@ -420,6 +370,7 @@
 
 
   </div>
+
 
 
   <!-- EDIT PROFILE -->
@@ -507,7 +458,8 @@
   </div>
 
 
-  <!-- MESSAGE -->
+
+  <!-- ERROR / MESSAGE -->
 
   <div
     id="message"
@@ -519,9 +471,9 @@
 
 
 
-<!-- =========================================
+<!-- =====================================
      FIREBASE
-========================================= -->
+===================================== -->
 
 <script type="module">
 
@@ -588,7 +540,7 @@
 
 
   /* =====================================
-     INITIALIZE
+     START FIREBASE
   ===================================== */
 
   const app =
@@ -611,18 +563,14 @@
   const loading =
     document.getElementById("loading");
 
-
   const profileView =
     document.getElementById("profileView");
-
 
   const editView =
     document.getElementById("editView");
 
-
   const message =
     document.getElementById("message");
-
 
 
   let currentUser = null;
@@ -630,12 +578,18 @@
 
 
   /* =====================================
-     MESSAGE
+     SHOW ERROR
   ===================================== */
 
-  function showMessage(text) {
+  function showError(title, details) {
 
-    message.textContent = text;
+    loading.classList.add("hidden");
+
+    message.innerHTML =
+      "<div class='error-title'>" +
+      title +
+      "</div>" +
+      details;
 
     message.classList.remove("hidden");
 
@@ -644,19 +598,7 @@
 
 
   /* =====================================
-     HIDE MESSAGE
-  ===================================== */
-
-  function hideMessage() {
-
-    message.classList.add("hidden");
-
-  }
-
-
-
-  /* =====================================
-     SHOW PROFILE
+     DISPLAY PROFILE
   ===================================== */
 
   function displayProfile(profile) {
@@ -665,51 +607,70 @@
     document.getElementById(
       "viewName"
     ).textContent =
-      profile.name || "-";
+
+      profile.name ||
+      currentUser.displayName ||
+      "-";
 
 
     document.getElementById(
       "viewEmail"
     ).textContent =
-      profile.email || currentUser.email || "-";
+
+      profile.email ||
+      currentUser.email ||
+      "-";
 
 
     document.getElementById(
       "viewMobile"
     ).textContent =
-      profile.mobile || "-";
+
+      profile.mobile ||
+      "Not added";
 
 
     document.getElementById(
       "viewAddress"
     ).textContent =
-      profile.address || "-";
+
+      profile.address ||
+      "Not added";
 
 
     document.getElementById(
       "viewCity"
     ).textContent =
-      profile.city || "-";
+
+      profile.city ||
+      "Not added";
 
 
     document.getElementById(
       "viewPincode"
     ).textContent =
-      profile.pincode || "-";
+
+      profile.pincode ||
+      "Not added";
 
 
-    /* Fill edit fields */
+
+    /* EDIT FIELDS */
 
 
     document.getElementById(
       "editName"
     ).value =
-      profile.name || "";
+
+      profile.name ||
+      currentUser.displayName ||
+      "";
 
 
     document.getElementById(
       "editMobile"
     ).value =
+
       (profile.mobile || "")
         .replace("+91", "");
 
@@ -717,33 +678,44 @@
     document.getElementById(
       "editAddress"
     ).value =
-      profile.address || "";
+
+      profile.address ||
+      "";
 
 
     document.getElementById(
       "editCity"
     ).value =
-      profile.city || "";
+
+      profile.city ||
+      "";
 
 
     document.getElementById(
       "editPincode"
     ).value =
-      profile.pincode || "";
 
+      profile.pincode ||
+      "";
 
   }
 
 
 
   /* =====================================
-     LOAD USER PROFILE
+     LOAD PROFILE
   ===================================== */
 
   async function loadProfile(user) {
 
 
     currentUser = user;
+
+
+    console.log(
+      "Logged-in user:",
+      user.email
+    );
 
 
     try {
@@ -758,7 +730,7 @@
         );
 
 
-      const profileSnapshot =
+      const snapshot =
 
         await getDoc(
           profileRef
@@ -769,12 +741,18 @@
 
 
       if (
-        profileSnapshot.exists()
+        snapshot.exists()
       ) {
 
 
         profile =
-          profileSnapshot.data();
+          snapshot.data();
+
+
+        console.log(
+          "Profile found:",
+          profile
+        );
 
 
       }
@@ -782,11 +760,10 @@
       else {
 
 
-        /*
-          If the profile document
-          doesn't exist yet, create
-          basic information from Google.
-        */
+        console.log(
+          "No profile document yet."
+        );
+
 
         profile = {
 
@@ -810,6 +787,7 @@
 
         };
 
+
       }
 
 
@@ -831,16 +809,15 @@
     catch (error) {
 
 
-      console.error(error);
-
-
-      loading.classList.add(
-        "hidden"
+      console.error(
+        "PROFILE ERROR:",
+        error
       );
 
 
-      showMessage(
-        "Could not load your profile: " +
+      showError(
+        "Unable to load profile",
+        "Firebase error: " +
         (
           error.code ||
           error.message
@@ -854,7 +831,7 @@
 
 
   /* =====================================
-     CHECK LOGIN
+     LOGIN CHECK
   ===================================== */
 
   onAuthStateChanged(
@@ -864,12 +841,14 @@
     (user) => {
 
 
+      console.log(
+        "Authentication state:",
+        user
+      );
+
+
       if (!user) {
 
-
-        /*
-          No logged-in user.
-        */
 
         window.location.replace(
           "login.html"
@@ -890,7 +869,7 @@
 
 
   /* =====================================
-     EDIT PROFILE
+     EDIT
   ===================================== */
 
   document
@@ -900,7 +879,9 @@
       () => {
 
 
-        hideMessage();
+        message.classList.add(
+          "hidden"
+        );
 
 
         profileView.classList.add(
@@ -912,14 +893,13 @@
           "hidden"
         );
 
-
       }
     );
 
 
 
   /* =====================================
-     CANCEL EDIT
+     CANCEL
   ===================================== */
 
   document
@@ -927,9 +907,6 @@
     .addEventListener(
       "click",
       () => {
-
-
-        hideMessage();
 
 
         editView.classList.add(
@@ -941,14 +918,13 @@
           "hidden"
         );
 
-
       }
     );
 
 
 
   /* =====================================
-     SAVE CHANGES
+     SAVE PROFILE
   ===================================== */
 
   document
@@ -960,24 +936,22 @@
 
         if (!currentUser) {
 
-
-          showMessage(
-            "You are not logged in."
+          showError(
+            "Not logged in",
+            "Please log in again."
           );
-
 
           return;
 
         }
 
 
-        /* GET VALUES */
-
-
         const name =
 
           document
-            .getElementById("editName")
+            .getElementById(
+              "editName"
+            )
             .value
             .trim();
 
@@ -985,7 +959,9 @@
         let mobile =
 
           document
-            .getElementById("editMobile")
+            .getElementById(
+              "editMobile"
+            )
             .value
             .trim();
 
@@ -993,7 +969,9 @@
         const address =
 
           document
-            .getElementById("editAddress")
+            .getElementById(
+              "editAddress"
+            )
             .value
             .trim();
 
@@ -1001,7 +979,9 @@
         const city =
 
           document
-            .getElementById("editCity")
+            .getElementById(
+              "editCity"
+            )
             .value
             .trim();
 
@@ -1009,7 +989,9 @@
         const pincode =
 
           document
-            .getElementById("editPincode")
+            .getElementById(
+              "editPincode"
+            )
             .value
             .trim();
 
@@ -1020,8 +1002,9 @@
 
         if (!name) {
 
-          showMessage(
-            "Please enter your name."
+          showError(
+            "Name required",
+            "Please enter your full name."
           );
 
           return;
@@ -1042,7 +1025,8 @@
           )
         ) {
 
-          showMessage(
+          showError(
+            "Invalid mobile number",
             "Please enter a valid 10-digit Indian mobile number."
           );
 
@@ -1053,8 +1037,9 @@
 
         if (!address) {
 
-          showMessage(
-            "Please enter your address."
+          showError(
+            "Address required",
+            "Please enter your delivery address."
           );
 
           return;
@@ -1064,7 +1049,8 @@
 
         if (!city) {
 
-          showMessage(
+          showError(
+            "City required",
             "Please enter your city."
           );
 
@@ -1079,7 +1065,8 @@
           )
         ) {
 
-          showMessage(
+          showError(
+            "Invalid PIN code",
             "Please enter a valid 6-digit PIN code."
           );
 
@@ -1089,72 +1076,50 @@
 
 
 
+        const saveButton =
+          document.getElementById(
+            "saveBtn"
+          );
+
+
+        saveButton.disabled =
+          true;
+
+
+        saveButton.textContent =
+          "Saving...";
+
+
         try {
-
-
-          const saveButton =
-            document.getElementById(
-              "saveBtn"
-            );
-
-
-          saveButton.disabled =
-            true;
-
-
-          saveButton.textContent =
-            "Saving...";
 
 
           const profile = {
 
-
             name:
               name,
-
 
             email:
               currentUser.email || "",
 
-
             mobile:
               "+91" + mobile,
-
 
             address:
               address,
 
-
             city:
               city,
-
 
             pincode:
               pincode,
 
-
             photoURL:
               currentUser.photoURL || "",
-
 
             updatedAt:
               new Date().toISOString()
 
           };
-
-
-
-          /*
-            IMPORTANT:
-
-            The profile is saved under
-            the logged-in user's UID.
-
-            users / USER_UID
-
-            Therefore each customer
-            gets their own profile.
-          */
 
 
           await setDoc(
@@ -1187,17 +1152,12 @@
           );
 
 
-          showMessage(
-            "✅ Profile updated successfully."
+          message.innerHTML =
+            "✅ Profile updated successfully.";
+
+          message.classList.remove(
+            "hidden"
           );
-
-
-          saveButton.disabled =
-            false;
-
-
-          saveButton.textContent =
-            "💾 Save Changes";
 
 
         }
@@ -1205,33 +1165,30 @@
         catch (error) {
 
 
-          console.error(error);
+          console.error(
+            "SAVE ERROR:",
+            error
+          );
 
 
-          showMessage(
-            "Could not save changes: " +
+          showError(
+            "Could not save profile",
+            "Firebase error: " +
             (
               error.code ||
               error.message
             )
           );
 
-
-          document
-            .getElementById(
-              "saveBtn"
-            )
-            .disabled = false;
-
-
-          document
-            .getElementById(
-              "saveBtn"
-            )
-            .textContent =
-            "💾 Save Changes";
-
         }
+
+
+        saveButton.disabled =
+          false;
+
+
+        saveButton.textContent =
+          "💾 Save Changes";
 
       }
     );
@@ -1273,12 +1230,6 @@
           await signOut(auth);
 
 
-          /*
-            After logout Firebase will
-            detect that there is no user.
-          */
-
-
           window.location.replace(
             "login.html"
           );
@@ -1289,12 +1240,10 @@
         catch (error) {
 
 
-          showMessage(
-            "Logout failed: " +
-            (
-              error.code ||
-              error.message
-            )
+          showError(
+            "Logout failed",
+            error.code ||
+            error.message
           );
 
         }
