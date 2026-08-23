@@ -1,533 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Owner Dashboard - GENZ FOOD SHOP</title>
+  <meta charset="UTF-8">
 
-<style>
-*{
-  box-sizing:border-box;
-}
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#fff8f3;
-  color:#171717;
-  padding:15px;
-}
+  <title>Owner Dashboard - GENZ FOOD SHOP</title>
 
-.container{
-  max-width:1200px;
-  margin:auto;
-}
+  <style>
 
-.header{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 8px 30px rgba(0,0,0,.07);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-h1{
-  margin:0;
-  font-size:25px;
-}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff8f3;
+      color: #171717;
+      padding: 15px;
+    }
 
-.owner{
-  color:#777;
-  font-size:13px;
-  margin-top:6px;
-}
+    .container {
+      max-width: 1150px;
+      margin: auto;
+    }
 
-button{
-  border:0;
-  border-radius:10px;
-  padding:10px 13px;
-  font-weight:700;
-  cursor:pointer;
-}
+    /* HEADER */
 
-.logout{
-  background:#171717;
-  color:white;
-}
+    .header {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.07);
 
-.refresh{
-  background:#ff5a1f;
-  color:white;
-  margin-bottom:15px;
-}
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.dashboard{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:20px;
-}
+    h1 {
+      margin: 0;
+      font-size: 25px;
+    }
 
-.card{
-  background:white;
-  padding:18px;
-  border-radius:17px;
-  box-shadow:0 8px 25px rgba(0,0,0,.06);
-}
+    .owner {
+      color: #777;
+      font-size: 13px;
+      margin-top: 6px;
+    }
 
-.card-title{
-  color:#777;
-  font-size:13px;
-  font-weight:700;
-}
+    .refresh {
+      background: #ff5a1f;
+      color: white;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.card-value{
-  font-size:25px;
-  font-weight:900;
-  margin-top:8px;
-}
+    /* STATS */
 
-.green{
-  color:#16803a;
-}
+    .stats {
+      display: grid;
+      grid-template-columns:
+        repeat(4, 1fr);
 
-.red{
-  color:#c62828;
-}
+      gap: 15px;
+      margin-bottom: 20px;
+    }
 
-.orange{
-  color:#ff5a1f;
-}
+    .stat {
+      background: white;
+      padding: 18px;
+      border-radius: 16px;
+      box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+    }
 
-.section{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 8px 25px rgba(0,0,0,.06);
-}
+    .stat p {
+      margin: 0 0 8px;
+      color: #777;
+      font-size: 13px;
+    }
 
-.section h2{
-  margin-top:0;
-}
+    .stat strong {
+      font-size: 25px;
+    }
 
-.expense-form{
-  display:grid;
-  grid-template-columns:1fr 1fr 2fr auto;
-  gap:10px;
-}
+    /* ORDERS */
 
-.expense-form input{
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:10px;
-}
+    .orders {
+      display: grid;
+      gap: 15px;
+    }
 
-.add-expense{
-  background:#171717;
-  color:white;
-}
+    .order {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+    }
 
-.expense-list{
-  margin-top:15px;
-}
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
 
-.expense-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 0;
-  border-bottom:1px solid #eee;
-  gap:10px;
-}
+    .order-id {
+      font-weight: 900;
+    }
 
-.delete-expense{
-  background:#ffe5e5;
-  color:#c62828;
-}
+    .type {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: #171717;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      margin-left: 5px;
+    }
 
-.orders{
-  display:grid;
-  gap:15px;
-}
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #fff0e9;
+      color: #ff5a1f;
+      font-size: 12px;
+      font-weight: 800;
+    }
 
-.order{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 8px 25px rgba(0,0,0,.06);
-  border-left:5px solid #ff5a1f;
-}
+    .customer {
+      background: #fff8f3;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 15px;
+    }
 
-.order-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:15px;
-}
+    .customer div {
+      margin: 7px 0;
+      font-size: 14px;
+    }
 
-.order-id{
-  font-weight:900;
-  word-break:break-all;
-}
+    .items {
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+    }
 
-.status{
-  padding:7px 11px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:900;
-}
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
 
-.status-pending{
-  background:#fff3cd;
-  color:#856404;
-}
+    .total {
+      text-align: right;
+      font-size: 20px;
+      font-weight: 900;
+      margin-top: 15px;
+    }
 
-.status-preparing{
-  background:#e3f2fd;
-  color:#1565c0;
-}
+    /* PAYMENT */
 
-.status-delivery{
-  background:#f3e5f5;
-  color:#7b1fa2;
-}
+    .payment-box {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
 
-.status-delivered{
-  background:#e8f5e9;
-  color:#2e7d32;
-}
+    .payment {
+      padding: 7px 11px;
+      border-radius: 10px;
+      background: #f1f1f1;
+      font-size: 12px;
+      font-weight: 800;
+    }
 
-.status-rejected{
-  background:#ffebee;
-  color:#c62828;
-}
+    .paid {
+      background: #dff7e6;
+      color: #167534;
+    }
 
-.customer{
-  background:#fff8f3;
-  border-radius:12px;
-  padding:14px;
-  margin-bottom:15px;
-}
+    .pending {
+      background: #fff2d8;
+      color: #8a5a00;
+    }
 
-.customer div{
-  margin:6px 0;
-  font-size:14px;
-}
+    /* CONTROLS */
 
-.items{
-  border-top:1px solid #eee;
-  padding-top:12px;
-}
+    .controls {
+      border-top: 1px solid #eee;
+      margin-top: 15px;
+      padding-top: 15px;
+    }
 
-.item{
-  display:flex;
-  justify-content:space-between;
-  padding:9px 0;
-  border-bottom:1px solid #eee;
-  font-size:14px;
-}
+    .controls-title {
+      font-weight: 800;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
 
-.total{
-  text-align:right;
-  font-size:20px;
-  font-weight:900;
-  margin-top:15px;
-}
+    .status-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
 
-.order-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:18px;
-  padding-top:15px;
-  border-top:1px solid #eee;
-}
+    .status-buttons button {
+      border: 0;
+      border-radius: 9px;
+      padding: 9px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #eee;
+    }
 
-.order-actions button{
-  color:white;
-}
+    .status-buttons button:hover {
+      background: #ff5a1f;
+      color: white;
+    }
 
-.btn-pending{
-  background:#d99a00;
-}
+    .payment-buttons {
+      display: flex;
+      gap: 7px;
+      margin-top: 10px;
+    }
 
-.btn-preparing{
-  background:#1976d2;
-}
+    .payment-buttons button {
+      border: 0;
+      border-radius: 9px;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.btn-delivery{
-  background:#7b1fa2;
-}
+    .paid-btn {
+      background: #dff7e6;
+      color: #167534;
+    }
 
-.btn-delivered{
-  background:#2e7d32;
-}
+    .pending-btn {
+      background: #fff2d8;
+      color: #8a5a00;
+    }
 
-.btn-rejected{
-  background:#c62828;
-}
+    .loading,
+    .empty,
+    .error {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      text-align: center;
+    }
 
-.loading,
-.empty,
-.error{
-  background:white;
-  padding:30px;
-  border-radius:18px;
-  text-align:center;
-}
+    .error {
+      color: #c00;
+    }
 
-.error{
-  color:#c00;
-}
+    /* MOBILE */
 
-.small{
-  color:#777;
-  font-size:12px;
-}
+    @media(max-width:800px) {
 
-@media(max-width:900px){
+      .stats {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
 
-  .dashboard{
-    grid-template-columns:repeat(2,1fr);
-  }
+    }
 
-  .expense-form{
-    grid-template-columns:1fr 1fr;
-  }
+    @media(max-width:600px) {
 
-}
+      body {
+        padding: 10px;
+      }
 
-@media(max-width:600px){
+      .header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
 
-  body{
-    padding:10px;
-  }
+      .refresh {
+        width: 100%;
+      }
 
-  .header{
-    align-items:flex-start;
-    flex-direction:column;
-  }
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
 
-  .dashboard{
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
+      .stat strong {
+        font-size: 20px;
+      }
 
-  .card{
-    padding:14px;
-  }
+    }
 
-  .card-value{
-    font-size:20px;
-  }
+  </style>
 
-  .expense-form{
-    grid-template-columns:1fr;
-  }
-
-  .order-actions{
-    flex-direction:column;
-  }
-
-  .order-actions button{
-    width:100%;
-  }
-}
-</style>
 </head>
+
 
 <body>
 
+
 <div class="container">
+
+
+  <!-- HEADER -->
 
   <div class="header">
 
     <div>
-      <h1>👑 Owner Dashboard</h1>
+
+      <h1>
+        👑 Owner Dashboard
+      </h1>
 
       <div class="owner">
+
         GENZ FOOD SHOP
+
         <br>
-        Owner: snsuhail19@gmail.com
+
+        Owner:
+        snsuhail19@gmail.com
+
       </div>
+
     </div>
 
-    <button id="logoutBtn" class="logout">
-      Logout
+
+    <button
+      id="refreshBtn"
+      class="refresh"
+    >
+      🔄 Refresh
     </button>
 
   </div>
 
 
-  <!-- =========================
-       BUSINESS SUMMARY
-  ========================== -->
+  <!-- STATS -->
 
-  <div class="dashboard">
+  <div class="stats">
 
-    <div class="card">
-      <div class="card-title">💰 TOTAL SALES</div>
-      <div class="card-value orange" id="sales">
-        ₹0
-      </div>
-    </div>
+    <div class="stat">
 
-    <div class="card">
-      <div class="card-title">📦 ORDERS</div>
-      <div class="card-value" id="orderCount">
+      <p>
+        Total Orders
+      </p>
+
+      <strong id="totalOrders">
         0
-      </div>
+      </strong>
+
     </div>
 
-    <div class="card">
-      <div class="card-title">🍔 ITEMS SOLD</div>
-      <div class="card-value" id="itemsSold">
+
+    <div class="stat">
+
+      <p>
+        Delivered
+      </p>
+
+      <strong id="deliveredOrders">
         0
-      </div>
+      </strong>
+
     </div>
 
-    <div class="card">
-      <div class="card-title">❌ REJECTED</div>
-      <div class="card-value red" id="rejectedCount">
+
+    <div class="stat">
+
+      <p>
+        Pending
+      </p>
+
+      <strong id="pendingOrders">
         0
-      </div>
+      </strong>
+
     </div>
 
-    <div class="card">
-      <div class="card-title">🏷️ PRODUCT COST</div>
-      <div class="card-value" id="productCost">
-        ₹0
-      </div>
-    </div>
 
-    <div class="card">
-      <div class="card-title">💵 GROSS PROFIT</div>
-      <div class="card-value green" id="grossProfit">
-        ₹0
-      </div>
-    </div>
+    <div class="stat">
 
-    <div class="card">
-      <div class="card-title">💸 EXPENSES</div>
-      <div class="card-value red" id="expenses">
-        ₹0
-      </div>
-    </div>
+      <p>
+        Total Sales
+      </p>
 
-    <div class="card">
-      <div class="card-title">📈 NET PROFIT</div>
-      <div class="card-value green" id="netProfit">
-        ₹0
-      </div>
+      <strong>
+        ₹<span id="totalSales">0</span>
+      </strong>
+
     </div>
 
   </div>
 
 
-  <button id="refreshBtn" class="refresh">
-    🔄 Refresh Dashboard
-  </button>
+  <!-- ORDERS -->
 
-
-  <!-- =========================
-       EXPENSES
-  ========================== -->
-
-  <div class="section">
-
-    <h2>💸 Business Expenses</h2>
-
-    <p class="small">
-      Add expenses such as ingredients, delivery, electricity,
-      packaging, rent, salary, advertising, etc.
-    </p>
-
-    <div class="expense-form">
-
-      <input
-        id="expenseName"
-        type="text"
-        placeholder="Expense name"
-      >
-
-      <input
-        id="expenseAmount"
-        type="number"
-        min="0"
-        placeholder="Amount ₹"
-      >
-
-      <input
-        id="expenseNote"
-        type="text"
-        placeholder="Note (optional)"
-      >
-
-      <button
-        id="addExpenseBtn"
-        class="add-expense"
-      >
-        + Add Expense
-      </button>
-
-    </div>
-
-    <div
-      id="expenseList"
-      class="expense-list"
-    ></div>
-
+  <div
+    id="loading"
+    class="loading"
+  >
+    Checking owner access...
   </div>
 
 
-  <!-- =========================
-       ORDERS
-  ========================== -->
+  <div
+    id="orders"
+    class="orders"
+  ></div>
 
-  <div class="section">
-
-    <h2>📦 Orders</h2>
-
-    <div
-      id="loading"
-      class="loading"
-    >
-      Checking owner access...
-    </div>
-
-    <div
-      id="orders"
-      class="orders"
-    ></div>
-
-  </div>
 
 </div>
 
 
 <script type="module">
 
+
 import {
   initializeApp
-}
-from
+} from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
 import {
   getAuth,
-  onAuthStateChanged,
-  signOut
-}
-from
+  onAuthStateChanged
+} from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
 
 import {
   getFirestore,
@@ -536,18 +456,12 @@ import {
   query,
   orderBy,
   doc,
-  updateDoc,
-  addDoc,
-  deleteDoc,
-  serverTimestamp
-}
-from
+  updateDoc
+} from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -585,68 +499,28 @@ const db =
   getFirestore(app);
 
 
-/* =========================
-   OWNER
-========================= */
+/* OWNER */
 
 const OWNER_EMAIL =
   "snsuhail19@gmail.com";
 
 
-/*
-  IMPORTANT:
-
-  Change these costs to your actual
-  approximate cost for each item.
-
-  Example:
-  Samosa selling price = ₹20
-  Business cost = ₹10
-  Profit = ₹10
-*/
-
-const PRODUCT_COSTS = {
-
-  "Samosa": 10,
-  "Vada": 15,
-  "Masala Dosa": 35,
-  "Idli": 20,
-  "White Rice": 18,
-  "Pani Puri": 25,
-  "Pakoda": 20,
-  "Momos": 45
-
-};
-
-
-/* =========================
-   ELEMENTS
-========================= */
+/* ELEMENTS */
 
 const loading =
-  document.getElementById("loading");
+  document.getElementById(
+    "loading"
+  );
 
 const ordersContainer =
-  document.getElementById("orders");
-
-const expenseList =
-  document.getElementById("expenseList");
-
-
-/* =========================
-   GLOBAL DATA
-========================= */
-
-let allOrders = [];
-
-let allExpenses = [];
+  document.getElementById(
+    "orders"
+  );
 
 
-/* =========================
-   LOAD ORDERS
-========================= */
+/* LOAD ORDERS */
 
-async function loadOrders(){
+async function loadOrders() {
 
   loading.style.display =
     "block";
@@ -657,13 +531,15 @@ async function loadOrders(){
   ordersContainer.innerHTML =
     "";
 
-  try{
+
+  try {
 
     const ordersRef =
       collection(
         db,
         "orders"
       );
+
 
     const ordersQuery =
       query(
@@ -674,60 +550,62 @@ async function loadOrders(){
         )
       );
 
+
     const snapshot =
       await getDocs(
         ordersQuery
       );
 
-    allOrders = [];
-
-    snapshot.forEach(
-      docSnapshot => {
-
-        allOrders.push({
-
-          id:
-            docSnapshot.id,
-
-          ...docSnapshot.data()
-
-        });
-
-      }
-    );
 
     loading.style.display =
       "none";
 
-    if(
-      allOrders.length === 0
-    ){
+
+    if (snapshot.empty) {
 
       ordersContainer.innerHTML =
         '<div class="empty">No orders yet.</div>';
 
-    }
+      updateStats([]);
 
-    else{
-
-      allOrders.forEach(
-        order => {
-
-          displayOrder(
-            order.id,
-            order
-          );
-
-        }
-      );
+      return;
 
     }
 
-    updateBusinessSummary();
+
+    const allOrders = [];
+
+
+    snapshot.forEach(
+      orderSnapshot => {
+
+        const order =
+          orderSnapshot.data();
+
+
+        order._id =
+          orderSnapshot.id;
+
+
+        allOrders.push(order);
+
+
+        displayOrder(
+          orderSnapshot.id,
+          order
+        );
+
+      }
+    );
+
+
+    updateStats(
+      allOrders
+    );
 
   }
 
-  catch(error){
+  catch(error) {
 
     console.error(error);
 
@@ -735,12 +613,16 @@ async function loadOrders(){
       "none";
 
     ordersContainer.innerHTML =
+
       '<div class="error">' +
+
       "Could not load orders.<br><br>" +
+
       (
         error.code ||
         error.message
       ) +
+
       "</div>";
 
   }
@@ -748,19 +630,90 @@ async function loadOrders(){
 }
 
 
-/* =========================
-   DISPLAY ORDER
-========================= */
+/* STATS */
+
+function updateStats(orders) {
+
+  let totalSales = 0;
+
+  let delivered = 0;
+
+  let pending = 0;
+
+
+  orders.forEach(order => {
+
+    const status =
+      order.status ||
+      "Pending";
+
+
+    if (status === "Delivered") {
+
+      delivered++;
+
+      totalSales +=
+        Number(
+          order.total || 0
+        );
+
+    }
+
+
+    if (
+      status === "Pending" ||
+      status === "Accepted" ||
+      status === "Preparing" ||
+      status === "Out for Delivery"
+    ) {
+
+      pending++;
+
+    }
+
+  });
+
+
+  document.getElementById(
+    "totalOrders"
+  ).textContent =
+    orders.length;
+
+
+  document.getElementById(
+    "deliveredOrders"
+  ).textContent =
+    delivered;
+
+
+  document.getElementById(
+    "pendingOrders"
+  ).textContent =
+    pending;
+
+
+  document.getElementById(
+    "totalSales"
+  ).textContent =
+    totalSales.toFixed(2);
+
+}
+
+
+/* DISPLAY ORDER */
 
 function displayOrder(
   orderId,
   order
-){
+) {
 
-  const orderElement =
-    document.createElement("div");
+  const element =
+    document.createElement(
+      "div"
+    );
 
-  orderElement.className =
+
+  element.className =
     "order";
 
 
@@ -768,13 +721,11 @@ function displayOrder(
     "";
 
 
-  let itemCount =
-    0;
-
-
-  if(
-    Array.isArray(order.items)
-  ){
+  if (
+    Array.isArray(
+      order.items
+    )
+  ) {
 
     order.items.forEach(
       item => {
@@ -783,18 +734,16 @@ function displayOrder(
           item.name ||
           "Food item";
 
+
         const quantity =
-          Number(
-            item.quantity || 1
-          );
+          item.quantity ||
+          1;
+
 
         const price =
           Number(
             item.price || 0
           );
-
-        itemCount +=
-          quantity;
 
 
         itemsHTML +=
@@ -811,7 +760,7 @@ function displayOrder(
 
           "</span>" +
 
-          "<strong>₹" +
+          '<strong>₹' +
 
           (
             price *
@@ -862,19 +811,41 @@ function displayOrder(
     "Pending";
 
 
-  const statusClass =
-    getStatusClass(status);
+  const paymentMethod =
+    order.paymentMethod ||
+    "Not selected";
 
 
-  orderElement.innerHTML = `
+  const paymentStatus =
+    order.paymentStatus ||
+    "Pending";
+
+
+  const customerType =
+    order.customerType ||
+    "Customer";
+
+
+  element.innerHTML = `
 
     <div class="order-header">
 
-      <div class="order-id">
-        Order #${orderId}
+      <div>
+
+        <div class="order-id">
+
+          Order #${orderId}
+
+          <span class="type">
+            ${customerType}
+          </span>
+
+        </div>
+
       </div>
 
-      <div class="status ${statusClass}">
+
+      <div class="status">
         ${status}
       </div>
 
@@ -885,22 +856,22 @@ function displayOrder(
 
       <div>
         <strong>Name:</strong>
-        ${escapeHTML(customerName)}
+        ${customerName}
       </div>
 
       <div>
         <strong>Email:</strong>
-        ${escapeHTML(email)}
+        ${email}
       </div>
 
       <div>
         <strong>Phone:</strong>
-        ${escapeHTML(phone)}
+        ${phone}
       </div>
 
       <div>
         <strong>Address:</strong>
-        ${escapeHTML(address)}
+        ${address}
       </div>
 
     </div>
@@ -913,100 +884,129 @@ function displayOrder(
     </div>
 
 
-    <div class="total">
+    <div class="payment-box">
 
-      Total: ₹${total.toFixed(2)}
+      <span class="payment">
+        💳 ${paymentMethod}
+      </span>
+
+      <span class="payment ${
+        paymentStatus === "Paid"
+          ? "paid"
+          : "pending"
+      }">
+
+        💰 Payment:
+        ${paymentStatus}
+
+      </span>
 
     </div>
 
 
-    <div class="order-actions">
+    <div class="total">
 
-      <button
-        class="btn-pending"
-        data-status="Pending"
-        data-id="${orderId}"
-      >
-        ⏳ Pending
-      </button>
+      Total:
+      ₹${total.toFixed(2)}
 
-      <button
-        class="btn-preparing"
-        data-status="Preparing"
-        data-id="${orderId}"
-      >
-        🍳 Preparing
-      </button>
+    </div>
 
-      <button
-        class="btn-delivery"
-        data-status="Out for Delivery"
-        data-id="${orderId}"
-      >
-        🚚 Out for Delivery
-      </button>
 
-      <button
-        class="btn-delivered"
-        data-status="Delivered"
-        data-id="${orderId}"
-      >
-        ✅ Delivered
-      </button>
+    <div class="controls">
 
-      <button
-        class="btn-rejected"
-        data-status="Rejected"
-        data-id="${orderId}"
-      >
-        ❌ Rejected
-      </button>
+      <div class="controls-title">
+        📦 Order Status
+      </div>
+
+
+      <div class="status-buttons">
+
+        <button
+          onclick="changeStatus('${orderId}', 'Pending')"
+        >
+          Pending
+        </button>
+
+        <button
+          onclick="changeStatus('${orderId}', 'Accepted')"
+        >
+          Accepted
+        </button>
+
+        <button
+          onclick="changeStatus('${orderId}', 'Preparing')"
+        >
+          Preparing
+        </button>
+
+        <button
+          onclick="changeStatus('${orderId}', 'Out for Delivery')"
+        >
+          Out for Delivery
+        </button>
+
+        <button
+          onclick="changeStatus('${orderId}', 'Delivered')"
+        >
+          Delivered
+        </button>
+
+        <button
+          onclick="changeStatus('${orderId}', 'Rejected')"
+        >
+          Rejected
+        </button>
+
+      </div>
+
+
+      <div class="controls-title"
+           style="margin-top:15px;">
+
+        💳 Payment Status
+
+      </div>
+
+
+      <div class="payment-buttons">
+
+        <button
+          class="paid-btn"
+          onclick="changePaymentStatus('${orderId}', 'Paid')"
+        >
+          ✅ Paid
+        </button>
+
+        <button
+          class="pending-btn"
+          onclick="changePaymentStatus('${orderId}', 'Pending')"
+        >
+          ⏳ Pending
+        </button>
+
+      </div>
 
     </div>
 
   `;
 
 
-  orderElement
-    .querySelectorAll(
-      ".order-actions button"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            updateOrderStatus(
-              button.dataset.id,
-              button.dataset.status
-            );
-
-          }
-        );
-
-      }
-    );
-
-
   ordersContainer.appendChild(
-    orderElement
+    element
   );
 
 }
 
 
-/* =========================
-   UPDATE ORDER STATUS
-========================= */
+/* CHANGE ORDER STATUS */
 
-async function updateOrderStatus(
+window.changeStatus =
+async function(
   orderId,
   newStatus
-){
+) {
 
-  try{
+  try {
 
     await updateDoc(
 
@@ -1018,60 +1018,22 @@ async function updateOrderStatus(
 
       {
         status:
-          newStatus,
-
-        updatedAt:
-          serverTimestamp()
+          newStatus
       }
 
     );
 
 
-    const order =
-      allOrders.find(
-        item =>
-          item.id === orderId
-      );
-
-
-    if(order){
-
-      order.status =
-        newStatus;
-
-    }
-
-
-    ordersContainer.innerHTML =
-      "";
-
-    allOrders.forEach(
-      order => {
-
-        displayOrder(
-          order.id,
-          order
-        );
-
-      }
-    );
-
-
-    updateBusinessSummary();
-
-    alert(
-      "Order status changed to: " +
-      newStatus
-    );
+    loadOrders();
 
   }
 
-  catch(error){
+  catch(error) {
 
     console.error(error);
 
     alert(
-      "Could not update status: " +
+      "Could not update order: " +
       (
         error.code ||
         error.message
@@ -1080,475 +1042,45 @@ async function updateOrderStatus(
 
   }
 
-}
+};
 
 
-/* =========================
-   BUSINESS SUMMARY
-========================= */
+/* CHANGE PAYMENT STATUS */
 
-function updateBusinessSummary(){
+window.changePaymentStatus =
+async function(
+  orderId,
+  newStatus
+) {
 
-  let sales =
-    0;
+  try {
 
-  let itemsSold =
-    0;
+    await updateDoc(
 
-  let productCost =
-    0;
-
-  let rejected =
-    0;
-
-
-  allOrders.forEach(
-    order => {
-
-      const status =
-        order.status ||
-        "Pending";
-
-
-      if(
-        status === "Rejected"
-      ){
-
-        rejected++;
-
-        return;
-
-      }
-
-
-      /*
-        Sales are counted for
-        non-rejected orders.
-      */
-
-      const total =
-        Number(
-          order.total || 0
-        );
-
-      sales +=
-        total;
-
-
-      if(
-        Array.isArray(order.items)
-      ){
-
-        order.items.forEach(
-          item => {
-
-            const quantity =
-              Number(
-                item.quantity || 1
-              );
-
-            const name =
-              item.name ||
-              "";
-
-            itemsSold +=
-              quantity;
-
-
-            const costPerItem =
-              Number(
-                PRODUCT_COSTS[name] || 0
-              );
-
-
-            productCost +=
-              costPerItem *
-              quantity;
-
-          }
-        );
-
-      }
-
-    }
-  );
-
-
-  const grossProfit =
-    sales -
-    productCost;
-
-
-  const totalExpenses =
-    allExpenses.reduce(
-      (
-        sum,
-        expense
-      ) =>
-        sum +
-        Number(
-          expense.amount || 0
-        ),
-      0
-    );
-
-
-  const netProfit =
-    grossProfit -
-    totalExpenses;
-
-
-  document.getElementById(
-    "sales"
-  ).textContent =
-    "₹" +
-    sales.toFixed(2);
-
-
-  document.getElementById(
-    "orderCount"
-  ).textContent =
-    allOrders.length;
-
-
-  document.getElementById(
-    "itemsSold"
-  ).textContent =
-    itemsSold;
-
-
-  document.getElementById(
-    "rejectedCount"
-  ).textContent =
-    rejected;
-
-
-  document.getElementById(
-    "productCost"
-  ).textContent =
-    "₹" +
-    productCost.toFixed(2);
-
-
-  document.getElementById(
-    "grossProfit"
-  ).textContent =
-    "₹" +
-    grossProfit.toFixed(2);
-
-
-  document.getElementById(
-    "expenses"
-  ).textContent =
-    "₹" +
-    totalExpenses.toFixed(2);
-
-
-  document.getElementById(
-    "netProfit"
-  ).textContent =
-    "₹" +
-    netProfit.toFixed(2);
-
-}
-
-
-/* =========================
-   LOAD EXPENSES
-========================= */
-
-async function loadExpenses(){
-
-  try{
-
-    const expensesRef =
-      collection(
-        db,
-        "expenses"
-      );
-
-    const snapshot =
-      await getDocs(
-        expensesRef
-      );
-
-    allExpenses = [];
-
-    snapshot.forEach(
-      docSnapshot => {
-
-        allExpenses.push({
-
-          id:
-            docSnapshot.id,
-
-          ...docSnapshot.data()
-
-        });
-
-      }
-    );
-
-
-    renderExpenses();
-
-    updateBusinessSummary();
-
-  }
-
-  catch(error){
-
-    console.error(
-      "Expense error:",
-      error
-    );
-
-    expenseList.innerHTML =
-      '<div class="error">' +
-      "Could not load expenses." +
-      "</div>";
-
-  }
-
-}
-
-
-/* =========================
-   RENDER EXPENSES
-========================= */
-
-function renderExpenses(){
-
-  if(
-    allExpenses.length === 0
-  ){
-
-    expenseList.innerHTML =
-      '<div class="small">No expenses added yet.</div>';
-
-    return;
-
-  }
-
-
-  expenseList.innerHTML =
-    allExpenses.map(
-      expense => `
-
-      <div class="expense-row">
-
-        <div>
-
-          <strong>
-            ${escapeHTML(
-              expense.name ||
-              "Expense"
-            )}
-          </strong>
-
-          <br>
-
-          <span class="small">
-            ${escapeHTML(
-              expense.note ||
-              ""
-            )}
-          </span>
-
-        </div>
-
-
-        <strong>
-          ₹${Number(
-            expense.amount || 0
-          ).toFixed(2)}
-        </strong>
-
-
-        <button
-          class="delete-expense"
-          data-expense="${expense.id}"
-        >
-          Delete
-        </button>
-
-      </div>
-
-    `
-    ).join("");
-
-
-  document
-    .querySelectorAll(
-      "[data-expense]"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            deleteExpense(
-              button.dataset.expense
-            );
-
-          }
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================
-   ADD EXPENSE
-========================= */
-
-async function addExpense(){
-
-  const name =
-    document.getElementById(
-      "expenseName"
-    ).value.trim();
-
-
-  const amount =
-    Number(
-      document.getElementById(
-        "expenseAmount"
-      ).value
-    );
-
-
-  const note =
-    document.getElementById(
-      "expenseNote"
-    ).value.trim();
-
-
-  if(
-    !name ||
-    !amount ||
-    amount <= 0
-  ){
-
-    alert(
-      "Enter expense name and a valid amount."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await addDoc(
-      collection(
-        db,
-        "expenses"
-      ),
-      {
-
-        name:
-          name,
-
-        amount:
-          amount,
-
-        note:
-          note,
-
-        createdAt:
-          serverTimestamp()
-
-      }
-    );
-
-
-    document.getElementById(
-      "expenseName"
-    ).value =
-      "";
-
-    document.getElementById(
-      "expenseAmount"
-    ).value =
-      "";
-
-    document.getElementById(
-      "expenseNote"
-    ).value =
-      "";
-
-
-    await loadExpenses();
-
-    alert(
-      "Expense added."
-    );
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Could not add expense: " +
-      (
-        error.code ||
-        error.message
-      )
-    );
-
-  }
-
-}
-
-
-/* =========================
-   DELETE EXPENSE
-========================= */
-
-async function deleteExpense(
-  expenseId
-){
-
-  if(
-    !confirm(
-      "Delete this expense?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    await deleteDoc(
       doc(
         db,
-        "expenses",
-        expenseId
-      )
+        "orders",
+        orderId
+      ),
+
+      {
+        paymentStatus:
+          newStatus
+      }
+
     );
 
 
-    await loadExpenses();
+    loadOrders();
 
   }
 
-  catch(error){
+  catch(error) {
 
     console.error(error);
 
     alert(
-      "Could not delete expense: " +
+      "Could not update payment: " +
       (
         error.code ||
         error.message
@@ -1557,100 +1089,19 @@ async function deleteExpense(
 
   }
 
-}
+};
 
 
-/* =========================
-   STATUS CLASS
-========================= */
-
-function getStatusClass(
-  status
-){
-
-  if(
-    status === "Preparing"
-  ){
-
-    return "status-preparing";
-
-  }
-
-  if(
-    status === "Out for Delivery"
-  ){
-
-    return "status-delivery";
-
-  }
-
-  if(
-    status === "Delivered"
-  ){
-
-    return "status-delivered";
-
-  }
-
-  if(
-    status === "Rejected"
-  ){
-
-    return "status-rejected";
-
-  }
-
-  return "status-pending";
-
-}
-
-
-/* =========================
-   BASIC HTML SAFETY
-========================= */
-
-function escapeHTML(
-  value
-){
-
-  return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================
-   AUTHENTICATION
-========================= */
+/* AUTH */
 
 onAuthStateChanged(
   auth,
   async user => {
 
-    if(!user){
+    if (!user) {
 
-      window.location.replace(
-        "login.html"
-      );
+      window.location.href =
+        "login.html";
 
       return;
 
@@ -1663,14 +1114,14 @@ onAuthStateChanged(
       ).toLowerCase();
 
 
-    if(
+    if (
       email !==
       OWNER_EMAIL.toLowerCase()
-    ){
+    ) {
 
       loading.innerHTML =
         "❌ Access denied.<br><br>" +
-        "This dashboard is only available to the shop owner.";
+        "This page is only available to the shop owner.";
 
       return;
 
@@ -1679,15 +1130,11 @@ onAuthStateChanged(
 
     await loadOrders();
 
-    await loadExpenses();
-
   }
 );
 
 
-/* =========================
-   REFRESH
-========================= */
+/* REFRESH */
 
 document
   .getElementById(
@@ -1695,66 +1142,9 @@ document
   )
   .addEventListener(
     "click",
-    async () => {
-
-      await loadOrders();
-
-      await loadExpenses();
-
-    }
+    loadOrders
   );
 
-
-/* =========================
-   ADD EXPENSE BUTTON
-========================= */
-
-document
-  .getElementById(
-    "addExpenseBtn"
-  )
-  .addEventListener(
-    "click",
-    addExpense
-  );
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-document
-  .getElementById(
-    "logoutBtn"
-  )
-  .addEventListener(
-    "click",
-    async () => {
-
-      try{
-
-        await signOut(auth);
-
-        window.location.replace(
-          "login.html"
-        );
-
-      }
-
-      catch(error){
-
-        alert(
-          "Logout failed: " +
-          (
-            error.code ||
-            error.message
-          )
-        );
-
-      }
-
-    }
-  );
 
 </script>
 
