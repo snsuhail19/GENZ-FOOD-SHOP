@@ -1,11 +1,18 @@
-<!DOCTYPE html><html lang="en">
-<head>  <meta charset="UTF-8"><meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+<!DOCTYPE html>
+<html lang="en">
 
-«»
+<head>
 
-  <title>Owner Dashboard - GENZ FOOD SHOP</title>  <style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Owner Dashboard - GENZ FOOD SHOP</title>
+
+  <style>
 
     * {
       box-sizing: border-box;
@@ -61,9 +68,44 @@ content="width=device-width, initial-scale=1.0"
       margin-bottom: 15px;
     }
 
-    /* =========================
-       BUSINESS SUMMARY
-    ========================== */
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e9f8ef;
+      color: #16803a;
+      padding: 7px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-left: 8px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #16803a;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .3;
+      }
+
+      100% {
+        opacity: 1;
+      }
+
+    }
+
+    /* SUMMARY */
 
     .summary {
       display: grid;
@@ -107,9 +149,7 @@ content="width=device-width, initial-scale=1.0"
       color: #00838f;
     }
 
-    /* =========================
-       EXPENSE BOX
-    ========================== */
+    /* EXPENSE */
 
     .expense-box {
       background: white;
@@ -152,9 +192,7 @@ content="width=device-width, initial-scale=1.0"
       border-bottom: 1px solid #eee;
     }
 
-    /* =========================
-       ORDERS
-    ========================== */
+    /* ORDERS */
 
     .orders {
       display: grid;
@@ -178,6 +216,7 @@ content="width=device-width, initial-scale=1.0"
 
     .order-id {
       font-weight: 800;
+      word-break: break-all;
     }
 
     .status {
@@ -212,6 +251,7 @@ content="width=device-width, initial-scale=1.0"
     .customer div {
       margin: 6px 0;
       font-size: 14px;
+      word-break: break-word;
     }
 
     .items {
@@ -225,6 +265,7 @@ content="width=device-width, initial-scale=1.0"
       padding: 8px 0;
       border-bottom: 1px solid #eee;
       font-size: 14px;
+      gap: 10px;
     }
 
     .total {
@@ -233,10 +274,6 @@ content="width=device-width, initial-scale=1.0"
       font-weight: 900;
       margin-top: 15px;
     }
-
-    /* =========================
-       CONTROLS
-    ========================== */
 
     .controls {
       display: flex;
@@ -260,6 +297,11 @@ content="width=device-width, initial-scale=1.0"
       color: white;
     }
 
+    .save-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .loading,
     .empty,
     .error {
@@ -271,6 +313,24 @@ content="width=device-width, initial-scale=1.0"
 
     .error {
       color: #c00;
+    }
+
+    .new-order {
+      animation: newOrder .5s ease;
+    }
+
+    @keyframes newOrder {
+
+      from {
+        transform: scale(.98);
+        opacity: .5;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+
     }
 
     @media (max-width: 800px) {
@@ -290,6 +350,7 @@ content="width=device-width, initial-scale=1.0"
       .header {
         align-items: flex-start;
         flex-direction: column;
+        gap: 10px;
       }
 
       .summary {
@@ -309,155 +370,199 @@ content="width=device-width, initial-scale=1.0"
         width: 100%;
       }
 
+      .live {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+
     }
 
-  </style></head><body><div class="container">  <!-- =========================
-       HEADER
-  ========================== -->  <div class="header"><div>
+  </style>
 
-  <h1>
-    👑 Owner Dashboard
-  </h1>
+</head>
 
-  <div class="owner">
+<body>
 
-    GENZ FOOD SHOP
+<div class="container">
 
-    <br>
+  <!-- HEADER -->
 
-    Owner: snsuhail19@gmail.com
+  <div class="header">
+
+    <div>
+
+      <h1>
+        👑 Owner Dashboard
+      </h1>
+
+      <div class="owner">
+
+        GENZ FOOD SHOP
+
+        <br>
+
+        Owner: snsuhail19@gmail.com
+
+        <br>
+
+        <span class="live">
+          <span class="live-dot"></span>
+          LIVE DATA
+        </span>
+
+      </div>
+
+    </div>
 
   </div>
 
-</div>
 
-  </div>  <!-- =========================
-       REFRESH
-  ========================== --><button
-id="refreshBtn"
-class="refresh"
-
-«»
-
-🔄 Refresh Dashboard
-
-  </button>  <!-- =========================
-       BUSINESS SUMMARY
-  ========================== -->  <div class="summary"><div class="summary-card">
-
-  <p>
-    TOTAL SALES
-  </p>
-
-  <h2 class="sales">
-    ₹<span id="totalSales">0</span>
-  </h2>
-
-</div>
-
-
-<div class="summary-card">
-
-  <p>
-    UPI SALES
-  </p>
-
-  <h2 class="upi">
-    ₹<span id="upiSales">0</span>
-  </h2>
-
-</div>
-
-
-<div class="summary-card">
-
-  <p>
-    CASH SALES
-  </p>
-
-  <h2 class="cash">
-    ₹<span id="cashSales">0</span>
-  </h2>
-
-</div>
-
-
-<div class="summary-card">
-
-  <p>
-    NET PROFIT
-  </p>
-
-  <h2 class="profit">
-    ₹<span id="netProfit">0</span>
-  </h2>
-
-</div>
-
-  </div>  <!-- =========================
-       EXPENSES
-  ========================== -->  <div class="expense-box"><h2>
-  💸 Business Expenses
-</h2>
-
-<p>
-  Add expenses such as ingredients, delivery, electricity,
-  packaging, etc.
-</p>
-
-
-<div class="expense-row">
-
-  <input
-    id="expenseName"
-    type="text"
-    placeholder="Expense name"
-  >
-
-
-  <input
-    id="expenseAmount"
-    type="number"
-    min="0"
-    placeholder="Amount ₹"
-  >
-
+  <!-- REFRESH -->
 
   <button
-    id="addExpenseBtn"
-    class="expense-btn"
+    id="refreshBtn"
+    class="refresh"
   >
-    + Add Expense
+    🔄 Refresh Dashboard
   </button>
 
-</div>
+
+  <!-- SUMMARY -->
+
+  <div class="summary">
+
+    <div class="summary-card">
+
+      <p>
+        TOTAL SALES
+      </p>
+
+      <h2 class="sales">
+        ₹<span id="totalSales">0</span>
+      </h2>
+
+    </div>
 
 
-<div
-  id="expenseList"
-  class="expense-list"
-></div>
+    <div class="summary-card">
+
+      <p>
+        UPI SALES
+      </p>
+
+      <h2 class="upi">
+        ₹<span id="upiSales">0</span>
+      </h2>
+
+    </div>
 
 
-<strong>
-  Total Expenses:
-  ₹<span id="totalExpenses">0</span>
-</strong>
+    <div class="summary-card">
 
-  </div>  <!-- =========================
-       LOADING
-  ========================== -->  <div
+      <p>
+        CASH SALES
+      </p>
+
+      <h2 class="cash">
+        ₹<span id="cashSales">0</span>
+      </h2>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <p>
+        NET PROFIT
+      </p>
+
+      <h2 class="profit">
+        ₹<span id="netProfit">0</span>
+      </h2>
+
+    </div>
+
+  </div>
+
+
+  <!-- EXPENSES -->
+
+  <div class="expense-box">
+
+    <h2>
+      💸 Business Expenses
+    </h2>
+
+    <p>
+      Add expenses such as ingredients, delivery,
+      electricity, packaging, etc.
+    </p>
+
+
+    <div class="expense-row">
+
+      <input
+        id="expenseName"
+        type="text"
+        placeholder="Expense name"
+      >
+
+
+      <input
+        id="expenseAmount"
+        type="number"
+        min="0"
+        placeholder="Amount ₹"
+      >
+
+
+      <button
+        id="addExpenseBtn"
+        class="expense-btn"
+      >
+        + Add Expense
+      </button>
+
+    </div>
+
+
+    <div
+      id="expenseList"
+      class="expense-list"
+    ></div>
+
+
+    <strong>
+
+      Total Expenses:
+      ₹<span id="totalExpenses">0</span>
+
+    </strong>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
     id="loading"
     class="loading"
   >
     Checking owner access...
-  </div>  <!-- =========================
-       ORDERS
-  ========================== -->  <div
+  </div>
+
+
+  <!-- ORDERS -->
+
+  <div
     id="orders"
     class="orders"
-  ></div></div><script type="module">
+  ></div>
 
+</div>
+
+
+<script type="module">
 
   import {
     initializeApp
@@ -477,21 +582,21 @@ class="refresh"
   import {
     getFirestore,
     collection,
-    getDocs,
     query,
     orderBy,
     doc,
     updateDoc,
     addDoc,
-    serverTimestamp
+    serverTimestamp,
+    onSnapshot
   }
   from
     "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-  /* ==============================
+  /* =====================================
      FIREBASE CONFIG
-  ============================== */
+  ===================================== */
 
   const firebaseConfig = {
 
@@ -519,9 +624,9 @@ class="refresh"
   };
 
 
-  /* ==============================
+  /* =====================================
      INITIALIZE
-  ============================== */
+  ===================================== */
 
   const app =
     initializeApp(firebaseConfig);
@@ -533,9 +638,9 @@ class="refresh"
     getFirestore(app);
 
 
-  /* ==============================
+  /* =====================================
      OWNER
-  ============================== */
+  ===================================== */
 
   const OWNER_EMAIL =
     "snsuhail19@gmail.com";
@@ -552,61 +657,105 @@ class="refresh"
   let upiSales = 0;
   let cashSales = 0;
 
-
-  /* ==============================
-     EXPENSES
-  ============================== */
-
   let expenses = [];
 
+  let stopOrdersListener = null;
+  let stopExpensesListener = null;
 
-  async function loadExpenses() {
 
-    expenses = [];
+  /* =====================================
+     ESCAPE HTML
+  ===================================== */
 
-    try {
+  function escapeHTML(value) {
 
-      const expenseRef =
-        collection(
-          db,
-          "expenses"
-        );
-
-      const snapshot =
-        await getDocs(
-          expenseRef
-        );
-
-      snapshot.forEach(
-        (docSnapshot) => {
-
-          const data =
-            docSnapshot.data();
-
-          expenses.push({
-            id: docSnapshot.id,
-            name: data.name || "Expense",
-            amount: Number(data.amount || 0)
-          });
-
-        }
-      );
-
-      renderExpenses();
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "Expense error:",
-        error
-      );
-
-    }
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 
   }
 
+
+  /* =====================================
+     EXPENSES - REAL TIME
+  ===================================== */
+
+  function startExpensesListener() {
+
+    if (stopExpensesListener) {
+
+      stopExpensesListener();
+
+    }
+
+
+    const expenseRef =
+      collection(
+        db,
+        "expenses"
+      );
+
+
+    stopExpensesListener =
+      onSnapshot(
+        expenseRef,
+
+        (snapshot) => {
+
+          expenses = [];
+
+
+          snapshot.forEach(
+            (docSnapshot) => {
+
+              const data =
+                docSnapshot.data();
+
+
+              expenses.push({
+
+                id:
+                  docSnapshot.id,
+
+                name:
+                  data.name ||
+                  "Expense",
+
+                amount:
+                  Number(
+                    data.amount || 0
+                  )
+
+              });
+
+            }
+          );
+
+
+          renderExpenses();
+
+        },
+
+        (error) => {
+
+          console.error(
+            "Expense listener error:",
+            error
+          );
+
+        }
+
+      );
+
+  }
+
+
+  /* =====================================
+     RENDER EXPENSES
+  ===================================== */
 
   function renderExpenses() {
 
@@ -632,7 +781,9 @@ class="refresh"
             <div class="expense-item">
 
               <span>
-                ${escapeHTML(expense.name)}
+                ${escapeHTML(
+                  expense.name
+                )}
               </span>
 
               <strong>
@@ -666,6 +817,10 @@ class="refresh"
   }
 
 
+  /* =====================================
+     PROFIT
+  ===================================== */
+
   function updateProfit() {
 
     const totalExpenses =
@@ -689,6 +844,10 @@ class="refresh"
   }
 
 
+  /* =====================================
+     ADD EXPENSE
+  ===================================== */
+
   document
     .getElementById("addExpenseBtn")
     .addEventListener(
@@ -698,7 +857,8 @@ class="refresh"
         const name =
           document
             .getElementById("expenseName")
-            .value.trim();
+            .value
+            .trim();
 
 
         const amount =
@@ -720,6 +880,18 @@ class="refresh"
         }
 
 
+        const button =
+          document.getElementById(
+            "addExpenseBtn"
+          );
+
+
+        button.disabled = true;
+
+        button.textContent =
+          "Adding...";
+
+
         try {
 
           await addDoc(
@@ -728,10 +900,16 @@ class="refresh"
               "expenses"
             ),
             {
-              name: name,
-              amount: amount,
+
+              name:
+                name,
+
+              amount:
+                amount,
+
               createdAt:
                 serverTimestamp()
+
             }
           );
 
@@ -745,12 +923,11 @@ class="refresh"
             "expenseAmount"
           ).value = "";
 
-
-          await loadExpenses();
-
         }
 
         catch (error) {
+
+          console.error(error);
 
           alert(
             "Could not add expense: " +
@@ -762,173 +939,206 @@ class="refresh"
 
         }
 
+        finally {
+
+          button.disabled = false;
+
+          button.textContent =
+            "+ Add Expense";
+
+        }
+
       }
     );
 
 
-  /* ==============================
-     LOAD ORDERS
-  ============================== */
+  /* =====================================
+     LOAD ORDERS - REAL TIME
+  ===================================== */
 
-  async function loadOrders() {
+  function startOrdersListener() {
+
+    if (stopOrdersListener) {
+
+      stopOrdersListener();
+
+    }
+
 
     loading.style.display =
       "block";
 
     loading.textContent =
-      "Loading orders...";
+      "Loading live orders...";
+
 
     ordersContainer.innerHTML =
       "";
 
 
-    totalSales = 0;
-    upiSales = 0;
-    cashSales = 0;
-
-
-    try {
-
-      const ordersRef =
-        collection(
-          db,
-          "orders"
-        );
-
-
-      const ordersQuery =
-        query(
-          ordersRef,
-          orderBy(
-            "createdAt",
-            "desc"
-          )
-        );
-
-
-      const snapshot =
-        await getDocs(
-          ordersQuery
-        );
-
-
-      if (snapshot.empty) {
-
-        loading.style.display =
-          "none";
-
-
-        ordersContainer.innerHTML =
-          '<div class="empty">No orders yet.</div>';
-
-
-        updateSummary();
-
-        return;
-
-      }
-
-
-      loading.style.display =
-        "none";
-
-
-      snapshot.forEach(
-        (docSnapshot) => {
-
-          const order =
-            docSnapshot.data();
-
-
-          displayOrder(
-            docSnapshot.id,
-            order
-          );
-
-
-          /*
-             Count only Delivered
-             orders as sales/profit.
-          */
-
-          const status =
-            order.status ||
-            "Pending";
-
-
-          if (
-            status === "Delivered"
-          ) {
-
-            const total =
-              Number(
-                order.total || 0
-              );
-
-
-            totalSales += total;
-
-
-            const paymentMode =
-              (
-                order.paymentMode ||
-                ""
-              ).toLowerCase();
-
-
-            if (
-              paymentMode === "upi"
-            ) {
-
-              upiSales += total;
-
-            }
-
-
-            if (
-              paymentMode ===
-              "cash"
-            ) {
-
-              cashSales += total;
-
-            }
-
-          }
-
-        }
+    const ordersRef =
+      collection(
+        db,
+        "orders"
       );
 
 
-      updateSummary();
-
-    }
-
-    catch (error) {
-
-      console.error(error);
-
-      loading.style.display =
-        "none";
+    const ordersQuery =
+      query(
+        ordersRef,
+        orderBy(
+          "createdAt",
+          "desc"
+        )
+      );
 
 
-      ordersContainer.innerHTML =
-        '<div class="error">' +
-        "Could not load orders.<br><br>" +
-        (
-          error.code ||
-          error.message
-        ) +
-        "</div>";
+    stopOrdersListener =
+      onSnapshot(
 
-    }
+        ordersQuery,
+
+        (snapshot) => {
+
+          totalSales = 0;
+          upiSales = 0;
+          cashSales = 0;
+
+
+          ordersContainer.innerHTML =
+            "";
+
+
+          if (snapshot.empty) {
+
+            loading.style.display =
+              "none";
+
+
+            ordersContainer.innerHTML =
+              '<div class="empty">' +
+              "No orders yet." +
+              "</div>";
+
+
+            updateSummary();
+
+            return;
+
+          }
+
+
+          loading.style.display =
+            "none";
+
+
+          snapshot.forEach(
+            (docSnapshot) => {
+
+              const order =
+                docSnapshot.data();
+
+
+              displayOrder(
+                docSnapshot.id,
+                order
+              );
+
+
+              /*
+                Only Delivered orders
+                count as sales.
+              */
+
+              const status =
+                order.status ||
+                "Pending";
+
+
+              if (
+                status ===
+                "Delivered"
+              ) {
+
+                const total =
+                  Number(
+                    order.total || 0
+                  );
+
+
+                totalSales +=
+                  total;
+
+
+                const paymentMode =
+                  (
+                    order.paymentMode ||
+                    ""
+                  ).toLowerCase();
+
+
+                if (
+                  paymentMode ===
+                  "upi"
+                ) {
+
+                  upiSales +=
+                    total;
+
+                }
+
+
+                if (
+                  paymentMode ===
+                  "cash"
+                ) {
+
+                  cashSales +=
+                    total;
+
+                }
+
+              }
+
+            }
+          );
+
+
+          updateSummary();
+
+        },
+
+        (error) => {
+
+          console.error(
+            "Orders listener error:",
+            error
+          );
+
+
+          loading.style.display =
+            "none";
+
+
+          ordersContainer.innerHTML =
+            '<div class="error">' +
+            "Could not load orders.<br><br>" +
+            escapeHTML(
+              error.code ||
+              error.message
+            ) +
+            "</div>";
+
+        }
+
+      );
 
   }
 
 
-  /* ==============================
+  /* =====================================
      SUMMARY
-  ============================== */
+  ===================================== */
 
   function updateSummary() {
 
@@ -955,9 +1165,9 @@ class="refresh"
   }
 
 
-  /* ==============================
+  /* =====================================
      DISPLAY ORDER
-  ============================== */
+  ===================================== */
 
   function displayOrder(
     orderId,
@@ -978,7 +1188,9 @@ class="refresh"
 
 
     if (
-      Array.isArray(order.items)
+      Array.isArray(
+        order.items
+      )
     ) {
 
       order.items.forEach(
@@ -990,8 +1202,9 @@ class="refresh"
 
 
           const quantity =
-            item.quantity ||
-            1;
+            Number(
+              item.quantity || 1
+            );
 
 
           const price =
@@ -1000,29 +1213,31 @@ class="refresh"
             );
 
 
-          itemsHTML +=
+          itemsHTML += `
 
-            '<div class="item">' +
+            <div class="item">
 
-            '<span>' +
+              <span>
 
-            escapeHTML(name) +
+                ${escapeHTML(name)}
 
-            " × " +
+                ×
 
-            quantity +
+                ${quantity}
 
-            "</span>" +
+              </span>
 
-            '<strong>₹' +
+              <strong>
 
-            (
-              price * quantity
-            ).toFixed(2) +
+                ₹${(
+                  price * quantity
+                ).toFixed(2)}
 
-            "</strong>" +
+              </strong>
 
-            "</div>";
+            </div>
+
+          `;
 
         }
       );
@@ -1066,7 +1281,7 @@ class="refresh"
 
     const paymentMode =
       order.paymentMode ||
-      "Not Selected";
+      "";
 
 
     let statusClass =
@@ -1074,7 +1289,8 @@ class="refresh"
 
 
     if (
-      status === "Delivered"
+      status ===
+      "Delivered"
     ) {
 
       statusClass =
@@ -1084,7 +1300,8 @@ class="refresh"
 
 
     if (
-      status === "Rejected"
+      status ===
+      "Rejected"
     ) {
 
       statusClass =
@@ -1099,13 +1316,19 @@ class="refresh"
 
         <div class="order-id">
 
-          Order #${escapeHTML(orderId)}
+          Order #${escapeHTML(
+            orderId
+          )}
 
         </div>
 
-        <div class="status ${statusClass}">
+        <div
+          class="status ${statusClass}"
+        >
 
-          ${escapeHTML(status)}
+          ${escapeHTML(
+            status
+          )}
 
         </div>
 
@@ -1115,23 +1338,46 @@ class="refresh"
       <div class="customer">
 
         <div>
+
           <strong>Name:</strong>
-          ${escapeHTML(customerName)}
+
+          ${escapeHTML(
+            customerName
+          )}
+
         </div>
 
+
         <div>
+
           <strong>Email:</strong>
-          ${escapeHTML(email)}
+
+          ${escapeHTML(
+            email
+          )}
+
         </div>
 
+
         <div>
+
           <strong>Phone:</strong>
-          ${escapeHTML(phone)}
+
+          ${escapeHTML(
+            phone
+          )}
+
         </div>
 
+
         <div>
+
           <strong>Address:</strong>
-          ${escapeHTML(address)}
+
+          ${escapeHTML(
+            address
+          )}
+
         </div>
 
       </div>
@@ -1146,7 +1392,8 @@ class="refresh"
 
       <div class="total">
 
-        Total: ₹${total.toFixed(2)}
+        Total:
+        ₹${total.toFixed(2)}
 
       </div>
 
@@ -1154,26 +1401,36 @@ class="refresh"
       <div class="controls">
 
         <select
-          id="status-${orderId}"
+          id="status-${escapeHTML(
+            orderId
+          )}"
         >
 
           <option
             value="Pending"
-            ${status === "Pending" ? "selected" : ""}
+            ${status === "Pending"
+              ? "selected"
+              : ""}
           >
             Pending
           </option>
 
+
           <option
             value="Delivered"
-            ${status === "Delivered" ? "selected" : ""}
+            ${status === "Delivered"
+              ? "selected"
+              : ""}
           >
             Delivered
           </option>
 
+
           <option
             value="Rejected"
-            ${status === "Rejected" ? "selected" : ""}
+            ${status === "Rejected"
+              ? "selected"
+              : ""}
           >
             Rejected
           </option>
@@ -1182,26 +1439,36 @@ class="refresh"
 
 
         <select
-          id="payment-${orderId}"
+          id="payment-${escapeHTML(
+            orderId
+          )}"
         >
 
           <option
             value=""
-            ${!order.paymentMode ? "selected" : ""}
+            ${!paymentMode
+              ? "selected"
+              : ""}
           >
             Payment Mode
           </option>
 
+
           <option
             value="UPI"
-            ${paymentMode === "UPI" ? "selected" : ""}
+            ${paymentMode === "UPI"
+              ? "selected"
+              : ""}
           >
             💳 UPI
           </option>
 
+
           <option
             value="Cash"
-            ${paymentMode === "Cash" ? "selected" : ""}
+            ${paymentMode === "Cash"
+              ? "selected"
+              : ""}
           >
             💵 Cash on Delivery
           </option>
@@ -1211,16 +1478,37 @@ class="refresh"
 
         <button
           class="save-btn"
-          onclick="saveOrder(
-            '${orderId}'
-          )"
+          data-order-id="${escapeHTML(
+            orderId
+          )}"
         >
+
           💾 Save
+
         </button>
 
       </div>
 
     `;
+
+
+    const saveButton =
+      orderElement.querySelector(
+        ".save-btn"
+      );
+
+
+    saveButton.addEventListener(
+      "click",
+      () => {
+
+        saveOrder(
+          orderId,
+          saveButton
+        );
+
+      }
+    );
 
 
     ordersContainer.appendChild(
@@ -1230,116 +1518,127 @@ class="refresh"
   }
 
 
-  /* ==============================
+  /* =====================================
      SAVE ORDER
-  ============================== */
+  ===================================== */
 
-  window.saveOrder =
-    async function(orderId) {
+  async function saveOrder(
+    orderId,
+    button
+  ) {
 
-      const status =
-        document.getElementById(
-          "status-" + orderId
-        ).value;
-
-
-      const paymentMode =
-        document.getElementById(
-          "payment-" + orderId
-        ).value;
-
-
-      if (!paymentMode) {
-
-        alert(
-          "Please select UPI or Cash on Delivery."
-        );
-
-        return;
-
-      }
-
-
-      try {
-
-        await updateDoc(
-          doc(
-            db,
-            "orders",
-            orderId
-          ),
-          {
-
-            status:
-              status,
-
-            paymentMode:
-              paymentMode
-
-          }
-        );
-
-
-        alert(
-          "Order updated successfully."
-        );
-
-
-        await loadOrders();
-
-      }
-
-      catch (error) {
-
-        console.error(error);
-
-        alert(
-          "Could not update order: " +
-          (
-            error.code ||
-            error.message
-          )
-        );
-
-      }
-
-    };
-
-
-  /* ==============================
-     SECURITY / HTML ESCAPE
-  ============================== */
-
-  function escapeHTML(value) {
-
-    return String(value)
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
+    const statusElement =
+      document.getElementById(
+        "status-" +
+        orderId
       );
+
+
+    const paymentElement =
+      document.getElementById(
+        "payment-" +
+        orderId
+      );
+
+
+    if (
+      !statusElement ||
+      !paymentElement
+    ) {
+
+      return;
+
+    }
+
+
+    const status =
+      statusElement.value;
+
+
+    const paymentMode =
+      paymentElement.value;
+
+
+    if (!paymentMode) {
+
+      alert(
+        "Please select UPI or Cash on Delivery."
+      );
+
+      return;
+
+    }
+
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Saving...";
+
+
+    try {
+
+      await updateDoc(
+        doc(
+          db,
+          "orders",
+          orderId
+        ),
+        {
+
+          status:
+            status,
+
+          paymentMode:
+            paymentMode
+
+        }
+      );
+
+
+      /*
+        No manual reload needed.
+        onSnapshot() automatically
+        updates the dashboard.
+      */
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "UPDATE ERROR:",
+        error
+      );
+
+
+      alert(
+        "Could not update order: " +
+        (
+          error.code ||
+          error.message
+        )
+      );
+
+    }
+
+    finally {
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "💾 Save";
+
+    }
 
   }
 
 
-  /* ==============================
+  /* =====================================
      AUTHENTICATION
-  ============================== */
+  ===================================== */
 
   onAuthStateChanged(
     auth,
@@ -1357,7 +1656,8 @@ class="refresh"
 
       const email =
         (
-          user.email || ""
+          user.email ||
+          ""
         ).toLowerCase();
 
 
@@ -1375,31 +1675,39 @@ class="refresh"
       }
 
 
-      await loadExpenses();
+      /*
+        START REAL-TIME LISTENERS
+      */
 
-      await loadOrders();
+      startExpensesListener();
+
+      startOrdersListener();
 
     }
   );
 
 
-  /* ==============================
-     REFRESH
-  ============================== */
+  /* =====================================
+     MANUAL REFRESH
+     Still available if needed.
+  ===================================== */
 
   document
     .getElementById("refreshBtn")
     .addEventListener(
       "click",
-      async () => {
+      () => {
 
-        await loadExpenses();
+        startExpensesListener();
 
-        await loadOrders();
+        startOrdersListener();
 
       }
     );
 
 
-</script></body>
+</script>
+
+</body>
+
 </html>
