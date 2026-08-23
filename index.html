@@ -26,7 +26,8 @@
     }
 
     .profile-btn,
-    .owner-btn {
+    .owner-btn,
+    .orders-btn {
       display: inline-block;
       padding: 11px 16px;
       color: white;
@@ -40,13 +41,18 @@
       background: #ff5a1f;
     }
 
+    .orders-btn {
+      background: #16803a;
+    }
+
     .owner-btn {
       display: none;
       background: #171717;
     }
 
     .profile-btn:hover,
-    .owner-btn:hover {
+    .owner-btn:hover,
+    .orders-btn:hover {
       opacity: 0.9;
     }
 
@@ -54,10 +60,13 @@
 
       .header-right {
         gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
 
       .profile-btn,
-      .owner-btn {
+      .owner-btn,
+      .orders-btn {
         padding: 9px 10px;
         font-size: 13px;
       }
@@ -109,6 +118,16 @@
         class="profile-btn"
       >
         👤 Profile
+      </a>
+
+
+      <!-- MY ORDERS -->
+
+      <a
+        href="orders.html"
+        class="orders-btn"
+      >
+        📦 My Orders
       </a>
 
 
@@ -311,7 +330,7 @@
 
     /* =========================
        FIREBASE CONFIG
-    ========================== */
+    ========================= */
 
     const firebaseConfig = {
 
@@ -341,7 +360,7 @@
 
     /* =========================
        INITIALIZE FIREBASE
-    ========================== */
+    ========================= */
 
     const app =
       initializeApp(firebaseConfig);
@@ -352,7 +371,7 @@
 
     /* =========================
        OWNER EMAIL
-    ========================== */
+    ========================= */
 
     const OWNER_EMAIL =
       "snsuhail19@gmail.com";
@@ -360,7 +379,7 @@
 
     /* =========================
        OWNER BUTTON
-    ========================== */
+    ========================= */
 
     const ownerBtn =
       document.getElementById("ownerBtn");
@@ -368,7 +387,7 @@
 
     /* =========================
        CHECK LOGIN
-    ========================== */
+    ========================= */
 
     onAuthStateChanged(
       auth,
@@ -400,7 +419,7 @@
 
         /* =========================
            CHECK OWNER
-        ========================== */
+        ========================= */
 
         if (
           user.email &&
