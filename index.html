@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>GENZ FOOD SHOP</title>
+
   <link rel="stylesheet" href="style.css">
 
+  <!-- Hide website until Firebase checks login -->
   <style>
-    /* Hide the shop until Firebase checks login */
     body {
       display: none;
     }
@@ -16,25 +18,40 @@
 
 <body>
 
+  <!-- =========================
+       HEADER
+  ========================== -->
+
   <header class="header">
 
     <div class="brand">
 
-      <div class="logo">G</div>
+      <div class="logo">
+        G
+      </div>
 
       <div>
 
-        <h1>GENZ FOOD SHOP</h1>
+        <h1>
+          GENZ FOOD SHOP
+        </h1>
 
-        <a href="login.html" class="login-btn">
+        <a
+          href="login.html"
+          class="login-btn"
+          id="loginButton"
+        >
           👤 Login
         </a>
 
-        <p>Indian Foods & Snacks</p>
+        <p>
+          Indian Foods & Snacks
+        </p>
 
       </div>
 
     </div>
+
 
     <button
       class="cart-btn"
@@ -46,6 +63,10 @@
 
   </header>
 
+
+  <!-- =========================
+       MAIN
+  ========================== -->
 
   <main>
 
@@ -80,6 +101,10 @@
     </section>
 
 
+    <!-- =========================
+         MENU
+    ========================== -->
+
     <section
       id="menu"
       class="menu-section"
@@ -87,13 +112,16 @@
 
       <div class="section-title">
 
-        <p>OUR MENU</p>
+        <p>
+          OUR MENU
+        </p>
 
         <h2>
           Indian Foods & Snacks
         </h2>
 
       </div>
+
 
       <div
         id="foodGrid"
@@ -105,7 +133,9 @@
   </main>
 
 
-  <!-- CART -->
+  <!-- =========================
+       CART
+  ========================== -->
 
   <div
     id="cartModal"
@@ -127,12 +157,14 @@
 
       <div id="cartItems"></div>
 
+
       <div class="cart-footer">
 
         <strong>
           Total: ₹
           <span id="cartTotal">0</span>
         </strong>
+
 
         <button
           class="checkout-btn"
@@ -148,6 +180,10 @@
   </div>
 
 
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer>
 
     <p>
@@ -162,18 +198,23 @@
   <script src="script.js"></script>
 
 
-  <!-- FIREBASE LOGIN CHECK -->
+  <!-- =========================
+       FIREBASE LOGIN CHECK
+  ========================== -->
 
   <script type="module">
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import {
+      initializeApp
+    }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
     import {
       getAuth,
       onAuthStateChanged
     }
-      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
     /* =========================
@@ -202,22 +243,24 @@
 
       measurementId:
         "G-LT095LEWJ6"
+
     };
 
 
     /* =========================
-       START FIREBASE
+       INITIALIZE FIREBASE
     ========================== */
 
     const app =
       initializeApp(firebaseConfig);
+
 
     const auth =
       getAuth(app);
 
 
     /* =========================
-       CHECK LOGIN
+       CHECK USER LOGIN
     ========================== */
 
     onAuthStateChanged(
@@ -227,20 +270,41 @@
         if (user) {
 
           /*
-            USER IS LOGGED IN
+            USER IS ALREADY LOGGED IN.
 
-            Show the food shop.
+            Show the website.
           */
 
           document.body.style.display =
             "block";
+
+
+          /*
+            Change Login button to Profile.
+          */
+
+          const loginButton =
+            document.getElementById(
+              "loginButton"
+            );
+
+
+          if (loginButton) {
+
+            loginButton.textContent =
+              "👤 Profile";
+
+            loginButton.href =
+              "login.html";
+
+          }
 
         }
 
         else {
 
           /*
-            USER IS NOT LOGGED IN
+            USER IS NOT LOGGED IN.
 
             Send them to login page.
           */
