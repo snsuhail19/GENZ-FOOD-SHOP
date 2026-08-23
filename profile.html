@@ -2,18 +2,12 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>My Profile - GENZ FOOD SHOP</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -95,6 +89,63 @@
       word-break: break-word;
     }
 
+    /* LOCATION */
+
+    .location-box {
+      background: #fff3ec;
+      border: 1px solid #ffd8c7;
+      border-radius: 15px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .location-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .location-info {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      word-break: break-word;
+    }
+
+    .location-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 11px;
+      padding: 14px;
+      background: #ff5a1f;
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .location-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .location-status {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .location-success {
+      color: #16803c;
+    }
+
+    .location-error {
+      color: #c00;
+    }
+
+    /* INPUTS */
+
     label {
       display: block;
       font-weight: 700;
@@ -102,8 +153,7 @@
       margin-bottom: 7px;
     }
 
-    input,
-    textarea {
+    input {
       width: 100%;
       padding: 13px;
       border: 1px solid #ddd;
@@ -113,14 +163,8 @@
       outline: none;
     }
 
-    input:focus,
-    textarea:focus {
+    input:focus {
       border-color: #ff5a1f;
-    }
-
-    textarea {
-      min-height: 90px;
-      resize: vertical;
     }
 
     button {
@@ -161,34 +205,6 @@
       border: 1px solid #ddd;
     }
 
-    .location-btn {
-      background: #16803a;
-      color: white;
-    }
-
-    .location-info {
-      background: #eef9f1;
-      color: #176b31;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .location-map-btn {
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      background: #e9f1ff;
-      color: #185abc;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 10px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
     .hidden {
       display: none;
     }
@@ -215,8 +231,14 @@
       margin-bottom: 5px;
     }
 
+    .map-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ff5a1f;
+      font-weight: 800;
+      text-decoration: none;
+    }
   </style>
-
 </head>
 
 <body>
@@ -230,34 +252,23 @@
     </div>
 
     <div>
-
-      <h1>
-        My Profile
-      </h1>
-
-      <p class="subtitle">
-        GENZ FOOD SHOP
-      </p>
-
+      <h1>My Profile</h1>
+      <p class="subtitle">GENZ FOOD SHOP</p>
     </div>
 
   </div>
 
 
-  <div
-    id="loading"
-    class="loading"
-  >
+  <!-- LOADING -->
+
+  <div id="loading" class="loading">
     Loading your profile...
   </div>
 
 
   <!-- PROFILE VIEW -->
 
-  <div
-    id="profileView"
-    class="hidden"
-  >
+  <div id="profileView" class="hidden">
 
     <div class="profile-card">
 
@@ -276,44 +287,60 @@
         <div id="viewMobile" class="value">Not added</div>
       </div>
 
-      <div class="profile-row">
-        <div class="label">DELIVERY LOCATION</div>
-        <div id="viewAddress" class="value">Not added</div>
-      </div>
-
-      <div class="profile-row">
-        <div class="label">CITY</div>
-        <div id="viewCity" class="value">Not added</div>
-      </div>
-
-      <div class="profile-row">
-        <div class="label">PIN CODE</div>
-        <div id="viewPincode" class="value">Not added</div>
-      </div>
+      <!-- LOCATION -->
 
       <div class="profile-row">
 
         <div class="label">
-          GPS LOCATION
+          DELIVERY LOCATION
         </div>
 
         <div
-          id="viewLocationStatus"
+          id="viewLocation"
           class="value"
         >
-          Not added
+          Location not added
         </div>
 
         <a
-          id="mapBtn"
-          class="location-map-btn hidden"
+          id="mapLink"
+          class="map-link hidden"
+          href="#"
           target="_blank"
-          rel="noopener"
         >
-          📍 View Saved Location
+          🗺️ View on Map
         </a>
 
       </div>
+
+    </div>
+
+
+    <!-- LOCATION BOX -->
+
+    <div class="location-box">
+
+      <div class="location-title">
+        📍 Delivery Location
+      </div>
+
+      <div class="location-info">
+        Your delivery location is taken directly
+        from your device location.
+        You cannot manually enter or edit it.
+      </div>
+
+      <button
+        id="locationBtn"
+        class="location-btn"
+      >
+        📍 Get My Current Location
+      </button>
+
+      <div
+        id="locationStatus"
+        class="location-status"
+      ></div>
 
     </div>
 
@@ -375,59 +402,39 @@
     >
 
 
-    <!-- LOCATION -->
+    <!-- IMPORTANT:
+         NO ADDRESS
+         NO CITY
+         NO PIN CODE
 
-    <label>
-      Delivery Location
-    </label>
-
-    <button
-      type="button"
-      id="locationBtn"
-      class="location-btn"
-    >
-      📍 Get My Location
-    </button>
+         LOCATION CANNOT BE MANUALLY EDITED.
+    -->
 
 
-    <div
-      id="locationInfo"
-      class="location-info hidden"
-    ></div>
+    <div class="location-box">
 
+      <div class="location-title">
+        📍 Delivery Location
+      </div>
 
-    <label for="editAddress">
-      Address
-    </label>
+      <div class="location-info">
+        Location can only be obtained from
+        your device GPS/location permission.
+      </div>
 
-    <textarea
-      id="editAddress"
-      placeholder="Your location address will appear here"
-    ></textarea>
+      <button
+        id="editLocationBtn"
+        class="location-btn"
+      >
+        📍 Get My Current Location
+      </button>
 
+      <div
+        id="editLocationStatus"
+        class="location-status"
+      ></div>
 
-    <label for="editCity">
-      City
-    </label>
-
-    <input
-      id="editCity"
-      type="text"
-      placeholder="Your city"
-    >
-
-
-    <label for="editPincode">
-      PIN Code
-    </label>
-
-    <input
-      id="editPincode"
-      type="text"
-      inputmode="numeric"
-      maxlength="6"
-      placeholder="600001"
-    >
+    </div>
 
 
     <button
@@ -448,6 +455,8 @@
   </div>
 
 
+  <!-- MESSAGE -->
+
   <div
     id="message"
     class="message hidden"
@@ -455,6 +464,8 @@
 
 </div>
 
+
+<!-- FIREBASE -->
 
 <script type="module">
 
@@ -481,7 +492,9 @@ import {
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* FIREBASE CONFIG */
+/* =====================================
+   FIREBASE CONFIG
+===================================== */
 
 const firebaseConfig = {
 
@@ -509,7 +522,9 @@ const firebaseConfig = {
 };
 
 
-/* INITIALIZE */
+/* =====================================
+   INITIALIZE
+===================================== */
 
 const app =
   initializeApp(firebaseConfig);
@@ -521,7 +536,9 @@ const db =
   getFirestore(app);
 
 
-/* ELEMENTS */
+/* =====================================
+   ELEMENTS
+===================================== */
 
 const loading =
   document.getElementById("loading");
@@ -538,20 +555,22 @@ const message =
 const locationBtn =
   document.getElementById("locationBtn");
 
-const locationInfo =
-  document.getElementById("locationInfo");
+const editLocationBtn =
+  document.getElementById("editLocationBtn");
 
-const mapBtn =
-  document.getElementById("mapBtn");
+const locationStatus =
+  document.getElementById("locationStatus");
+
+const editLocationStatus =
+  document.getElementById("editLocationStatus");
 
 
 let currentUser = null;
 
-let currentLatitude = null;
-let currentLongitude = null;
 
-
-/* MESSAGE */
+/* =====================================
+   MESSAGE
+===================================== */
 
 function showMessage(
   title,
@@ -604,88 +623,61 @@ function displayProfile(profile) {
     "Not added";
 
 
-  document.getElementById(
-    "viewAddress"
-  ).textContent =
-    profile.address ||
-    "Not added";
+  /* LOCATION */
+
+  const latitude =
+    profile.latitude;
+
+  const longitude =
+    profile.longitude;
 
 
-  document.getElementById(
-    "viewCity"
-  ).textContent =
-    profile.city ||
-    "Not added";
-
-
-  document.getElementById(
-    "viewPincode"
-  ).textContent =
-    profile.pincode ||
-    "Not added";
-
-
-  /* GPS */
-
-  if (
-    profile.latitude !== undefined &&
-    profile.latitude !== null &&
-    profile.longitude !== undefined &&
-    profile.longitude !== null
-  ) {
-
-    currentLatitude =
-      Number(profile.latitude);
-
-    currentLongitude =
-      Number(profile.longitude);
-
-
+  const locationElement =
     document.getElementById(
-      "viewLocationStatus"
-    ).textContent =
-      "✅ GPS location saved";
+      "viewLocation"
+    );
 
-
-    mapBtn.href =
-      "https://www.google.com/maps?q=" +
-      encodeURIComponent(
-        currentLatitude +
-        "," +
-        currentLongitude
-      );
-
-
-    mapBtn.classList.remove(
-      "hidden"
+  const mapLink =
+    document.getElementById(
+      "mapLink"
     );
 
 
-    locationBtn.textContent =
-      "📍 Update My Location";
+  if (
+    typeof latitude === "number" &&
+    typeof longitude === "number"
+  ) {
+
+    locationElement.textContent =
+      "📍 Location saved";
+
+
+    mapLink.href =
+      "https://www.google.com/maps?q=" +
+      latitude +
+      "," +
+      longitude;
+
+
+    mapLink.classList.remove(
+      "hidden"
+    );
 
   }
 
   else {
 
-    document.getElementById(
-      "viewLocationStatus"
-    ).textContent =
-      "❌ GPS location not added";
+    locationElement.textContent =
+      "Location not added";
 
-
-    mapBtn.classList.add(
+    mapLink.classList.add(
       "hidden"
     );
-
-
-    locationBtn.textContent =
-      "📍 Get My Location";
 
   }
 
 
-  /* EDIT VALUES */
+  /* EDIT FIELDS */
 
   document.getElementById(
     "editName"
@@ -701,27 +693,6 @@ function displayProfile(profile) {
     (profile.mobile || "")
       .replace("+91", "");
 
-
-  document.getElementById(
-    "editAddress"
-  ).value =
-    profile.address ||
-    "";
-
-
-  document.getElementById(
-    "editCity"
-  ).value =
-    profile.city ||
-    "";
-
-
-  document.getElementById(
-    "editPincode"
-  ).value =
-    profile.pincode ||
-    "";
-
 }
 
 
@@ -733,6 +704,7 @@ async function loadProfile(user) {
 
   currentUser =
     user;
+
 
   try {
 
@@ -772,12 +744,6 @@ async function loadProfile(user) {
 
         mobile: "",
 
-        address: "",
-
-        city: "",
-
-        pincode: "",
-
         latitude: null,
 
         longitude: null
@@ -787,7 +753,9 @@ async function loadProfile(user) {
     }
 
 
-    displayProfile(profile);
+    displayProfile(
+      profile
+    );
 
 
     loading.classList.add(
@@ -807,6 +775,7 @@ async function loadProfile(user) {
       error
     );
 
+
     showMessage(
       "Unable to load profile",
       "Firebase error: " +
@@ -822,216 +791,281 @@ async function loadProfile(user) {
 
 
 /* =====================================
-   GET GPS LOCATION
+   GET CURRENT LOCATION
+===================================== */
+
+function getCurrentLocation(
+  statusElement,
+  buttonElement
+) {
+
+  if (!currentUser) {
+
+    statusElement.textContent =
+      "Please login again.";
+
+    statusElement.className =
+      "location-status location-error";
+
+    return;
+
+  }
+
+
+  if (!navigator.geolocation) {
+
+    statusElement.textContent =
+      "❌ Location is not supported by this browser.";
+
+    statusElement.className =
+      "location-status location-error";
+
+    return;
+
+  }
+
+
+  buttonElement.disabled =
+    true;
+
+  buttonElement.textContent =
+    "📍 Getting Location...";
+
+
+  statusElement.textContent =
+    "Please allow location permission...";
+
+  statusElement.className =
+    "location-status";
+
+
+  navigator.geolocation.getCurrentPosition(
+
+    async (position) => {
+
+      const latitude =
+        position.coords.latitude;
+
+      const longitude =
+        position.coords.longitude;
+
+
+      const accuracy =
+        position.coords.accuracy;
+
+
+      statusElement.textContent =
+        "Saving your location...";
+
+
+      try {
+
+        await setDoc(
+
+          doc(
+            db,
+            "users",
+            currentUser.uid
+          ),
+
+          {
+
+            latitude:
+              latitude,
+
+            longitude:
+              longitude,
+
+            locationAccuracy:
+              accuracy,
+
+            locationUpdatedAt:
+              new Date().toISOString()
+
+          },
+
+          {
+            merge: true
+          }
+
+        );
+
+
+        /* UPDATE DISPLAY */
+
+        document.getElementById(
+          "viewLocation"
+        ).textContent =
+          "📍 Location saved";
+
+
+        const mapLink =
+          document.getElementById(
+            "mapLink"
+          );
+
+
+        mapLink.href =
+          "https://www.google.com/maps?q=" +
+          latitude +
+          "," +
+          longitude;
+
+
+        mapLink.classList.remove(
+          "hidden"
+        );
+
+
+        statusElement.textContent =
+          "✅ Location saved successfully.";
+
+        statusElement.className =
+          "location-status location-success";
+
+
+        buttonElement.textContent =
+          "📍 Update My Location";
+
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "LOCATION SAVE ERROR:",
+          error
+        );
+
+
+        statusElement.textContent =
+          "❌ Could not save location: " +
+          (
+            error.code ||
+            error.message
+          );
+
+
+        statusElement.className =
+          "location-status location-error";
+
+
+        buttonElement.textContent =
+          "📍 Get My Current Location";
+
+      }
+
+
+      buttonElement.disabled =
+        false;
+
+    },
+
+
+    (error) => {
+
+      console.error(
+        "LOCATION ERROR:",
+        error
+      );
+
+
+      let text =
+        "❌ Could not get your location.";
+
+
+      if (
+        error.code ===
+        error.PERMISSION_DENIED
+      ) {
+
+        text =
+          "❌ Location permission denied. Please allow location access in browser settings.";
+
+      }
+
+      else if (
+        error.code ===
+        error.POSITION_UNAVAILABLE
+      ) {
+
+        text =
+          "❌ Your location is currently unavailable.";
+
+      }
+
+      else if (
+        error.code ===
+        error.TIMEOUT
+      ) {
+
+        text =
+          "❌ Location request timed out. Please try again.";
+
+      }
+
+
+      statusElement.textContent =
+        text;
+
+      statusElement.className =
+        "location-status location-error";
+
+
+      buttonElement.disabled =
+        false;
+
+      buttonElement.textContent =
+        "📍 Get My Current Location";
+
+    },
+
+    {
+
+      enableHighAccuracy:
+        true,
+
+      timeout:
+        15000,
+
+      maximumAge:
+        0
+
+    }
+
+  );
+
+}
+
+
+/* =====================================
+   LOCATION BUTTON
 ===================================== */
 
 locationBtn.addEventListener(
   "click",
   () => {
 
-    message.classList.add(
-      "hidden"
+    getCurrentLocation(
+      locationStatus,
+      locationBtn
     );
 
+  }
+);
 
-    if (!navigator.geolocation) {
 
-      showMessage(
-        "Location not supported",
-        "Your browser does not support GPS location."
-      );
+/* =====================================
+   EDIT LOCATION BUTTON
+===================================== */
 
-      return;
+editLocationBtn.addEventListener(
+  "click",
+  () => {
 
-    }
-
-
-    locationBtn.disabled =
-      true;
-
-    locationBtn.textContent =
-      "📍 Getting location...";
-
-
-    navigator.geolocation.getCurrentPosition(
-
-      async (position) => {
-
-        currentLatitude =
-          position.coords.latitude;
-
-        currentLongitude =
-          position.coords.longitude;
-
-
-        locationInfo.textContent =
-          "✅ GPS location detected. Finding your address...";
-
-        locationInfo.classList.remove(
-          "hidden"
-        );
-
-
-        try {
-
-          const url =
-            "https://nominatim.openstreetmap.org/reverse" +
-            "?format=jsonv2" +
-            "&lat=" +
-            encodeURIComponent(
-              currentLatitude
-            ) +
-            "&lon=" +
-            encodeURIComponent(
-              currentLongitude
-            ) +
-            "&addressdetails=1";
-
-
-          const response =
-            await fetch(
-              url,
-              {
-                headers: {
-                  "Accept":
-                    "application/json"
-                }
-              }
-            );
-
-
-          if (!response.ok) {
-
-            throw new Error(
-              "Reverse geocoding failed."
-            );
-
-          }
-
-
-          const data =
-            await response.json();
-
-
-          const addressData =
-            data.address || {};
-
-
-          document.getElementById(
-            "editAddress"
-          ).value =
-            data.display_name || "";
-
-
-          document.getElementById(
-            "editCity"
-          ).value =
-            addressData.city ||
-            addressData.town ||
-            addressData.village ||
-            addressData.municipality ||
-            "";
-
-
-          document.getElementById(
-            "editPincode"
-          ).value =
-            addressData.postcode || "";
-
-
-          locationInfo.textContent =
-            "✅ Location detected and address filled automatically.";
-
-        }
-
-        catch (error) {
-
-          console.error(
-            "REVERSE LOCATION ERROR:",
-            error
-          );
-
-
-          locationInfo.textContent =
-            "✅ GPS detected. Please enter missing address details manually.";
-
-        }
-
-
-        locationBtn.disabled =
-          false;
-
-        locationBtn.textContent =
-          "📍 Update My Location";
-
-      },
-
-
-      (error) => {
-
-        console.error(
-          "LOCATION ERROR:",
-          error
-        );
-
-
-        let text =
-          "Unable to get your location.";
-
-
-        if (
-          error.code ===
-          error.PERMISSION_DENIED
-        ) {
-
-          text =
-            "Location permission denied. Please allow location permission and try again.";
-
-        }
-
-
-        if (
-          error.code ===
-          error.POSITION_UNAVAILABLE
-        ) {
-
-          text =
-            "Your location is unavailable. Please try again.";
-
-        }
-
-
-        if (
-          error.code ===
-          error.TIMEOUT
-        ) {
-
-          text =
-            "Location request timed out. Please try again.";
-
-        }
-
-
-        showMessage(
-          "Location Error",
-          text
-        );
-
-
-        locationBtn.disabled =
-          false;
-
-        locationBtn.textContent =
-          "📍 Get My Location";
-
-      },
-
-      {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 0
-      }
-
+    getCurrentLocation(
+      editLocationStatus,
+      editLocationBtn
     );
 
   }
@@ -1056,7 +1090,9 @@ onAuthStateChanged(
     }
 
 
-    loadProfile(user);
+    loadProfile(
+      user
+    );
 
   }
 );
@@ -1106,6 +1142,9 @@ document
         "hidden"
       );
 
+      editLocationStatus.textContent =
+        "";
+
     }
   );
 
@@ -1146,27 +1185,6 @@ document
           .trim();
 
 
-      const address =
-        document
-          .getElementById("editAddress")
-          .value
-          .trim();
-
-
-      const city =
-        document
-          .getElementById("editCity")
-          .value
-          .trim();
-
-
-      const pincode =
-        document
-          .getElementById("editPincode")
-          .value
-          .trim();
-
-
       mobile =
         mobile.replace(
           /\D/g,
@@ -1202,58 +1220,38 @@ document
       }
 
 
-      /*
-        GPS location is required.
-      */
+      /* =================================
+         CHECK LOCATION
+      ================================= */
+
+      const profileRef =
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        );
+
+
+      const snapshot =
+        await getDoc(
+          profileRef
+        );
+
+
+      const existingProfile =
+        snapshot.exists()
+          ? snapshot.data()
+          : {};
+
 
       if (
-        currentLatitude === null ||
-        currentLongitude === null
+        typeof existingProfile.latitude !== "number" ||
+        typeof existingProfile.longitude !== "number"
       ) {
 
         showMessage(
           "Location required",
-          "Please click 📍 Get My Location and allow location permission."
-        );
-
-        return;
-
-      }
-
-
-      if (!address) {
-
-        showMessage(
-          "Address required",
-          "Please get your GPS location first."
-        );
-
-        return;
-
-      }
-
-
-      if (!city) {
-
-        showMessage(
-          "City required",
-          "Please get your GPS location first."
-        );
-
-        return;
-
-      }
-
-
-      if (
-        !/^\d{6}$/.test(
-          pincode
-        )
-      ) {
-
-        showMessage(
-          "Invalid PIN code",
-          "Please enter a valid 6-digit PIN code."
+          "Please click 'Get My Current Location' before saving your profile."
         );
 
         return;
@@ -1287,26 +1285,24 @@ document
           mobile:
             "+91" + mobile,
 
-          address:
-            address,
-
-          city:
-            city,
-
-          pincode:
-            pincode,
+          /* LOCATION IS NOT USER EDITABLE */
 
           latitude:
-            currentLatitude,
+            existingProfile.latitude,
 
           longitude:
-            currentLongitude,
+            existingProfile.longitude,
+
+          locationAccuracy:
+            existingProfile.locationAccuracy ||
+            null,
+
+          locationUpdatedAt:
+            existingProfile.locationUpdatedAt ||
+            new Date().toISOString(),
 
           photoURL:
             currentUser.photoURL || "",
-
-          locationUpdatedAt:
-            new Date().toISOString(),
 
           updatedAt:
             new Date().toISOString()
@@ -1316,11 +1312,7 @@ document
 
         await setDoc(
 
-          doc(
-            db,
-            "users",
-            currentUser.uid
-          ),
+          profileRef,
 
           profile,
 
@@ -1346,7 +1338,7 @@ document
 
 
         message.innerHTML =
-          "✅ Profile and GPS location updated successfully.";
+          "✅ Profile updated successfully.";
 
         message.classList.remove(
           "hidden"
@@ -1426,7 +1418,10 @@ document
 
       try {
 
-        await signOut(auth);
+        await signOut(
+          auth
+        );
+
 
         window.location.href =
           "login.html";
@@ -1462,4 +1457,5 @@ document
 </script>
 
 </body>
+
 </html>
