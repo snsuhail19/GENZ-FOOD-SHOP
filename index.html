@@ -5,55 +5,256 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GENZ FOOD SHOP</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Hide the shop until Firebase checks login */
+    body {
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
+
   <header class="header">
+
     <div class="brand">
+
       <div class="logo">G</div>
+
       <div>
+
         <h1>GENZ FOOD SHOP</h1>
-<a href="login.html" class="login-btn">👤 Login</a>
+
+        <a href="login.html" class="login-btn">
+          👤 Login
+        </a>
+
         <p>Indian Foods & Snacks</p>
+
       </div>
+
     </div>
-    <button class="cart-btn" onclick="openCart()">🛒 Cart <span id="cartCount">0</span></button>
+
+    <button
+      class="cart-btn"
+      onclick="openCart()"
+    >
+      🛒 Cart
+      <span id="cartCount">0</span>
+    </button>
+
   </header>
 
+
   <main>
+
     <section class="hero">
+
       <div>
-        <span class="tag">🔥 Fresh & Tasty</span>
-        <h2>Your favourite Indian snacks, <span>just a click away.</span></h2>
-        <p>Choose your food, add it to cart and continue to payment. THE WEBSITE IS NOT COMPLETED , IT IS IN UNDER DEVELOPING, BE PATIENCE</p>
-        <a href="#menu" class="hero-btn">Explore Menu</a>
+
+        <span class="tag">
+          🔥 Fresh & Tasty
+        </span>
+
+        <h2>
+          Your favourite Indian snacks,
+          <span>just a click away.</span>
+        </h2>
+
+        <p>
+          Choose your food, add it to cart and continue to payment.
+          THE WEBSITE IS NOT COMPLETED, IT IS IN UNDER DEVELOPING,
+          BE PATIENT.
+        </p>
+
+        <a
+          href="#menu"
+          class="hero-btn"
+        >
+          Explore Menu
+        </a>
+
       </div>
+
     </section>
 
-    <section id="menu" class="menu-section">
+
+    <section
+      id="menu"
+      class="menu-section"
+    >
+
       <div class="section-title">
+
         <p>OUR MENU</p>
-        <h2>Indian Foods & Snacks</h2>
+
+        <h2>
+          Indian Foods & Snacks
+        </h2>
+
       </div>
-      <div id="foodGrid" class="food-grid"></div>
+
+      <div
+        id="foodGrid"
+        class="food-grid"
+      ></div>
+
     </section>
+
   </main>
 
-  <div id="cartModal" class="modal">
+
+  <!-- CART -->
+
+  <div
+    id="cartModal"
+    class="modal"
+  >
+
     <div class="modal-content">
-      <button class="close" onclick="closeCart()">×</button>
-      <h2>Your Cart</h2>
+
+      <button
+        class="close"
+        onclick="closeCart()"
+      >
+        ×
+      </button>
+
+      <h2>
+        Your Cart
+      </h2>
+
       <div id="cartItems"></div>
+
       <div class="cart-footer">
-        <strong>Total: ₹<span id="cartTotal">0</span></strong>
-        <button class="checkout-btn" onclick="goToPayment()">Proceed to Payment →</button>
+
+        <strong>
+          Total: ₹
+          <span id="cartTotal">0</span>
+        </strong>
+
+        <button
+          class="checkout-btn"
+          onclick="goToPayment()"
+        >
+          Proceed to Payment →
+        </button>
+
       </div>
+
     </div>
+
   </div>
 
+
   <footer>
-    <p>© 2026 GENZ FOOD SHOP • Indian Foods & Snacks</p>
+
+    <p>
+      © 2026 GENZ FOOD SHOP • Indian Foods & Snacks
+    </p>
+
   </footer>
 
+
+  <!-- YOUR EXISTING SCRIPT -->
+
   <script src="script.js"></script>
+
+
+  <!-- FIREBASE LOGIN CHECK -->
+
+  <script type="module">
+
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    import {
+      getAuth,
+      onAuthStateChanged
+    }
+      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    /* =========================
+       FIREBASE CONFIG
+    ========================== */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+      authDomain:
+        "genz-food-shop.firebaseapp.com",
+
+      projectId:
+        "genz-food-shop",
+
+      storageBucket:
+        "genz-food-shop.firebasestorage.app",
+
+      messagingSenderId:
+        "259228392374",
+
+      appId:
+        "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+      measurementId:
+        "G-LT095LEWJ6"
+    };
+
+
+    /* =========================
+       START FIREBASE
+    ========================== */
+
+    const app =
+      initializeApp(firebaseConfig);
+
+    const auth =
+      getAuth(app);
+
+
+    /* =========================
+       CHECK LOGIN
+    ========================== */
+
+    onAuthStateChanged(
+      auth,
+      (user) => {
+
+        if (user) {
+
+          /*
+            USER IS LOGGED IN
+
+            Show the food shop.
+          */
+
+          document.body.style.display =
+            "block";
+
+        }
+
+        else {
+
+          /*
+            USER IS NOT LOGGED IN
+
+            Send them to login page.
+          */
+
+          window.location.replace(
+            "login.html"
+          );
+
+        }
+
+      }
+    );
+
+  </script>
+
 </body>
 </html>
