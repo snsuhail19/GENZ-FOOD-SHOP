@@ -1,195 +1,500 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Owner Dashboard - GENZ FOOD SHOP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>Owner Dashboard - GENZ FOOD SHOP</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #fff8f3;
-      color: #171717;
-      padding: 20px;
-    }
+<style>
+*{
+  box-sizing:border-box;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-    }
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#fff8f3;
+  color:#171717;
+  padding:15px;
+}
 
-    .header {
-      background: white;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.07);
+.container{
+  max-width:1200px;
+  margin:auto;
+}
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
+.header{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 8px 30px rgba(0,0,0,.07);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 25px;
-    }
+h1{
+  margin:0;
+  font-size:25px;
+}
 
-    .owner {
-      color: #777;
-      font-size: 13px;
-      margin-top: 5px;
-    }
+.owner{
+  color:#777;
+  font-size:13px;
+  margin-top:6px;
+}
 
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 15px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+button{
+  border:0;
+  border-radius:10px;
+  padding:10px 13px;
+  font-weight:700;
+  cursor:pointer;
+}
 
-    .logout {
-      background: #171717;
-      color: white;
-    }
+.logout{
+  background:#171717;
+  color:white;
+}
 
-    .refresh {
-      background: #ff5a1f;
-      color: white;
-      margin-bottom: 15px;
-    }
+.refresh{
+  background:#ff5a1f;
+  color:white;
+  margin-bottom:15px;
+}
 
-    .orders {
-      display: grid;
-      gap: 15px;
-    }
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
 
-    .order {
-      background: white;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.06);
-    }
+.card{
+  background:white;
+  padding:18px;
+  border-radius:17px;
+  box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
 
-    .order-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
+.card-title{
+  color:#777;
+  font-size:13px;
+  font-weight:700;
+}
 
-    .order-id {
-      font-weight: 800;
-    }
+.card-value{
+  font-size:25px;
+  font-weight:900;
+  margin-top:8px;
+}
 
-    .status {
-      background: #fff0e9;
-      color: #ff5a1f;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 800;
-    }
+.green{
+  color:#16803a;
+}
 
-    .customer {
-      background: #fff8f3;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 15px;
-    }
+.red{
+  color:#c62828;
+}
 
-    .customer div {
-      margin: 6px 0;
-      font-size: 14px;
-    }
+.orange{
+  color:#ff5a1f;
+}
 
-    .items {
-      border-top: 1px solid #eee;
-      padding-top: 12px;
-    }
+.section{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
 
-    .item {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
+.section h2{
+  margin-top:0;
+}
 
-    .total {
-      text-align: right;
-      font-size: 20px;
-      font-weight: 900;
-      margin-top: 15px;
-    }
+.expense-form{
+  display:grid;
+  grid-template-columns:1fr 1fr 2fr auto;
+  gap:10px;
+}
 
-    .loading,
-    .empty,
-    .error {
-      background: white;
-      padding: 30px;
-      border-radius: 18px;
-      text-align: center;
-    }
+.expense-form input{
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
 
-    .error {
-      color: #c00;
-    }
+.add-expense{
+  background:#171717;
+  color:white;
+}
 
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
+.expense-list{
+  margin-top:15px;
+}
 
-      .header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-  </style>
+.expense-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+  gap:10px;
+}
+
+.delete-expense{
+  background:#ffe5e5;
+  color:#c62828;
+}
+
+.orders{
+  display:grid;
+  gap:15px;
+}
+
+.order{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,.06);
+  border-left:5px solid #ff5a1f;
+}
+
+.order-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+.order-id{
+  font-weight:900;
+  word-break:break-all;
+}
+
+.status{
+  padding:7px 11px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.status-pending{
+  background:#fff3cd;
+  color:#856404;
+}
+
+.status-preparing{
+  background:#e3f2fd;
+  color:#1565c0;
+}
+
+.status-delivery{
+  background:#f3e5f5;
+  color:#7b1fa2;
+}
+
+.status-delivered{
+  background:#e8f5e9;
+  color:#2e7d32;
+}
+
+.status-rejected{
+  background:#ffebee;
+  color:#c62828;
+}
+
+.customer{
+  background:#fff8f3;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:15px;
+}
+
+.customer div{
+  margin:6px 0;
+  font-size:14px;
+}
+
+.items{
+  border-top:1px solid #eee;
+  padding-top:12px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  padding:9px 0;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+}
+
+.total{
+  text-align:right;
+  font-size:20px;
+  font-weight:900;
+  margin-top:15px;
+}
+
+.order-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:18px;
+  padding-top:15px;
+  border-top:1px solid #eee;
+}
+
+.order-actions button{
+  color:white;
+}
+
+.btn-pending{
+  background:#d99a00;
+}
+
+.btn-preparing{
+  background:#1976d2;
+}
+
+.btn-delivery{
+  background:#7b1fa2;
+}
+
+.btn-delivered{
+  background:#2e7d32;
+}
+
+.btn-rejected{
+  background:#c62828;
+}
+
+.loading,
+.empty,
+.error{
+  background:white;
+  padding:30px;
+  border-radius:18px;
+  text-align:center;
+}
+
+.error{
+  color:#c00;
+}
+
+.small{
+  color:#777;
+  font-size:12px;
+}
+
+@media(max-width:900px){
+
+  .dashboard{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .expense-form{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:600px){
+
+  body{
+    padding:10px;
+  }
+
+  .header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .dashboard{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .card{
+    padding:14px;
+  }
+
+  .card-value{
+    font-size:20px;
+  }
+
+  .expense-form{
+    grid-template-columns:1fr;
+  }
+
+  .order-actions{
+    flex-direction:column;
+  }
+
+  .order-actions button{
+    width:100%;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="header">
+  <div class="header">
 
-      <div>
-        <h1>👑 Owner Dashboard</h1>
+    <div>
+      <h1>👑 Owner Dashboard</h1>
 
-        <div class="owner">
-          GENZ FOOD SHOP
-          <br>
-          Owner: snsuhail19@gmail.com
-        </div>
+      <div class="owner">
+        GENZ FOOD SHOP
+        <br>
+        Owner: snsuhail19@gmail.com
       </div>
+    </div>
+
+    <button id="logoutBtn" class="logout">
+      Logout
+    </button>
+
+  </div>
+
+
+  <!-- =========================
+       BUSINESS SUMMARY
+  ========================== -->
+
+  <div class="dashboard">
+
+    <div class="card">
+      <div class="card-title">💰 TOTAL SALES</div>
+      <div class="card-value orange" id="sales">
+        ₹0
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📦 ORDERS</div>
+      <div class="card-value" id="orderCount">
+        0
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🍔 ITEMS SOLD</div>
+      <div class="card-value" id="itemsSold">
+        0
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">❌ REJECTED</div>
+      <div class="card-value red" id="rejectedCount">
+        0
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏷️ PRODUCT COST</div>
+      <div class="card-value" id="productCost">
+        ₹0
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💵 GROSS PROFIT</div>
+      <div class="card-value green" id="grossProfit">
+        ₹0
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💸 EXPENSES</div>
+      <div class="card-value red" id="expenses">
+        ₹0
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📈 NET PROFIT</div>
+      <div class="card-value green" id="netProfit">
+        ₹0
+      </div>
+    </div>
+
+  </div>
+
+
+  <button id="refreshBtn" class="refresh">
+    🔄 Refresh Dashboard
+  </button>
+
+
+  <!-- =========================
+       EXPENSES
+  ========================== -->
+
+  <div class="section">
+
+    <h2>💸 Business Expenses</h2>
+
+    <p class="small">
+      Add expenses such as ingredients, delivery, electricity,
+      packaging, rent, salary, advertising, etc.
+    </p>
+
+    <div class="expense-form">
+
+      <input
+        id="expenseName"
+        type="text"
+        placeholder="Expense name"
+      >
+
+      <input
+        id="expenseAmount"
+        type="number"
+        min="0"
+        placeholder="Amount ₹"
+      >
+
+      <input
+        id="expenseNote"
+        type="text"
+        placeholder="Note (optional)"
+      >
 
       <button
-        id="logoutBtn"
-        class="logout"
+        id="addExpenseBtn"
+        class="add-expense"
       >
-        Logout
+        + Add Expense
       </button>
 
     </div>
 
+    <div
+      id="expenseList"
+      class="expense-list"
+    ></div>
 
-    <button
-      id="refreshBtn"
-      class="refresh"
-    >
-      🔄 Refresh Orders
-    </button>
+  </div>
 
+
+  <!-- =========================
+       ORDERS
+  ========================== -->
+
+  <div class="section">
+
+    <h2>📦 Orders</h2>
 
     <div
       id="loading"
@@ -198,7 +503,6 @@
       Checking owner access...
     </div>
 
-
     <div
       id="orders"
       class="orders"
@@ -206,480 +510,1253 @@
 
   </div>
 
-
-  <script type="module">
-
-    import {
-      initializeApp
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+</div>
 
 
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+<script type="module">
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  doc,
+  updateDoc,
+  addDoc,
+  deleteDoc,
+  serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-    import {
-      getFirestore,
-      collection,
-      getDocs,
-      query,
-      orderBy
-    } from
-      "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+  authDomain:
+    "genz-food-shop.firebaseapp.com",
+
+  projectId:
+    "genz-food-shop",
+
+  storageBucket:
+    "genz-food-shop.firebasestorage.app",
+
+  messagingSenderId:
+    "259228392374",
+
+  appId:
+    "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+  measurementId:
+    "G-LT095LEWJ6"
+
+};
 
 
-    /* ==============================
-       FIREBASE CONFIG
-    ============================== */
+const app =
+  initializeApp(firebaseConfig);
 
-    const firebaseConfig = {
+const auth =
+  getAuth(app);
 
-      apiKey:
-        "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
-
-      authDomain:
-        "genz-food-shop.firebaseapp.com",
-
-      projectId:
-        "genz-food-shop",
-
-      storageBucket:
-        "genz-food-shop.firebasestorage.app",
-
-      messagingSenderId:
-        "259228392374",
-
-      appId:
-        "1:259228392374:web:6af3a0d3c93597a5b5bf17",
-
-      measurementId:
-        "G-LT095LEWJ6"
-
-    };
+const db =
+  getFirestore(app);
 
 
-    /* ==============================
-       INITIALIZE
-    ============================== */
+/* =========================
+   OWNER
+========================= */
 
-    const app =
-      initializeApp(firebaseConfig);
-
-    const auth =
-      getAuth(app);
-
-    const db =
-      getFirestore(app);
+const OWNER_EMAIL =
+  "snsuhail19@gmail.com";
 
 
-    /* ==============================
-       OWNER EMAIL
-    ============================== */
+/*
+  IMPORTANT:
 
-    const OWNER_EMAIL =
-      "snsuhail19@gmail.com";
+  Change these costs to your actual
+  approximate cost for each item.
+
+  Example:
+  Samosa selling price = ₹20
+  Business cost = ₹10
+  Profit = ₹10
+*/
+
+const PRODUCT_COSTS = {
+
+  "Samosa": 10,
+  "Vada": 15,
+  "Masala Dosa": 35,
+  "Idli": 20,
+  "White Rice": 18,
+  "Pani Puri": 25,
+  "Pakoda": 20,
+  "Momos": 45
+
+};
 
 
-    /* ==============================
-       ELEMENTS
-    ============================== */
+/* =========================
+   ELEMENTS
+========================= */
 
-    const loading =
-      document.getElementById("loading");
+const loading =
+  document.getElementById("loading");
 
-    const ordersContainer =
-      document.getElementById("orders");
+const ordersContainer =
+  document.getElementById("orders");
+
+const expenseList =
+  document.getElementById("expenseList");
 
 
-    /* ==============================
-       LOAD ORDERS
-    ============================== */
+/* =========================
+   GLOBAL DATA
+========================= */
 
-    async function loadOrders() {
+let allOrders = [];
 
-      loading.style.display =
-        "block";
+let allExpenses = [];
 
-      loading.textContent =
-        "Loading orders...";
+
+/* =========================
+   LOAD ORDERS
+========================= */
+
+async function loadOrders(){
+
+  loading.style.display =
+    "block";
+
+  loading.textContent =
+    "Loading orders...";
+
+  ordersContainer.innerHTML =
+    "";
+
+  try{
+
+    const ordersRef =
+      collection(
+        db,
+        "orders"
+      );
+
+    const ordersQuery =
+      query(
+        ordersRef,
+        orderBy(
+          "createdAt",
+          "desc"
+        )
+      );
+
+    const snapshot =
+      await getDocs(
+        ordersQuery
+      );
+
+    allOrders = [];
+
+    snapshot.forEach(
+      docSnapshot => {
+
+        allOrders.push({
+
+          id:
+            docSnapshot.id,
+
+          ...docSnapshot.data()
+
+        });
+
+      }
+    );
+
+    loading.style.display =
+      "none";
+
+    if(
+      allOrders.length === 0
+    ){
 
       ordersContainer.innerHTML =
-        "";
+        '<div class="empty">No orders yet.</div>';
 
+    }
 
-      try {
+    else{
 
-        const ordersRef =
-          collection(
-            db,
-            "orders"
+      allOrders.forEach(
+        order => {
+
+          displayOrder(
+            order.id,
+            order
           );
-
-
-        const ordersQuery =
-          query(
-            ordersRef,
-            orderBy(
-              "createdAt",
-              "desc"
-            )
-          );
-
-
-        const snapshot =
-          await getDocs(
-            ordersQuery
-          );
-
-
-        if (snapshot.empty) {
-
-          loading.style.display =
-            "none";
-
-          ordersContainer.innerHTML =
-            '<div class="empty">No orders yet.</div>';
-
-          return;
 
         }
+      );
+
+    }
+
+    updateBusinessSummary();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    loading.style.display =
+      "none";
+
+    ordersContainer.innerHTML =
+      '<div class="error">' +
+      "Could not load orders.<br><br>" +
+      (
+        error.code ||
+        error.message
+      ) +
+      "</div>";
+
+  }
+
+}
 
 
-        loading.style.display =
-          "none";
+/* =========================
+   DISPLAY ORDER
+========================= */
+
+function displayOrder(
+  orderId,
+  order
+){
+
+  const orderElement =
+    document.createElement("div");
+
+  orderElement.className =
+    "order";
 
 
-        snapshot.forEach(
-          (docSnapshot) => {
+  let itemsHTML =
+    "";
 
-            const order =
-              docSnapshot.data();
 
-            displayOrder(
-              docSnapshot.id,
-              order
+  let itemCount =
+    0;
+
+
+  if(
+    Array.isArray(order.items)
+  ){
+
+    order.items.forEach(
+      item => {
+
+        const name =
+          item.name ||
+          "Food item";
+
+        const quantity =
+          Number(
+            item.quantity || 1
+          );
+
+        const price =
+          Number(
+            item.price || 0
+          );
+
+        itemCount +=
+          quantity;
+
+
+        itemsHTML +=
+
+          '<div class="item">' +
+
+          '<span>' +
+
+          name +
+
+          " × " +
+
+          quantity +
+
+          "</span>" +
+
+          "<strong>₹" +
+
+          (
+            price *
+            quantity
+          ).toFixed(2) +
+
+          "</strong>" +
+
+          "</div>";
+
+      }
+    );
+
+  }
+
+
+  const customerName =
+    order.customerName ||
+    order.name ||
+    "Not available";
+
+
+  const email =
+    order.customerEmail ||
+    order.email ||
+    "Not available";
+
+
+  const phone =
+    order.phone ||
+    order.mobile ||
+    "Not available";
+
+
+  const address =
+    order.address ||
+    "Not available";
+
+
+  const total =
+    Number(
+      order.total || 0
+    );
+
+
+  const status =
+    order.status ||
+    "Pending";
+
+
+  const statusClass =
+    getStatusClass(status);
+
+
+  orderElement.innerHTML = `
+
+    <div class="order-header">
+
+      <div class="order-id">
+        Order #${orderId}
+      </div>
+
+      <div class="status ${statusClass}">
+        ${status}
+      </div>
+
+    </div>
+
+
+    <div class="customer">
+
+      <div>
+        <strong>Name:</strong>
+        ${escapeHTML(customerName)}
+      </div>
+
+      <div>
+        <strong>Email:</strong>
+        ${escapeHTML(email)}
+      </div>
+
+      <div>
+        <strong>Phone:</strong>
+        ${escapeHTML(phone)}
+      </div>
+
+      <div>
+        <strong>Address:</strong>
+        ${escapeHTML(address)}
+      </div>
+
+    </div>
+
+
+    <div class="items">
+
+      ${itemsHTML}
+
+    </div>
+
+
+    <div class="total">
+
+      Total: ₹${total.toFixed(2)}
+
+    </div>
+
+
+    <div class="order-actions">
+
+      <button
+        class="btn-pending"
+        data-status="Pending"
+        data-id="${orderId}"
+      >
+        ⏳ Pending
+      </button>
+
+      <button
+        class="btn-preparing"
+        data-status="Preparing"
+        data-id="${orderId}"
+      >
+        🍳 Preparing
+      </button>
+
+      <button
+        class="btn-delivery"
+        data-status="Out for Delivery"
+        data-id="${orderId}"
+      >
+        🚚 Out for Delivery
+      </button>
+
+      <button
+        class="btn-delivered"
+        data-status="Delivered"
+        data-id="${orderId}"
+      >
+        ✅ Delivered
+      </button>
+
+      <button
+        class="btn-rejected"
+        data-status="Rejected"
+        data-id="${orderId}"
+      >
+        ❌ Rejected
+      </button>
+
+    </div>
+
+  `;
+
+
+  orderElement
+    .querySelectorAll(
+      ".order-actions button"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            updateOrderStatus(
+              button.dataset.id,
+              button.dataset.status
             );
 
           }
         );
 
       }
+    );
 
-      catch (error) {
 
-        console.error(error);
+  ordersContainer.appendChild(
+    orderElement
+  );
 
-        loading.style.display =
-          "none";
+}
 
-        ordersContainer.innerHTML =
-          '<div class="error">' +
-          "Could not load orders.<br><br>" +
-          (error.code || error.message) +
-          "</div>";
 
+/* =========================
+   UPDATE ORDER STATUS
+========================= */
+
+async function updateOrderStatus(
+  orderId,
+  newStatus
+){
+
+  try{
+
+    await updateDoc(
+
+      doc(
+        db,
+        "orders",
+        orderId
+      ),
+
+      {
+        status:
+          newStatus,
+
+        updatedAt:
+          serverTimestamp()
       }
+
+    );
+
+
+    const order =
+      allOrders.find(
+        item =>
+          item.id === orderId
+      );
+
+
+    if(order){
+
+      order.status =
+        newStatus;
 
     }
 
 
-    /* ==============================
-       DISPLAY ORDER
-    ============================== */
+    ordersContainer.innerHTML =
+      "";
 
-    function displayOrder(
-      orderId,
-      order
-    ) {
+    allOrders.forEach(
+      order => {
 
-      const orderElement =
-        document.createElement("div");
-
-      orderElement.className =
-        "order";
-
-
-      let itemsHTML = "";
-
-
-      if (
-        Array.isArray(order.items)
-      ) {
-
-        order.items.forEach(
-          (item) => {
-
-            const name =
-              item.name ||
-              "Food item";
-
-            const quantity =
-              item.quantity ||
-              1;
-
-            const price =
-              Number(
-                item.price || 0
-              );
-
-
-            itemsHTML +=
-
-              '<div class="item">' +
-
-              '<span>' +
-
-              name +
-
-              " × " +
-
-              quantity +
-
-              "</span>" +
-
-              '<strong>₹' +
-
-              (
-                price * quantity
-              ).toFixed(2) +
-
-              "</strong>" +
-
-              "</div>";
-
-          }
+        displayOrder(
+          order.id,
+          order
         );
 
       }
+    );
 
 
-      const customerName =
-        order.name ||
-        order.customerName ||
-        "Not available";
+    updateBusinessSummary();
+
+    alert(
+      "Order status changed to: " +
+      newStatus
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Could not update status: " +
+      (
+        error.code ||
+        error.message
+      )
+    );
+
+  }
+
+}
 
 
-      const email =
-        order.email ||
-        "Not available";
+/* =========================
+   BUSINESS SUMMARY
+========================= */
+
+function updateBusinessSummary(){
+
+  let sales =
+    0;
+
+  let itemsSold =
+    0;
+
+  let productCost =
+    0;
+
+  let rejected =
+    0;
 
 
-      const mobile =
-        order.mobile ||
-        "Not available";
-
-
-      const address =
-        order.address ||
-        "Not available";
-
-
-      const city =
-        order.city ||
-        "Not available";
-
-
-      const pincode =
-        order.pincode ||
-        "Not available";
-
-
-      const total =
-        Number(
-          order.total || 0
-        );
-
+  allOrders.forEach(
+    order => {
 
       const status =
         order.status ||
         "Pending";
 
 
-      orderElement.innerHTML =
+      if(
+        status === "Rejected"
+      ){
 
-        '<div class="order-header">' +
+        rejected++;
 
-        '<div class="order-id">' +
+        return;
 
-        "Order #" +
-
-        orderId +
-
-        "</div>" +
-
-        '<div class="status">' +
-
-        status +
-
-        "</div>" +
-
-        "</div>" +
+      }
 
 
-        '<div class="customer">' +
+      /*
+        Sales are counted for
+        non-rejected orders.
+      */
 
-        "<div><strong>Name:</strong> " +
+      const total =
+        Number(
+          order.total || 0
+        );
 
-        customerName +
-
-        "</div>" +
-
-        "<div><strong>Email:</strong> " +
-
-        email +
-
-        "</div>" +
-
-        "<div><strong>Mobile:</strong> " +
-
-        mobile +
-
-        "</div>" +
-
-        "<div><strong>Address:</strong> " +
-
-        address +
-
-        "</div>" +
-
-        "<div><strong>City:</strong> " +
-
-        city +
-
-        "</div>" +
-
-        "<div><strong>PIN:</strong> " +
-
-        pincode +
-
-        "</div>" +
-
-        "</div>" +
+      sales +=
+        total;
 
 
-        '<div class="items">' +
+      if(
+        Array.isArray(order.items)
+      ){
 
-        itemsHTML +
+        order.items.forEach(
+          item => {
 
-        "</div>" +
+            const quantity =
+              Number(
+                item.quantity || 1
+              );
+
+            const name =
+              item.name ||
+              "";
+
+            itemsSold +=
+              quantity;
 
 
-        '<div class="total">' +
-
-        "Total: ₹" +
-
-        total.toFixed(2) +
-
-        "</div>";
+            const costPerItem =
+              Number(
+                PRODUCT_COSTS[name] || 0
+              );
 
 
-      ordersContainer.appendChild(
-        orderElement
-      );
+            productCost +=
+              costPerItem *
+              quantity;
+
+          }
+        );
+
+      }
 
     }
+  );
 
 
-    /* ==============================
-       AUTHENTICATION
-    ============================== */
-
-    onAuthStateChanged(
-      auth,
-      async (user) => {
-
-        if (!user) {
-
-          window.location.href =
-            "login.html";
-
-          return;
-
-        }
+  const grossProfit =
+    sales -
+    productCost;
 
 
-        const email =
-          (
-            user.email || ""
-          ).toLowerCase();
+  const totalExpenses =
+    allExpenses.reduce(
+      (
+        sum,
+        expense
+      ) =>
+        sum +
+        Number(
+          expense.amount || 0
+        ),
+      0
+    );
 
 
-        if (
-          email !==
-          OWNER_EMAIL.toLowerCase()
-        ) {
-
-          loading.innerHTML =
-            "❌ Access denied.<br><br>" +
-            "This page is only available to the shop owner.";
-
-          return;
-
-        }
+  const netProfit =
+    grossProfit -
+    totalExpenses;
 
 
-        await loadOrders();
+  document.getElementById(
+    "sales"
+  ).textContent =
+    "₹" +
+    sales.toFixed(2);
+
+
+  document.getElementById(
+    "orderCount"
+  ).textContent =
+    allOrders.length;
+
+
+  document.getElementById(
+    "itemsSold"
+  ).textContent =
+    itemsSold;
+
+
+  document.getElementById(
+    "rejectedCount"
+  ).textContent =
+    rejected;
+
+
+  document.getElementById(
+    "productCost"
+  ).textContent =
+    "₹" +
+    productCost.toFixed(2);
+
+
+  document.getElementById(
+    "grossProfit"
+  ).textContent =
+    "₹" +
+    grossProfit.toFixed(2);
+
+
+  document.getElementById(
+    "expenses"
+  ).textContent =
+    "₹" +
+    totalExpenses.toFixed(2);
+
+
+  document.getElementById(
+    "netProfit"
+  ).textContent =
+    "₹" +
+    netProfit.toFixed(2);
+
+}
+
+
+/* =========================
+   LOAD EXPENSES
+========================= */
+
+async function loadExpenses(){
+
+  try{
+
+    const expensesRef =
+      collection(
+        db,
+        "expenses"
+      );
+
+    const snapshot =
+      await getDocs(
+        expensesRef
+      );
+
+    allExpenses = [];
+
+    snapshot.forEach(
+      docSnapshot => {
+
+        allExpenses.push({
+
+          id:
+            docSnapshot.id,
+
+          ...docSnapshot.data()
+
+        });
 
       }
     );
 
 
-    /* ==============================
-       REFRESH
-    ============================== */
+    renderExpenses();
 
-    document
-      .getElementById("refreshBtn")
-      .addEventListener(
-        "click",
-        () => {
+    updateBusinessSummary();
 
-          loadOrders();
+  }
 
-        }
-      );
+  catch(error){
+
+    console.error(
+      "Expense error:",
+      error
+    );
+
+    expenseList.innerHTML =
+      '<div class="error">' +
+      "Could not load expenses." +
+      "</div>";
+
+  }
+
+}
 
 
-    /* ==============================
-       LOGOUT
-    ============================== */
+/* =========================
+   RENDER EXPENSES
+========================= */
 
-    document
-      .getElementById("logoutBtn")
-      .addEventListener(
-        "click",
-        async () => {
+function renderExpenses(){
 
-          try {
+  if(
+    allExpenses.length === 0
+  ){
 
-            await signOut(auth);
+    expenseList.innerHTML =
+      '<div class="small">No expenses added yet.</div>';
 
-            window.location.href =
-              "login.html";
+    return;
 
-          }
+  }
 
-          catch (error) {
 
-            alert(
-              "Logout failed: " +
-              (
-                error.code ||
-                error.message
-              )
+  expenseList.innerHTML =
+    allExpenses.map(
+      expense => `
+
+      <div class="expense-row">
+
+        <div>
+
+          <strong>
+            ${escapeHTML(
+              expense.name ||
+              "Expense"
+            )}
+          </strong>
+
+          <br>
+
+          <span class="small">
+            ${escapeHTML(
+              expense.note ||
+              ""
+            )}
+          </span>
+
+        </div>
+
+
+        <strong>
+          ₹${Number(
+            expense.amount || 0
+          ).toFixed(2)}
+        </strong>
+
+
+        <button
+          class="delete-expense"
+          data-expense="${expense.id}"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `
+    ).join("");
+
+
+  document
+    .querySelectorAll(
+      "[data-expense]"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            deleteExpense(
+              button.dataset.expense
             );
 
           }
+        );
 
-        }
+      }
+    );
+
+}
+
+
+/* =========================
+   ADD EXPENSE
+========================= */
+
+async function addExpense(){
+
+  const name =
+    document.getElementById(
+      "expenseName"
+    ).value.trim();
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "expenseAmount"
+      ).value
+    );
+
+
+  const note =
+    document.getElementById(
+      "expenseNote"
+    ).value.trim();
+
+
+  if(
+    !name ||
+    !amount ||
+    amount <= 0
+  ){
+
+    alert(
+      "Enter expense name and a valid amount."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "expenses"
+      ),
+      {
+
+        name:
+          name,
+
+        amount:
+          amount,
+
+        note:
+          note,
+
+        createdAt:
+          serverTimestamp()
+
+      }
+    );
+
+
+    document.getElementById(
+      "expenseName"
+    ).value =
+      "";
+
+    document.getElementById(
+      "expenseAmount"
+    ).value =
+      "";
+
+    document.getElementById(
+      "expenseNote"
+    ).value =
+      "";
+
+
+    await loadExpenses();
+
+    alert(
+      "Expense added."
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Could not add expense: " +
+      (
+        error.code ||
+        error.message
+      )
+    );
+
+  }
+
+}
+
+
+/* =========================
+   DELETE EXPENSE
+========================= */
+
+async function deleteExpense(
+  expenseId
+){
+
+  if(
+    !confirm(
+      "Delete this expense?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    await deleteDoc(
+      doc(
+        db,
+        "expenses",
+        expenseId
+      )
+    );
+
+
+    await loadExpenses();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Could not delete expense: " +
+      (
+        error.code ||
+        error.message
+      )
+    );
+
+  }
+
+}
+
+
+/* =========================
+   STATUS CLASS
+========================= */
+
+function getStatusClass(
+  status
+){
+
+  if(
+    status === "Preparing"
+  ){
+
+    return "status-preparing";
+
+  }
+
+  if(
+    status === "Out for Delivery"
+  ){
+
+    return "status-delivery";
+
+  }
+
+  if(
+    status === "Delivered"
+  ){
+
+    return "status-delivered";
+
+  }
+
+  if(
+    status === "Rejected"
+  ){
+
+    return "status-rejected";
+
+  }
+
+  return "status-pending";
+
+}
+
+
+/* =========================
+   BASIC HTML SAFETY
+========================= */
+
+function escapeHTML(
+  value
+){
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================
+   AUTHENTICATION
+========================= */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if(!user){
+
+      window.location.replace(
+        "login.html"
       );
 
-  </script>
+      return;
+
+    }
+
+
+    const email =
+      (
+        user.email || ""
+      ).toLowerCase();
+
+
+    if(
+      email !==
+      OWNER_EMAIL.toLowerCase()
+    ){
+
+      loading.innerHTML =
+        "❌ Access denied.<br><br>" +
+        "This dashboard is only available to the shop owner.";
+
+      return;
+
+    }
+
+
+    await loadOrders();
+
+    await loadExpenses();
+
+  }
+);
+
+
+/* =========================
+   REFRESH
+========================= */
+
+document
+  .getElementById(
+    "refreshBtn"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      await loadOrders();
+
+      await loadExpenses();
+
+    }
+  );
+
+
+/* =========================
+   ADD EXPENSE BUTTON
+========================= */
+
+document
+  .getElementById(
+    "addExpenseBtn"
+  )
+  .addEventListener(
+    "click",
+    addExpense
+  );
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+  .getElementById(
+    "logoutBtn"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      try{
+
+        await signOut(auth);
+
+        window.location.replace(
+          "login.html"
+        );
+
+      }
+
+      catch(error){
+
+        alert(
+          "Logout failed: " +
+          (
+            error.code ||
+            error.message
+          )
+        );
+
+      }
+
+    }
+  );
+
+</script>
 
 </body>
 </html>
