@@ -76,6 +76,16 @@
       resize: vertical;
     }
 
+    .location-box {
+      background: #eef9f1;
+      color: #176b35;
+      padding: 13px;
+      border-radius: 11px;
+      margin: 12px 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     .item {
       display: flex;
       align-items: center;
@@ -135,8 +145,6 @@
       padding-top: 15px;
     }
 
-    /* PAYMENT */
-
     .payment-title {
       margin-top: 25px;
     }
@@ -152,7 +160,6 @@
       border-radius: 14px;
       padding: 16px;
       cursor: pointer;
-      transition: .2s;
     }
 
     .payment-option:hover {
@@ -264,9 +271,7 @@
 
 </head>
 
-
 <body>
-
 
 <header class="header">
 
@@ -294,7 +299,6 @@
 
 
 <main class="checkout">
-
 
   <a
     class="back"
@@ -433,7 +437,17 @@
     </div>
 
 
-    <!-- PAYMENT METHOD -->
+    <!-- LOCATION -->
+
+    <div
+      id="locationBox"
+      class="location-box"
+    >
+      📍 Checking saved delivery location...
+    </div>
+
+
+    <!-- PAYMENT -->
 
     <h2 class="payment-title">
       💳 Payment Method
@@ -533,7 +547,6 @@
 
   </div>
 
-
 </main>
 
 
@@ -618,6 +631,9 @@ let cart =
 let currentUser =
   null;
 
+let savedLocation =
+  null;
+
 
 /* ELEMENTS */
 
@@ -635,6 +651,9 @@ const successBox =
 
 const message =
   document.getElementById("message");
+
+const locationBox =
+  document.getElementById("locationBox");
 
 
 /* MESSAGE */
@@ -658,7 +677,7 @@ function hideMessage() {
 }
 
 
-/* PROFILE */
+/* LOAD PROFILE */
 
 async function loadProfile(user) {
 
@@ -671,40 +690,87 @@ async function loadProfile(user) {
         user.uid
       );
 
+
     const snapshot =
       await getDoc(
         profileRef
       );
 
 
-    if (snapshot.exists()) {
-
-      const profile =
-        snapshot.data();
-
+    if (!snapshot.exists()) {
 
       document.getElementById("name").value =
-        profile.name ||
-        user.displayName ||
-        "";
+        user.displayName || "";
+
+      locationBox.textContent =
+        "⚠️ No saved GPS location. Please open Profile and add your location.";
+
+      savedLocation = null;
+
+      return;
+
+    }
 
 
-      document.getElementById("phone").value =
-        (profile.mobile || "")
-          .replace("+91", "");
+    const profile =
+      snapshot.data();
 
 
-      document.getElementById("address").value =
-        profile.address ||
-        "";
+    document.getElementById("name").value =
+      profile.name ||
+      user.displayName ||
+      "";
+
+
+    document.getElementById("phone").value =
+      (profile.mobile || "")
+        .replace("+91", "");
+
+
+    document.getElementById("address").value =
+      profile.address ||
+      "";
+
+
+    /*
+      LOAD SAVED GPS LOCATION
+    */
+
+    if (
+      profile.location &&
+      typeof profile.location.latitude === "number" &&
+      typeof profile.location.longitude === "number"
+    ) {
+
+      savedLocation = {
+
+        latitude:
+          profile.location.latitude,
+
+        longitude:
+          profile.location.longitude,
+
+        accuracy:
+          profile.location.accuracy || null
+
+      };
+
+
+      locationBox.textContent =
+        "✅ Your saved delivery location is attached to this order. GPS accuracy: approximately " +
+        (
+          savedLocation.accuracy || "unknown"
+        ) +
+        " metres.";
 
     }
 
     else {
 
-      document.getElementById("name").value =
-        user.displayName ||
-        "";
+      savedLocation = null;
+
+      locationBox.textContent =
+        "⚠️ GPS location not saved. Please go to Profile → Edit Profile → Get My Location.";
 
     }
 
@@ -712,11 +778,18 @@ async function loadProfile(user) {
 
   catch (error) {
 
-    console.error(error);
+    console.error(
+      "PROFILE ERROR:",
+      error
+    );
+
 
     document.getElementById("name").value =
-      user.displayName ||
-      "";
+      user.displayName || "";
+
+
+    locationBox.textContent =
+      "⚠️ Could not load your saved location.";
 
   }
 
@@ -745,7 +818,9 @@ function(id, amount) {
       i => i.id === id
     );
 
+
   if (!item) return;
+
 
   item.quantity += amount;
 
@@ -784,6 +859,7 @@ function render() {
         </a>
       </div>
     `;
+
 
     document.getElementById("subtotal")
       .textContent = "0";
@@ -951,6 +1027,21 @@ async function() {
   }
 
 
+  /*
+    GPS LOCATION REQUIRED
+  */
+
+  if (!savedLocation) {
+
+    showMessage(
+      "📍 Your delivery location is not saved. Please open Profile and add your location before placing an order."
+    );
+
+    return;
+
+  }
+
+
   phone =
     phone.replace(
       /\D/g,
@@ -958,9 +1049,7 @@ async function() {
     );
 
 
-  if (
-    !/^[6-9]\d{9}$/.test(phone)
-  ) {
+  if (!/^[6-9]\d{9}$/.test(phone)) {
 
     showMessage(
       "Please enter a valid 10-digit Indian mobile number."
@@ -1025,16 +1114,15 @@ async function() {
 
   try {
 
-    /*
-      If the owner places an order,
-      Firestore will mark it as Owner.
-    */
-
     const isOwner =
       currentUser.email &&
       currentUser.email.toLowerCase() ===
       OWNER_EMAIL.toLowerCase();
 
+
+    /*
+      ORDER DATA
+    */
 
     const orderData = {
 
@@ -1058,6 +1146,25 @@ async function() {
       address:
         address,
 
+
+      /*
+        VERIFIED DELIVERY LOCATION
+      */
+
+      location: {
+
+        latitude:
+          savedLocation.latitude,
+
+        longitude:
+          savedLocation.longitude,
+
+        accuracy:
+          savedLocation.accuracy
+
+      },
+
+
       items:
         orderItems,
 
@@ -1074,9 +1181,7 @@ async function() {
         paymentMethod,
 
       paymentStatus:
-        paymentMethod === "UPI"
-          ? "Pending"
-          : "Pending",
+        "Pending",
 
       status:
         "Pending",
@@ -1108,8 +1213,9 @@ async function() {
 
     /* SUCCESS */
 
-    document.getElementById("orderId")
-      .textContent =
+    document.getElementById(
+      "orderId"
+    ).textContent =
       "Order ID: " +
       orderRef.id;
 
@@ -1121,8 +1227,9 @@ async function() {
       ).join("\n");
 
 
-    document.getElementById("orderText")
-      .textContent =
+    document.getElementById(
+      "orderText"
+    ).textContent =
 
 `Order Type: ${isOwner ? "Owner Order" : "Customer Order"}
 
@@ -1133,6 +1240,11 @@ Email: ${currentUser.email || "-"}
 Phone: +91${phone}
 
 Address: ${address}
+
+GPS Location:
+Latitude: ${savedLocation.latitude}
+Longitude: ${savedLocation.longitude}
+Accuracy: approximately ${savedLocation.accuracy || "unknown"} metres
 
 
 ${lines}
@@ -1160,7 +1272,11 @@ Order Status: Pending`;
 
   catch (error) {
 
-    console.error(error);
+    console.error(
+      "PLACE ORDER ERROR:",
+      error
+    );
+
 
     showMessage(
       "Could not place order: " +
