@@ -2,11 +2,18 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>My Profile - GENZ FOOD SHOP</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -154,6 +161,34 @@
       border: 1px solid #ddd;
     }
 
+    .location-btn {
+      background: #16803a;
+      color: white;
+    }
+
+    .location-info {
+      background: #eef9f1;
+      color: #176b31;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .location-map-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      background: #e9f1ff;
+      color: #185abc;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
     .hidden {
       display: none;
     }
@@ -179,705 +214,1252 @@
       font-weight: 800;
       margin-bottom: 5px;
     }
+
   </style>
+
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="top">
-      <div class="logo">G</div>
+  <div class="top">
 
-      <div>
-        <h1>My Profile</h1>
-        <p class="subtitle">GENZ FOOD SHOP</p>
-      </div>
+    <div class="logo">
+      G
     </div>
 
-    <!-- LOADING -->
+    <div>
 
-    <div id="loading" class="loading">
-      Loading your profile...
-    </div>
+      <h1>
+        My Profile
+      </h1>
 
-    <!-- PROFILE VIEW -->
-
-    <div id="profileView" class="hidden">
-
-      <div class="profile-card">
-
-        <div class="profile-row">
-          <div class="label">NAME</div>
-          <div id="viewName" class="value">-</div>
-        </div>
-
-        <div class="profile-row">
-          <div class="label">GMAIL</div>
-          <div id="viewEmail" class="value">-</div>
-        </div>
-
-        <div class="profile-row">
-          <div class="label">MOBILE</div>
-          <div id="viewMobile" class="value">Not added</div>
-        </div>
-
-        <div class="profile-row">
-          <div class="label">ADDRESS</div>
-          <div id="viewAddress" class="value">Not added</div>
-        </div>
-
-        <div class="profile-row">
-          <div class="label">CITY</div>
-          <div id="viewCity" class="value">Not added</div>
-        </div>
-
-        <div class="profile-row">
-          <div class="label">PIN CODE</div>
-          <div id="viewPincode" class="value">Not added</div>
-        </div>
-
-      </div>
-
-      <button id="editBtn" class="edit-btn">
-        ✏️ Edit Profile
-      </button>
-
-      <button id="shopBtn" class="shop-btn">
-        🛒 Go to Shop
-      </button>
-
-      <button id="logoutBtn" class="logout-btn">
-        🚪 Logout
-      </button>
+      <p class="subtitle">
+        GENZ FOOD SHOP
+      </p>
 
     </div>
-
-    <!-- EDIT PROFILE -->
-
-    <div id="editView" class="hidden">
-
-      <label for="editName">Full Name</label>
-
-      <input
-        id="editName"
-        type="text"
-        placeholder="Your full name"
-      >
-
-      <label for="editMobile">Mobile Number</label>
-
-      <input
-        id="editMobile"
-        type="tel"
-        inputmode="numeric"
-        maxlength="10"
-        placeholder="9876543210"
-      >
-
-      <label for="editAddress">Address</label>
-
-      <textarea
-        id="editAddress"
-        placeholder="House number, street, area..."
-      ></textarea>
-
-      <label for="editCity">City</label>
-
-      <input
-        id="editCity"
-        type="text"
-        placeholder="Your city"
-      >
-
-      <label for="editPincode">PIN Code</label>
-
-      <input
-        id="editPincode"
-        type="text"
-        inputmode="numeric"
-        maxlength="6"
-        placeholder="600001"
-      >
-
-      <button id="saveBtn" class="save-btn">
-        💾 Save Changes
-      </button>
-
-      <button id="cancelBtn" class="cancel-btn">
-        Cancel
-      </button>
-
-    </div>
-
-    <!-- MESSAGE -->
-
-    <div id="message" class="message hidden"></div>
 
   </div>
 
 
-  <!-- FIREBASE -->
-
-  <script type="module">
-
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-    import {
-      getFirestore,
-      doc,
-      getDoc,
-      setDoc
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  <div
+    id="loading"
+    class="loading"
+  >
+    Loading your profile...
+  </div>
 
 
-    /* FIREBASE CONFIG */
+  <!-- PROFILE VIEW -->
 
-    const firebaseConfig = {
+  <div
+    id="profileView"
+    class="hidden"
+  >
 
-      apiKey:
-        "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+    <div class="profile-card">
 
-      authDomain:
-        "genz-food-shop.firebaseapp.com",
+      <div class="profile-row">
+        <div class="label">NAME</div>
+        <div id="viewName" class="value">-</div>
+      </div>
 
-      projectId:
-        "genz-food-shop",
+      <div class="profile-row">
+        <div class="label">GMAIL</div>
+        <div id="viewEmail" class="value">-</div>
+      </div>
 
-      storageBucket:
-        "genz-food-shop.firebasestorage.app",
+      <div class="profile-row">
+        <div class="label">MOBILE</div>
+        <div id="viewMobile" class="value">Not added</div>
+      </div>
 
-      messagingSenderId:
-        "259228392374",
+      <div class="profile-row">
+        <div class="label">DELIVERY LOCATION</div>
+        <div id="viewAddress" class="value">Not added</div>
+      </div>
 
-      appId:
-        "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+      <div class="profile-row">
+        <div class="label">CITY</div>
+        <div id="viewCity" class="value">Not added</div>
+      </div>
 
-      measurementId:
-        "G-LT095LEWJ6"
+      <div class="profile-row">
+        <div class="label">PIN CODE</div>
+        <div id="viewPincode" class="value">Not added</div>
+      </div>
 
-    };
+      <div class="profile-row">
+
+        <div class="label">
+          GPS LOCATION
+        </div>
+
+        <div
+          id="viewLocationStatus"
+          class="value"
+        >
+          Not added
+        </div>
+
+        <a
+          id="mapBtn"
+          class="location-map-btn hidden"
+          target="_blank"
+          rel="noopener"
+        >
+          📍 View Saved Location
+        </a>
+
+      </div>
+
+    </div>
 
 
-    /* INITIALIZE FIREBASE */
-
-    const app = initializeApp(firebaseConfig);
-
-    const auth = getAuth(app);
-
-    const db = getFirestore(app);
-
-
-    /* ELEMENTS */
-
-    const loading =
-      document.getElementById("loading");
-
-    const profileView =
-      document.getElementById("profileView");
-
-    const editView =
-      document.getElementById("editView");
-
-    const message =
-      document.getElementById("message");
+    <button
+      id="editBtn"
+      class="edit-btn"
+    >
+      ✏️ Edit Profile
+    </button>
 
 
-    let currentUser = null;
+    <button
+      id="shopBtn"
+      class="shop-btn"
+    >
+      🛒 Go to Shop
+    </button>
 
 
-    /* MESSAGE */
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+    >
+      🚪 Logout
+    </button>
 
-    function showMessage(title, details = "") {
+  </div>
 
-      loading.classList.add("hidden");
 
-      message.innerHTML =
-        "<div class='error-title'>" +
-        title +
-        "</div>" +
-        details;
+  <!-- EDIT PROFILE -->
 
-      message.classList.remove("hidden");
+  <div
+    id="editView"
+    class="hidden"
+  >
+
+    <label for="editName">
+      Full Name
+    </label>
+
+    <input
+      id="editName"
+      type="text"
+      placeholder="Your full name"
+    >
+
+
+    <label for="editMobile">
+      Mobile Number
+    </label>
+
+    <input
+      id="editMobile"
+      type="tel"
+      inputmode="numeric"
+      maxlength="10"
+      placeholder="9876543210"
+    >
+
+
+    <!-- LOCATION -->
+
+    <label>
+      Delivery Location
+    </label>
+
+    <button
+      type="button"
+      id="locationBtn"
+      class="location-btn"
+    >
+      📍 Get My Location
+    </button>
+
+
+    <div
+      id="locationInfo"
+      class="location-info hidden"
+    ></div>
+
+
+    <label for="editAddress">
+      Address
+    </label>
+
+    <textarea
+      id="editAddress"
+      placeholder="Your location address will appear here"
+    ></textarea>
+
+
+    <label for="editCity">
+      City
+    </label>
+
+    <input
+      id="editCity"
+      type="text"
+      placeholder="Your city"
+    >
+
+
+    <label for="editPincode">
+      PIN Code
+    </label>
+
+    <input
+      id="editPincode"
+      type="text"
+      inputmode="numeric"
+      maxlength="6"
+      placeholder="600001"
+    >
+
+
+    <button
+      id="saveBtn"
+      class="save-btn"
+    >
+      💾 Save Changes
+    </button>
+
+
+    <button
+      id="cancelBtn"
+      class="cancel-btn"
+    >
+      Cancel
+    </button>
+
+  </div>
+
+
+  <div
+    id="message"
+    class="message hidden"
+  ></div>
+
+</div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyBYgXkb6ED1gQDbpJpNj3a8fvwDqmOv5yQ",
+
+  authDomain:
+    "genz-food-shop.firebaseapp.com",
+
+  projectId:
+    "genz-food-shop",
+
+  storageBucket:
+    "genz-food-shop.firebasestorage.app",
+
+  messagingSenderId:
+    "259228392374",
+
+  appId:
+    "1:259228392374:web:6af3a0d3c93597a5b5bf17",
+
+  measurementId:
+    "G-LT095LEWJ6"
+
+};
+
+
+/* INITIALIZE */
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+/* ELEMENTS */
+
+const loading =
+  document.getElementById("loading");
+
+const profileView =
+  document.getElementById("profileView");
+
+const editView =
+  document.getElementById("editView");
+
+const message =
+  document.getElementById("message");
+
+const locationBtn =
+  document.getElementById("locationBtn");
+
+const locationInfo =
+  document.getElementById("locationInfo");
+
+const mapBtn =
+  document.getElementById("mapBtn");
+
+
+let currentUser = null;
+
+let currentLatitude = null;
+let currentLongitude = null;
+
+
+/* MESSAGE */
+
+function showMessage(
+  title,
+  details = ""
+) {
+
+  loading.classList.add(
+    "hidden"
+  );
+
+  message.innerHTML =
+    "<div class='error-title'>" +
+    title +
+    "</div>" +
+    details;
+
+  message.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =====================================
+   DISPLAY PROFILE
+===================================== */
+
+function displayProfile(profile) {
+
+  document.getElementById(
+    "viewName"
+  ).textContent =
+    profile.name ||
+    currentUser.displayName ||
+    "-";
+
+
+  document.getElementById(
+    "viewEmail"
+  ).textContent =
+    profile.email ||
+    currentUser.email ||
+    "-";
+
+
+  document.getElementById(
+    "viewMobile"
+  ).textContent =
+    profile.mobile ||
+    "Not added";
+
+
+  document.getElementById(
+    "viewAddress"
+  ).textContent =
+    profile.address ||
+    "Not added";
+
+
+  document.getElementById(
+    "viewCity"
+  ).textContent =
+    profile.city ||
+    "Not added";
+
+
+  document.getElementById(
+    "viewPincode"
+  ).textContent =
+    profile.pincode ||
+    "Not added";
+
+
+  /* GPS */
+
+  if (
+    profile.latitude !== undefined &&
+    profile.latitude !== null &&
+    profile.longitude !== undefined &&
+    profile.longitude !== null
+  ) {
+
+    currentLatitude =
+      Number(profile.latitude);
+
+    currentLongitude =
+      Number(profile.longitude);
+
+
+    document.getElementById(
+      "viewLocationStatus"
+    ).textContent =
+      "✅ GPS location saved";
+
+
+    mapBtn.href =
+      "https://www.google.com/maps?q=" +
+      encodeURIComponent(
+        currentLatitude +
+        "," +
+        currentLongitude
+      );
+
+
+    mapBtn.classList.remove(
+      "hidden"
+    );
+
+
+    locationBtn.textContent =
+      "📍 Update My Location";
+
+  }
+
+  else {
+
+    document.getElementById(
+      "viewLocationStatus"
+    ).textContent =
+      "❌ GPS location not added";
+
+
+    mapBtn.classList.add(
+      "hidden"
+    );
+
+
+    locationBtn.textContent =
+      "📍 Get My Location";
+
+  }
+
+
+  /* EDIT VALUES */
+
+  document.getElementById(
+    "editName"
+  ).value =
+    profile.name ||
+    currentUser.displayName ||
+    "";
+
+
+  document.getElementById(
+    "editMobile"
+  ).value =
+    (profile.mobile || "")
+      .replace("+91", "");
+
+
+  document.getElementById(
+    "editAddress"
+  ).value =
+    profile.address ||
+    "";
+
+
+  document.getElementById(
+    "editCity"
+  ).value =
+    profile.city ||
+    "";
+
+
+  document.getElementById(
+    "editPincode"
+  ).value =
+    profile.pincode ||
+    "";
+
+}
+
+
+/* =====================================
+   LOAD PROFILE
+===================================== */
+
+async function loadProfile(user) {
+
+  currentUser =
+    user;
+
+  try {
+
+    const profileRef =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
+
+
+    const snapshot =
+      await getDoc(
+        profileRef
+      );
+
+
+    let profile;
+
+
+    if (snapshot.exists()) {
+
+      profile =
+        snapshot.data();
+
+    }
+
+    else {
+
+      profile = {
+
+        name:
+          user.displayName || "",
+
+        email:
+          user.email || "",
+
+        mobile: "",
+
+        address: "",
+
+        city: "",
+
+        pincode: "",
+
+        latitude: null,
+
+        longitude: null
+
+      };
 
     }
 
 
-    /* DISPLAY PROFILE */
-
-    function displayProfile(profile) {
-
-      document.getElementById("viewName").textContent =
-        profile.name ||
-        currentUser.displayName ||
-        "-";
-
-      document.getElementById("viewEmail").textContent =
-        profile.email ||
-        currentUser.email ||
-        "-";
-
-      document.getElementById("viewMobile").textContent =
-        profile.mobile ||
-        "Not added";
-
-      document.getElementById("viewAddress").textContent =
-        profile.address ||
-        "Not added";
-
-      document.getElementById("viewCity").textContent =
-        profile.city ||
-        "Not added";
-
-      document.getElementById("viewPincode").textContent =
-        profile.pincode ||
-        "Not added";
+    displayProfile(profile);
 
 
-      document.getElementById("editName").value =
-        profile.name ||
-        currentUser.displayName ||
-        "";
+    loading.classList.add(
+      "hidden"
+    );
 
-      document.getElementById("editMobile").value =
-        (profile.mobile || "")
-        .replace("+91", "");
+    profileView.classList.remove(
+      "hidden"
+    );
 
-      document.getElementById("editAddress").value =
-        profile.address ||
-        "";
+  }
 
-      document.getElementById("editCity").value =
-        profile.city ||
-        "";
+  catch (error) {
 
-      document.getElementById("editPincode").value =
-        profile.pincode ||
-        "";
+    console.error(
+      "PROFILE ERROR:",
+      error
+    );
+
+    showMessage(
+      "Unable to load profile",
+      "Firebase error: " +
+      (
+        error.code ||
+        error.message
+      )
+    );
+
+  }
+
+}
+
+
+/* =====================================
+   GET GPS LOCATION
+===================================== */
+
+locationBtn.addEventListener(
+  "click",
+  () => {
+
+    message.classList.add(
+      "hidden"
+    );
+
+
+    if (!navigator.geolocation) {
+
+      showMessage(
+        "Location not supported",
+        "Your browser does not support GPS location."
+      );
+
+      return;
 
     }
 
 
-    /* LOAD PROFILE */
+    locationBtn.disabled =
+      true;
 
-    async function loadProfile(user) {
+    locationBtn.textContent =
+      "📍 Getting location...";
 
-      currentUser = user;
 
-      try {
+    navigator.geolocation.getCurrentPosition(
 
-        const profileRef = doc(
-          db,
-          "users",
-          user.uid
+      async (position) => {
+
+        currentLatitude =
+          position.coords.latitude;
+
+        currentLongitude =
+          position.coords.longitude;
+
+
+        locationInfo.textContent =
+          "✅ GPS location detected. Finding your address...";
+
+        locationInfo.classList.remove(
+          "hidden"
         );
 
-        const snapshot =
-          await getDoc(profileRef);
 
-        let profile;
+        try {
+
+          const url =
+            "https://nominatim.openstreetmap.org/reverse" +
+            "?format=jsonv2" +
+            "&lat=" +
+            encodeURIComponent(
+              currentLatitude
+            ) +
+            "&lon=" +
+            encodeURIComponent(
+              currentLongitude
+            ) +
+            "&addressdetails=1";
 
 
-        if (snapshot.exists()) {
+          const response =
+            await fetch(
+              url,
+              {
+                headers: {
+                  "Accept":
+                    "application/json"
+                }
+              }
+            );
 
-          profile =
-            snapshot.data();
 
-        } else {
+          if (!response.ok) {
 
-          profile = {
+            throw new Error(
+              "Reverse geocoding failed."
+            );
 
-            name:
-              user.displayName || "",
+          }
 
-            email:
-              user.email || "",
 
-            mobile: "",
+          const data =
+            await response.json();
 
-            address: "",
 
-            city: "",
+          const addressData =
+            data.address || {};
 
-            pincode: ""
 
-          };
+          document.getElementById(
+            "editAddress"
+          ).value =
+            data.display_name || "";
+
+
+          document.getElementById(
+            "editCity"
+          ).value =
+            addressData.city ||
+            addressData.town ||
+            addressData.village ||
+            addressData.municipality ||
+            "";
+
+
+          document.getElementById(
+            "editPincode"
+          ).value =
+            addressData.postcode || "";
+
+
+          locationInfo.textContent =
+            "✅ Location detected and address filled automatically.";
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "REVERSE LOCATION ERROR:",
+            error
+          );
+
+
+          locationInfo.textContent =
+            "✅ GPS detected. Please enter missing address details manually.";
 
         }
 
 
-        displayProfile(profile);
+        locationBtn.disabled =
+          false;
 
-        loading.classList.add("hidden");
+        locationBtn.textContent =
+          "📍 Update My Location";
 
-        profileView.classList.remove("hidden");
+      },
+
+
+      (error) => {
+
+        console.error(
+          "LOCATION ERROR:",
+          error
+        );
+
+
+        let text =
+          "Unable to get your location.";
+
+
+        if (
+          error.code ===
+          error.PERMISSION_DENIED
+        ) {
+
+          text =
+            "Location permission denied. Please allow location permission and try again.";
+
+        }
+
+
+        if (
+          error.code ===
+          error.POSITION_UNAVAILABLE
+        ) {
+
+          text =
+            "Your location is unavailable. Please try again.";
+
+        }
+
+
+        if (
+          error.code ===
+          error.TIMEOUT
+        ) {
+
+          text =
+            "Location request timed out. Please try again.";
+
+        }
+
+
+        showMessage(
+          "Location Error",
+          text
+        );
+
+
+        locationBtn.disabled =
+          false;
+
+        locationBtn.textContent =
+          "📍 Get My Location";
+
+      },
+
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
+      }
+
+    );
+
+  }
+);
+
+
+/* =====================================
+   LOGIN CHECK
+===================================== */
+
+onAuthStateChanged(
+  auth,
+  (user) => {
+
+    if (!user) {
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    loadProfile(user);
+
+  }
+);
+
+
+/* =====================================
+   EDIT PROFILE
+===================================== */
+
+document
+  .getElementById("editBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      message.classList.add(
+        "hidden"
+      );
+
+      profileView.classList.add(
+        "hidden"
+      );
+
+      editView.classList.remove(
+        "hidden"
+      );
+
+    }
+  );
+
+
+/* =====================================
+   CANCEL
+===================================== */
+
+document
+  .getElementById("cancelBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      editView.classList.add(
+        "hidden"
+      );
+
+      profileView.classList.remove(
+        "hidden"
+      );
+
+    }
+  );
+
+
+/* =====================================
+   SAVE PROFILE
+===================================== */
+
+document
+  .getElementById("saveBtn")
+  .addEventListener(
+    "click",
+    async () => {
+
+      if (!currentUser) {
+
+        showMessage(
+          "Not logged in",
+          "Please log in again."
+        );
+
+        return;
+
+      }
+
+
+      const name =
+        document
+          .getElementById("editName")
+          .value
+          .trim();
+
+
+      let mobile =
+        document
+          .getElementById("editMobile")
+          .value
+          .trim();
+
+
+      const address =
+        document
+          .getElementById("editAddress")
+          .value
+          .trim();
+
+
+      const city =
+        document
+          .getElementById("editCity")
+          .value
+          .trim();
+
+
+      const pincode =
+        document
+          .getElementById("editPincode")
+          .value
+          .trim();
+
+
+      mobile =
+        mobile.replace(
+          /\D/g,
+          ""
+        );
+
+
+      if (!name) {
+
+        showMessage(
+          "Name required",
+          "Please enter your full name."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        !/^[6-9]\d{9}$/.test(
+          mobile
+        )
+      ) {
+
+        showMessage(
+          "Invalid mobile number",
+          "Please enter a valid 10-digit Indian mobile number."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        GPS location is required.
+      */
+
+      if (
+        currentLatitude === null ||
+        currentLongitude === null
+      ) {
+
+        showMessage(
+          "Location required",
+          "Please click 📍 Get My Location and allow location permission."
+        );
+
+        return;
+
+      }
+
+
+      if (!address) {
+
+        showMessage(
+          "Address required",
+          "Please get your GPS location first."
+        );
+
+        return;
+
+      }
+
+
+      if (!city) {
+
+        showMessage(
+          "City required",
+          "Please get your GPS location first."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        !/^\d{6}$/.test(
+          pincode
+        )
+      ) {
+
+        showMessage(
+          "Invalid PIN code",
+          "Please enter a valid 6-digit PIN code."
+        );
+
+        return;
+
+      }
+
+
+      const saveButton =
+        document.getElementById(
+          "saveBtn"
+        );
+
+
+      saveButton.disabled =
+        true;
+
+      saveButton.textContent =
+        "Saving...";
+
+
+      try {
+
+        const profile = {
+
+          name:
+            name,
+
+          email:
+            currentUser.email || "",
+
+          mobile:
+            "+91" + mobile,
+
+          address:
+            address,
+
+          city:
+            city,
+
+          pincode:
+            pincode,
+
+          latitude:
+            currentLatitude,
+
+          longitude:
+            currentLongitude,
+
+          photoURL:
+            currentUser.photoURL || "",
+
+          locationUpdatedAt:
+            new Date().toISOString(),
+
+          updatedAt:
+            new Date().toISOString()
+
+        };
+
+
+        await setDoc(
+
+          doc(
+            db,
+            "users",
+            currentUser.uid
+          ),
+
+          profile,
+
+          {
+            merge: true
+          }
+
+        );
+
+
+        displayProfile(
+          profile
+        );
+
+
+        editView.classList.add(
+          "hidden"
+        );
+
+        profileView.classList.remove(
+          "hidden"
+        );
+
+
+        message.innerHTML =
+          "✅ Profile and GPS location updated successfully.";
+
+        message.classList.remove(
+          "hidden"
+        );
 
       }
 
       catch (error) {
 
         console.error(
-          "PROFILE ERROR:",
+          "SAVE ERROR:",
           error
         );
 
+
         showMessage(
-          "Unable to load profile",
+          "Could not save profile",
           "Firebase error: " +
-          (error.code || error.message)
+          (
+            error.code ||
+            error.message
+          )
+        );
+
+      }
+
+
+      saveButton.disabled =
+        false;
+
+      saveButton.textContent =
+        "💾 Save Changes";
+
+    }
+  );
+
+
+/* =====================================
+   GO TO SHOP
+===================================== */
+
+document
+  .getElementById("shopBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+document
+  .getElementById("logoutBtn")
+  .addEventListener(
+    "click",
+    async () => {
+
+      const logoutButton =
+        document.getElementById(
+          "logoutBtn"
+        );
+
+
+      logoutButton.disabled =
+        true;
+
+      logoutButton.textContent =
+        "Logging out...";
+
+
+      try {
+
+        await signOut(auth);
+
+        window.location.href =
+          "login.html";
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "LOGOUT ERROR:",
+          error
+        );
+
+
+        logoutButton.disabled =
+          false;
+
+        logoutButton.textContent =
+          "🚪 Logout";
+
+
+        showMessage(
+          "Logout failed",
+          error.code ||
+          error.message
         );
 
       }
 
     }
+  );
 
-
-    /* LOGIN CHECK */
-
-    onAuthStateChanged(
-      auth,
-      (user) => {
-
-        if (!user) {
-
-          window.location.href =
-            "login.html";
-
-          return;
-
-        }
-
-        loadProfile(user);
-
-      }
-    );
-
-
-    /* EDIT PROFILE */
-
-    document
-      .getElementById("editBtn")
-      .addEventListener(
-        "click",
-        () => {
-
-          message.classList.add("hidden");
-
-          profileView.classList.add("hidden");
-
-          editView.classList.remove("hidden");
-
-        }
-      );
-
-
-    /* CANCEL */
-
-    document
-      .getElementById("cancelBtn")
-      .addEventListener(
-        "click",
-        () => {
-
-          editView.classList.add("hidden");
-
-          profileView.classList.remove("hidden");
-
-        }
-      );
-
-
-    /* SAVE PROFILE */
-
-    document
-      .getElementById("saveBtn")
-      .addEventListener(
-        "click",
-        async () => {
-
-          if (!currentUser) {
-
-            showMessage(
-              "Not logged in",
-              "Please log in again."
-            );
-
-            return;
-
-          }
-
-
-          const name =
-            document
-              .getElementById("editName")
-              .value
-              .trim();
-
-
-          let mobile =
-            document
-              .getElementById("editMobile")
-              .value
-              .trim();
-
-
-          const address =
-            document
-              .getElementById("editAddress")
-              .value
-              .trim();
-
-
-          const city =
-            document
-              .getElementById("editCity")
-              .value
-              .trim();
-
-
-          const pincode =
-            document
-              .getElementById("editPincode")
-              .value
-              .trim();
-
-
-          mobile =
-            mobile.replace(/\D/g, "");
-
-
-          if (!name) {
-
-            showMessage(
-              "Name required",
-              "Please enter your full name."
-            );
-
-            return;
-
-          }
-
-
-          if (!/^[6-9]\d{9}$/.test(mobile)) {
-
-            showMessage(
-              "Invalid mobile number",
-              "Please enter a valid 10-digit Indian mobile number."
-            );
-
-            return;
-
-          }
-
-
-          if (!address) {
-
-            showMessage(
-              "Address required",
-              "Please enter your delivery address."
-            );
-
-            return;
-
-          }
-
-
-          if (!city) {
-
-            showMessage(
-              "City required",
-              "Please enter your city."
-            );
-
-            return;
-
-          }
-
-
-          if (!/^\d{6}$/.test(pincode)) {
-
-            showMessage(
-              "Invalid PIN code",
-              "Please enter a valid 6-digit PIN code."
-            );
-
-            return;
-
-          }
-
-
-          const saveButton =
-            document.getElementById("saveBtn");
-
-
-          saveButton.disabled = true;
-
-          saveButton.textContent =
-            "Saving...";
-
-
-          try {
-
-            const profile = {
-
-              name: name,
-
-              email:
-                currentUser.email || "",
-
-              mobile:
-                "+91" + mobile,
-
-              address: address,
-
-              city: city,
-
-              pincode: pincode,
-
-              photoURL:
-                currentUser.photoURL || "",
-
-              updatedAt:
-                new Date().toISOString()
-
-            };
-
-
-            await setDoc(
-
-              doc(
-                db,
-                "users",
-                currentUser.uid
-              ),
-
-              profile,
-
-              {
-                merge: true
-              }
-
-            );
-
-
-            displayProfile(profile);
-
-            editView.classList.add("hidden");
-
-            profileView.classList.remove("hidden");
-
-
-            message.innerHTML =
-              "✅ Profile updated successfully.";
-
-            message.classList.remove("hidden");
-
-
-          }
-
-          catch (error) {
-
-            console.error(
-              "SAVE ERROR:",
-              error
-            );
-
-            showMessage(
-              "Could not save profile",
-              "Firebase error: " +
-              (error.code || error.message)
-            );
-
-          }
-
-
-          saveButton.disabled = false;
-
-          saveButton.textContent =
-            "💾 Save Changes";
-
-        }
-      );
-
-
-    /* GO TO SHOP */
-
-    document
-      .getElementById("shopBtn")
-      .addEventListener(
-        "click",
-        () => {
-
-          window.location.href =
-            "index.html";
-
-        }
-      );
-
-
-    /* LOGOUT */
-
-    document
-      .getElementById("logoutBtn")
-      .addEventListener(
-        "click",
-        async () => {
-
-          const logoutButton =
-            document.getElementById("logoutBtn");
-
-          logoutButton.disabled = true;
-
-          logoutButton.textContent =
-            "Logging out...";
-
-
-          try {
-
-            await signOut(auth);
-
-            /*
-              Go directly to login page.
-            */
-
-            window.location.href =
-              "login.html";
-
-          }
-
-          catch (error) {
-
-            console.error(
-              "LOGOUT ERROR:",
-              error
-            );
-
-            logoutButton.disabled = false;
-
-            logoutButton.textContent =
-              "🚪 Logout";
-
-            showMessage(
-              "Logout failed",
-              error.code ||
-              error.message
-            );
-
-          }
-
-        }
-      );
-
-  </script>
+</script>
 
 </body>
-
 </html>
